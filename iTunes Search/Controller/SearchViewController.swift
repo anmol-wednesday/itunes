@@ -25,7 +25,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
-        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.enablesReturnKeyAutomatically = true
         
         searchController.searchBar.sizeToFit()
