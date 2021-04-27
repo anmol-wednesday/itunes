@@ -12,7 +12,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     var albums = [Album]()
     var resultName: String = ""
-    let string = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
