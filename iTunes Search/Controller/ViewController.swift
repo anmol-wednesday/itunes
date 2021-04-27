@@ -12,6 +12,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     var albums = [Album]()
     var resultName: String = ""
+    var aVeryUnusualVariableNameWhichIsPrettyLongAndSenselessToUseIsHere = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
