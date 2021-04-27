@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B1BD6DA263801E6006C6658 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B1BD6D9263801E6006C6658 /* .swiftlint.yml */; };
 		7B6AC5B92618427B000A4B45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5B82618427B000A4B45 /* AppDelegate.swift */; };
 		7B6AC5BB2618427B000A4B45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */; };
 		7B6AC5BD2618427B000A4B45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BC2618427B000A4B45 /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B1BD6D9263801E6006C6658 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		7B6AC5B52618427B000A4B45 /* iTunes Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B6AC5B82618427B000A4B45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,7 +35,6 @@
 		7B6AC5D1261842A9000A4B45 /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		7B6AC5D926184369000A4B45 /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
 		7B6AC5DC26184477000A4B45 /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
-		7BC11D9A2630A35400C584BE /* iTunes Search.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iTunes Search.entitlements"; sourceTree = "<group>"; };
 		7BC2242126187D8B00B53474 /* ImageStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStyle.swift; sourceTree = "<group>"; };
 		7BC49EAC263047A4007FED3B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7BC49EAF26304AFB007FED3B /* Artists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artists.swift; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		7B6AC5B72618427B000A4B45 /* iTunes Search */ = {
 			isa = PBXGroup;
 			children = (
-				7BC11D9A2630A35400C584BE /* iTunes Search.entitlements */,
 				7B6AC5B82618427B000A4B45 /* AppDelegate.swift */,
 				7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */,
 				7B6AC5DC26184477000A4B45 /* SearchManager.swift */,
@@ -79,6 +79,7 @@
 				7B6AC5C12618427B000A4B45 /* Assets.xcassets */,
 				7B6AC5C32618427B000A4B45 /* LaunchScreen.storyboard */,
 				7B6AC5C62618427B000A4B45 /* Info.plist */,
+				7B1BD6D9263801E6006C6658 /* .swiftlint.yml */,
 			);
 			path = "iTunes Search";
 			sourceTree = "<group>";
@@ -121,6 +122,7 @@
 				7B6AC5B12618427B000A4B45 /* Sources */,
 				7B6AC5B22618427B000A4B45 /* Frameworks */,
 				7B6AC5B32618427B000A4B45 /* Resources */,
+				7B1BD6D62637FF4B006C6658 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -168,6 +170,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B1BD6DA263801E6006C6658 /* .swiftlint.yml in Resources */,
 				7B6AC5C52618427B000A4B45 /* LaunchScreen.storyboard in Resources */,
 				7B6AC5C22618427B000A4B45 /* Assets.xcassets in Resources */,
 				7B6AC5C02618427B000A4B45 /* Main.storyboard in Resources */,
@@ -175,6 +178,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7B1BD6D62637FF4B006C6658 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7B6AC5B12618427B000A4B45 /* Sources */ = {
@@ -346,7 +370,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Anmol.iTunes-Search";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -367,7 +391,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Anmol.iTunes-Search";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
