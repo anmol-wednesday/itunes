@@ -7,9 +7,8 @@
 
 import Foundation
 
-let baseURL = "https://itunes.apple.com/search?term="
-
 class SearchManager {
+    var baseURL = ""
     static let instance = SearchManager()
     func getAlbum(searchRequest: String, completion: @escaping ([Album]) -> Void) {
         var albums = [Album]()
@@ -72,5 +71,31 @@ class SearchManager {
             }.resume()
         }
         print(artists)
+    }
+    func getNapsterArtists(_ searchString: String) {
+        // perform artists search
+        //var artistName = [String]()
+        let search = searchString.replacingOccurrences(of: " ", with: "+")
+        if let url = URL(string: "\(baseURL)\(search)") {
+            print(url)
+            if let data = try? Data(contentsOf: url) {
+                parseJSON(json: data)
+                return
+            }
+        } else {
+            print("Error")
+        }
+        //return artistName
+    }
+    func parseJSON(json: Data) {
+//      var artistName = [String]()
+        let decoder = JSONDecoder()
+        if let jsonArtists = try? decoder.decode(NapsterArtists.self, from: json) {
+            print(jsonArtists.search.data.artists)
+        }
+        //return artistName
+    }
+    func getNapsterAlbums(_ string: String) {
+        // perform album search
     }
 }

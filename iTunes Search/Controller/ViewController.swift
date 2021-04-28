@@ -12,8 +12,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     var albums = [Album]()
     var resultName: String = ""
-    var aVeryUnusualVariableNameWhichIsPrettyLongAndSenselessToUseIsHere = 10
-    
+//  var aVeryUnusualVariableNameWhichIsPrettyLongAndSenselessToUseIsHere = 10
+//  var aVeryUnusualVariableNameWhichIsPrettyLongAndSenselessToUseIsHereWhichIsEqualToEleven = 11
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
