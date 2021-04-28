@@ -44,6 +44,7 @@ class SearchManager {
         var artists = [Artists]()
         let search = search.replacingOccurrences(of: " ", with: "+")
         let url = URL(string: "\(baseURL)\(search)")
+        print(url!)
         let session = URLSession.shared
         if let safeURL = url {
             session.dataTask(with: safeURL) { (data, _, error) in
@@ -91,7 +92,7 @@ class SearchManager {
 //      var artistName = [String]()
         let decoder = JSONDecoder()
         if let jsonArtists = try? decoder.decode(NapsterArtists.self, from: json) {
-            print(jsonArtists.search.data.artists)
+            print(jsonArtists.search.data.artists.description)
         }
         //return artistName
     }

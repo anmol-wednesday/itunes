@@ -12,7 +12,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
     let searchController = UISearchController(searchResultsController: nil)
     var artistHits = [Artists]()
     var artists = [NapsterArtists]()
-    var selectedAPI = "Apple"
+    var selectedAPI: String?
     var searchQuery = ""
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +31,10 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.definesPresentationContext = true
         title = "Search"
         navigationItem.searchController = searchController
-        showAlert(selectedAPI)
     }
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchQuery = searchController.searchBar.text else { return }
-        if selectedAPI == "Apple"{
+        if selectedAPI == "Apple" {
             SearchManager.instance.getArtists(search: searchQuery) { (requestedArtists) in
                 self.artistHits = []
                 self.artistHits = requestedArtists
@@ -43,11 +42,13 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
                     self.searchTable.reloadData()
                 }
             }
-        } else {
+        } else if selectedAPI == "Napster"{
             SearchManager.instance.getNapsterArtists(searchQuery)
             DispatchQueue.main.async {
                 self.searchTable.reloadData()
             }
+        } else {
+            print("error")
         }
     }
     @objc func appleAPI() {

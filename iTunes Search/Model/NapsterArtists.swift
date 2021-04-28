@@ -20,5 +20,5 @@ struct DataResponse: Codable {
 }
 
 struct Napster: Codable {
-    var napsterArtists: String
+    var name: String
 }
