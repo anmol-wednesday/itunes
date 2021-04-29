@@ -73,29 +73,22 @@ class SearchManager {
         }
         print(artists)
     }
-    func getNapsterArtists(_ searchString: String) {
-        // perform artists search
-        //var artistName = [String]()
+    func getNapsterArtists(_ searchString: String) -> [String] {
+        var artistName = [String]()
         let search = searchString.replacingOccurrences(of: " ", with: "+")
         if let url = URL(string: "\(baseURL)\(search)") {
-            print(url)
             if let data = try? Data(contentsOf: url) {
-                parseJSON(json: data)
-                return
+                let decoder = JSONDecoder()
+                if let jsonArtists = try? decoder.decode(NapsterArtists.self, from: data) {
+                    for names in jsonArtists.search.data.artists {
+                        artistName.append(names.name)
+                    }
+                }
             }
-        } else {
-            print("Error")
         }
-        //return artistName
+        return artistName
     }
-    func parseJSON(json: Data) {
-//      var artistName = [String]()
-        let decoder = JSONDecoder()
-        if let jsonArtists = try? decoder.decode(NapsterArtists.self, from: json) {
-            print(jsonArtists.search.data.artists.description)
-        }
-        //return artistName
-    }
+    
     func getNapsterAlbums(_ string: String) {
         // perform album search
     }

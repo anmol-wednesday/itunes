@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+struct Messages {
+    let errorTitle = "Error"
+    let error = "There was an error, please try again!"
+    
+    let apiTitle = "API Switched"
+    let api = "The API has switched to "
+    
+    let select = "Select iTunes or Napster API by pressing there logos respectively."
+    let selectTitle = "Select"
+}
