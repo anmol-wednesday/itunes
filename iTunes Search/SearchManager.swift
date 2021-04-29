@@ -40,11 +40,11 @@ class SearchManager {
             }
         }.resume()
     }
-    func getArtists(search: String, completion: @escaping ([Artists]) -> Void) {
-        var artists = [Artists]()
+    
+    func getArtists(search: String, completion: @escaping ([String]) -> Void) {
+        var artists = [String]()
         let search = search.replacingOccurrences(of: " ", with: "+")
         let url = URL(string: "\(baseURL)\(search)")
-        print(url!)
         let session = URLSession.shared
         if let safeURL = url {
             session.dataTask(with: safeURL) { (data, _, error) in
@@ -57,7 +57,7 @@ class SearchManager {
                                     guard let artistName = artistInfo["artistName"] as? String else { return }
 
                                     let artist = Artists(name: artistName)
-                                    artists.append(artist)
+                                    artists.append(artist.name)
                                 }
                             }
                             completion(artists)
@@ -71,8 +71,8 @@ class SearchManager {
                 }
             }.resume()
         }
-        print(artists)
     }
+    
     func getNapsterArtists(_ searchString: String) -> [String] {
         var artistName = [String]()
         let search = searchString.replacingOccurrences(of: " ", with: "+")
@@ -89,7 +89,26 @@ class SearchManager {
         return artistName
     }
     
-    func getNapsterAlbums(_ string: String) {
-        // perform album search
-    }
+    //FIXME: - Implement getNapsterAlbums
+    
+//    func getNapsterAlbums(_ string: String) {
+//        var napsterAlbums = [NapsterAlbums]()
+//        let searchString = string.replacingOccurrences(of: " ", with: "+")
+//        if let url = URL(string: "\(baseURL)\(searchString)") {
+//            if let data = try? Data(contentsOf: url) {
+//                let decoder = JSONDecoder()
+//                if let jsonAlbum = try decoder.decode(Napster, from: data) {
+//                    for album in jsonAlbum {
+//                        guard let trackName = album.something as? String else { return }
+//                        guard let albumArt = album.something as? String else { return }
+//                        guard let artistName = album.something as? String else { return }
+//
+//                        let albumInfo = NapsterAlbums(trackName: trackName, artistName: artistName, albumArtwork: albumArt)
+//                        napsterAlbums.append(albumInfo)
+//
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

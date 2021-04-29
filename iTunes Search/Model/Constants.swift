@@ -14,7 +14,7 @@ struct Constants {
     let apiTitle = "API Switched"
     let api = "The API has switched to "
     
-    let select = "Select iTunes or Napster API by pressing there logos respectively."
+    let select = "Select iTunes or Napster API by tapping any logo respectively."
     let selectTitle = "Select"
     
     let apple = "Apple"

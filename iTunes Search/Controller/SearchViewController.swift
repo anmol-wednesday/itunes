@@ -12,8 +12,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
     let searchController = UISearchController(searchResultsController: nil)
     let K = Constants()
     
-    var artistHits = [Artists]()
-    var artists = [String]()
+    var artistHits = [String]()
     var selectedAPI: String?
     var searchQuery = ""
     
@@ -50,20 +49,20 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         guard let searchQuery = searchController.searchBar.text else { return }
         
         if selectedAPI == K.apple {
+            artistHits = []
             SearchManager.instance.getArtists(search: searchQuery) { (requestedArtists) in
-                self.artistHits = []
                 self.artistHits = requestedArtists
                 DispatchQueue.main.async {
                     self.searchTable.reloadData()
                 }
             }
         } else if selectedAPI == K.napster {
-            artists = SearchManager.instance.getNapsterArtists(searchQuery)
+            artistHits = []
+            artistHits = SearchManager.instance.getNapsterArtists(searchQuery)
             DispatchQueue.main.async {
                 self.searchTable.reloadData()
             }
         } else {
-            artists = []
             artistHits = []
         }
     }
@@ -73,6 +72,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         let name = K.apple
         selectedAPI = name
         showAlert(name)
+        artistHits = []
         SearchManager.instance.baseURL = api
     }
     
@@ -82,6 +82,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         let apiKey = "NmJiYmYzNTItOTgyNi00ZjdmLTgxZDYtYWVkYmI0NDVlOWQ4"
         let api = "https://api.napster.com/v2.2/search?apikey=\(apiKey)&type=artist&query="
         showAlert(name)
+        artistHits = []
         SearchManager.instance.baseURL = api
     }
     
@@ -101,11 +102,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "artist", for: indexPath)
-        if selectedAPI == K.apple {
-            cell.textLabel?.text = artistHits[indexPath.row].name
-        } else if selectedAPI == K.napster {
-            cell.textLabel?.text = artists[indexPath.row]
-        }
+        cell.textLabel?.text = artistHits[indexPath.row]
         return cell
     }
     
@@ -114,9 +111,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         searchController.searchBar.resignFirstResponder()
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
         if selectedAPI == K.apple {
-            SearchManager.instance.getAlbum(searchRequest: artistHits[indexPath.row].name) { (requestedAlbums) in
+            SearchManager.instance.getAlbum(searchRequest: artistHits[indexPath.row]) { (requestedAlbums) in
                 detail.albums = requestedAlbums
-                detail.resultName = self.artistHits[indexPath.row].name
+                detail.resultName = self.artistHits[indexPath.row]
                 DispatchQueue.main.async {
                     self.navigationController?.pushViewController(detail, animated: true)
                 }
