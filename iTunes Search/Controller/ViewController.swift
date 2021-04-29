@@ -10,10 +10,13 @@ import UIKit
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
 
+    let K = Constants()
+    
     var albums = [Album]()
+    var napster = [NapsterAlbums]()
     var resultName: String = ""
-//  var aVeryUnusualVariableNameWhichIsPrettyLongAndSenselessToUseIsHere = 10
-//  var aVeryUnusualVariableNameWhichIsPrettyLongAndSenselessToUseIsHereWhichIsEqualToEleven = 11
+    var selectedAPI = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
@@ -25,7 +28,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCell", for: indexPath) as? AlbumCell {
-            cell.updateCell(album: albums[indexPath.row])
+            if selectedAPI == K.apple {
+                cell.updateCell(album: albums[indexPath.row])
+            }
+            if selectedAPI == K.napster {
+                cell.getNapsterCell(with: napster[indexPath.row].albumID[indexPath.row])
+            }
             return cell
         }
         collectionView.reloadData()

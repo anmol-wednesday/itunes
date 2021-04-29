@@ -18,12 +18,13 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
+
         let appleAPI = UIBarButtonItem(image: UIImage(named: "apple"), style: .plain, target: self, action: #selector(appleAPI))
         let napsterAPI = UIBarButtonItem(image: UIImage(named: "napster"), style: .plain, target: self, action: #selector(napsterAPI))
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Search"
+        navigationItem.searchController = searchController
         navigationItem.rightBarButtonItems = [napsterAPI, appleAPI]
         
         searchTable.delegate = self
@@ -37,12 +38,9 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.placeholder = "Enter artist name"
         searchController.definesPresentationContext = true
         
-        title = "Search"
-        navigationItem.searchController = searchController
-        
-        let alert = UIAlertController(title: K.selectTitle, message: K.select, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: K.selectTitle, message: K.select, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+//        present(alert, animated: true, completion: nil)
     }
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -52,6 +50,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
             artistHits = []
             SearchManager.instance.getArtists(search: searchQuery) { (requestedArtists) in
                 self.artistHits = requestedArtists
+                print("iTunes")
                 DispatchQueue.main.async {
                     self.searchTable.reloadData()
                 }
@@ -59,6 +58,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         } else if selectedAPI == K.napster {
             artistHits = []
             artistHits = SearchManager.instance.getNapsterArtists(searchQuery)
+            print("Napster")
             DispatchQueue.main.async {
                 self.searchTable.reloadData()
             }
@@ -114,12 +114,20 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             SearchManager.instance.getAlbum(searchRequest: artistHits[indexPath.row]) { (requestedAlbums) in
                 detail.albums = requestedAlbums
                 detail.resultName = self.artistHits[indexPath.row]
+                detail.selectedAPI = self.K.apple
                 DispatchQueue.main.async {
                     self.navigationController?.pushViewController(detail, animated: true)
                 }
             }
         } else if selectedAPI == K.napster {
-            // getAlbum information from Napster API
+            let albums = SearchManager.instance.getNapsterAlbums(artistHits[indexPath.row])
+            detail.napster = albums
+            print(albums)
+            detail.selectedAPI = self.K.napster
+            detail.resultName = self.artistHits[indexPath.row]
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(detail, animated: true)
+            }
         }
     }
 }

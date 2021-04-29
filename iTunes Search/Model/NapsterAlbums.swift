@@ -6,15 +6,16 @@
 //
 
 import Foundation
+import UIKit
 
 class NapsterAlbums {
-    var trackName: String
+    var trackName: [String]
     var artistName: String
-    var albumArtwork: String
+    var albumID: [String]
     
-    init(trackName: String, artistName: String, albumArtwork: String) {
+    init(trackName: [String], artistName: String, albumID: [String]) {
         self.trackName = trackName
         self.artistName = artistName
-        self.albumArtwork = albumArtwork
+        self.albumID = albumID
     }
 }

@@ -23,4 +23,24 @@ class AlbumCell: UICollectionViewCell {
         songName.text = album.songName
         songArtist.text = album.artistName
     }
+    
+    func getNapsterCell(with albumID: String) {
+        let baseURL = "https://api.napster.com/imageserver/v2/albums/"
+        let size = "200x200"
+        let imageExtension = ".jpg"
+        
+        let imageURL = "\(baseURL)\(albumID)/images\(size)\(imageExtension)"
+        if let url = URL(string: imageURL) {
+            DispatchQueue.global().async {
+                if let imageData = try? Data(contentsOf: url) {
+                    DispatchQueue.main.async {
+                        self.songImage.image = UIImage(data: imageData)
+                    }
+                }
+            }
+        }
+        
+        songName.text = "Hi"
+        songArtist.text = "Hi"
+    }
 }
