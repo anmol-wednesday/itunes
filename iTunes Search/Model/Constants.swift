@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Messages {
+struct Constants {
     let errorTitle = "Error"
     let error = "There was an error, please try again!"
     
@@ -16,4 +16,7 @@ struct Messages {
     
     let select = "Select iTunes or Napster API by pressing there logos respectively."
     let selectTitle = "Select"
+    
+    let apple = "Apple"
+    let napster = "Napster"
 }

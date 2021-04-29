@@ -11,7 +11,7 @@
 		7B25FB7F2639611200731422 /* napster.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B25FB7E2639611200731422 /* napster.png */; };
 		7B25FB812639611800731422 /* apple.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B25FB802639611800731422 /* apple.png */; };
 		7B25FB8926397A7300731422 /* NapsterArtists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8826397A7300731422 /* NapsterArtists.swift */; };
-		7B25FB8B26399C0700731422 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8A26399C0700731422 /* Messages.swift */; };
+		7B25FB8B26399C0700731422 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8A26399C0700731422 /* Constants.swift */; };
 		7B6AC5B92618427B000A4B45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5B82618427B000A4B45 /* AppDelegate.swift */; };
 		7B6AC5BB2618427B000A4B45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */; };
 		7B6AC5BD2618427B000A4B45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BC2618427B000A4B45 /* ViewController.swift */; };
@@ -31,7 +31,7 @@
 		7B25FB7E2639611200731422 /* napster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = napster.png; sourceTree = "<group>"; };
 		7B25FB802639611800731422 /* apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple.png; sourceTree = "<group>"; };
 		7B25FB8826397A7300731422 /* NapsterArtists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NapsterArtists.swift; sourceTree = "<group>"; };
-		7B25FB8A26399C0700731422 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
+		7B25FB8A26399C0700731422 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7B6AC5B52618427B000A4B45 /* iTunes Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B6AC5B82618427B000A4B45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 				7B6AC5D1261842A9000A4B45 /* Album.swift */,
 				7BC49EAF26304AFB007FED3B /* Artists.swift */,
 				7B25FB8826397A7300731422 /* NapsterArtists.swift */,
-				7B25FB8A26399C0700731422 /* Messages.swift */,
+				7B25FB8A26399C0700731422 /* Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -225,7 +225,7 @@
 				7BC49EAD263047A4007FED3B /* SearchViewController.swift in Sources */,
 				7B6AC5DA26184369000A4B45 /* AlbumCell.swift in Sources */,
 				7B6AC5DD26184477000A4B45 /* SearchManager.swift in Sources */,
-				7B25FB8B26399C0700731422 /* Messages.swift in Sources */,
+				7B25FB8B26399C0700731422 /* Constants.swift in Sources */,
 				7BC2242226187D8B00B53474 /* ImageStyle.swift in Sources */,
 				7B6AC5BB2618427B000A4B45 /* SceneDelegate.swift in Sources */,
 				7B25FB8926397A7300731422 /* NapsterArtists.swift in Sources */,
