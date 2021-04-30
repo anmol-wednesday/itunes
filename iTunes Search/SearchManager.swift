@@ -124,7 +124,6 @@ class SearchManager {
                 }
             }
             task.resume()
-            
-        }// this is not returning the array to the function call
+        }
     }
 }

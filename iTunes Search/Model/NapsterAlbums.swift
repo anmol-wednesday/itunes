@@ -8,6 +8,7 @@
 import Foundation
 
 class NapsterAlbums {
+    
     var albumID: [String]
     var artistName: String
     
