@@ -32,7 +32,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             count = albums.count
         }
         if selectedAPI == K.napster {
-            count = napster.first!.albumID.count
+            count = napster[0].albumID.count
         }
         return count
     }
@@ -43,7 +43,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 cell.updateCell(album: albums[indexPath.row])
             }
             if selectedAPI == K.napster {
-                cell.getNapsterCell(with: napster.first!.albumID, name: resultName)
+                cell.getNapsterCell(with: napster[0].albumID[indexPath.row], name: resultName)
             }
             return cell
         }
