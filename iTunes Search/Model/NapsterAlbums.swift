@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 class NapsterAlbums {
     var trackName: [String]

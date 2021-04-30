@@ -9,7 +9,6 @@ import Foundation
 
 class SearchManager {
     var baseURL = ""
-    var napsterAlbums = [NapsterAlbums]()
     static let instance = SearchManager()
     func getAlbum(searchRequest: String, completion: @escaping ([Album]) -> Void) {
         var albums = [Album]()
@@ -56,7 +55,7 @@ class SearchManager {
                             for artist in artistResults {
                                 if let artistInfo = artist as? [String: AnyObject] {
                                     guard let artistName = artistInfo["artistName"] as? String else { return }
-
+                                    
                                     let artist = Artists(name: artistName)
                                     artists.append(artist.name)
                                 }
@@ -90,10 +89,31 @@ class SearchManager {
         return artistName
     }
     
-    func getNapsterAlbums(_ string: String) -> [NapsterAlbums]{
+    func parseJSON(_ data: Data) -> [NapsterAlbums] {
+        let decoder = JSONDecoder()
+        var temp = [NapsterAlbums]()
+        var trackName: [String] = []
+        var albumID: [String] = []
+        
+        do {
+            let decodedData = try decoder.decode(AlbumID.self, from: data)
+            if let trackJSON = decodedData.search.data.artists.first!.albumGroups.singlesAndEPs {
+                trackName = trackJSON
+                albumID = trackName
+            }
+            let artistName = decodedData.search.data.artists.first!.name
+            let albumInfo = NapsterAlbums(trackName: trackName, artistName: artistName, albumID: albumID)
+            temp.append(albumInfo)
+        } catch {
+            print(error)
+        }
+        return temp
+    }
+    
+    func getNapsterAlbums(string: String, completion: @escaping ([NapsterAlbums]) -> Void) {
+        var napsterAlbums: [NapsterAlbums] = []
         let searchString = string.replacingOccurrences(of: " ", with: "+")
         if let url = URL(string: "\(baseURL)\(searchString)") {
-            print(url)
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, _, error in
                 if error != nil {
@@ -101,32 +121,12 @@ class SearchManager {
                     return
                 }
                 if let safeData = data {
-                    let albumInfo = self.parseJSON(safeData)
-                    self.napsterAlbums = albumInfo
+                    napsterAlbums = self.parseJSON(safeData)
+                    completion(napsterAlbums)
                 }
             }
             task.resume()
-        }
-        return napsterAlbums
-    }
-    
-    func parseJSON(_ data: Data) -> [NapsterAlbums] {
-        let decoder = JSONDecoder()
-        var temp = [NapsterAlbums]()
-        
-        do {
-            let decodedData = try decoder.decode(AlbumID.self, from: data)
-            for index in decodedData.search.data.artists {
-                let trackName = index.albumGroups.singlesAndEPs ?? []
-                let artistName = index.name
-                let albumID = trackName
             
-                let albumInfo = NapsterAlbums(trackName: trackName, artistName: artistName, albumID: albumID)
-                temp.append(albumInfo)
-            }
-        } catch {
-            print(error)
-        }
-        return temp
+        }// this is not returning the array to the function call
     }
 }
