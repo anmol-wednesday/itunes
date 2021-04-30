@@ -38,9 +38,9 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.placeholder = "Enter artist name"
         searchController.definesPresentationContext = true
         
-        //        let alert = UIAlertController(title: K.selectTitle, message: K.select, preferredStyle: .alert)
-        //        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        //        present(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: K.selectTitle, message: K.select, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                present(alert, animated: true, completion: nil)
     }
     
     func updateSearchResults(for searchController: UISearchController) {

@@ -22,21 +22,31 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collectionView.delegate = self
         collectionView.dataSource = self
         title = resultName
+        
+        print(selectedAPI)
+        print(napster)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return albums.count
+        var count = 0
+        if selectedAPI == K.apple {
+            count = albums.count
+        }
+        if selectedAPI == K.napster {
+            count = napster.first!.albumID.count
+        }
+        return count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCell", for: indexPath) as? AlbumCell {
+            cell.layer.borderColor = UIColor.black.cgColor
             if selectedAPI == K.apple {
                 cell.updateCell(album: albums[indexPath.row])
             }
             if selectedAPI == K.napster {
-                cell.getNapsterCell(with: napster[indexPath.row].albumID, name: napster.first!.artistName)
+                cell.getNapsterCell(with: napster.first!.albumID, name: resultName)
             }
             return cell
         }
-        collectionView.reloadData()
         return UICollectionViewCell()
     }
 }

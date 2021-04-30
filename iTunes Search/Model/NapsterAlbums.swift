@@ -8,13 +8,11 @@
 import Foundation
 
 class NapsterAlbums {
-    var trackName: [String]
-    var artistName: String
     var albumID: [String]
+    var artistName: String
     
-    init(trackName: [String], artistName: String, albumID: [String]) {
-        self.trackName = trackName
-        self.artistName = artistName
+    init(albumID: [String], artistName: String) {
         self.albumID = albumID
+        self.artistName = artistName
     }
 }

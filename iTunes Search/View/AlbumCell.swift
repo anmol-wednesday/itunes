@@ -30,13 +30,15 @@ class AlbumCell: UICollectionViewCell {
         let baseURL = "https://api.napster.com/imageserver/v2/albums/"
         let size = "200x200"
         let imageExtension = ".jpg"
-        let imageURL = "\(baseURL)\(albums.first!)/images\(size)\(imageExtension)"
-        if let url = URL(string: imageURL) {
-            print(url)
-            DispatchQueue.global().async {
-                if let imageData = try? Data(contentsOf: url) {
-                    DispatchQueue.main.async {
-                        self.songImage.image = UIImage(data: imageData)
+        for image in albums {
+            songName.text = image.uppercased()
+            let imageURL = "\(baseURL)\(image)/images/\(size)\(imageExtension)"
+            if let url = URL(string: imageURL) {
+                DispatchQueue.global().async {
+                    if let imageData = try? Data(contentsOf: url) {
+                        DispatchQueue.main.async {
+                            self.songImage.image = UIImage(data: imageData)
+                        }
                     }
                 }
             }

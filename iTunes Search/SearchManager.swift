@@ -92,17 +92,15 @@ class SearchManager {
     func parseJSON(_ data: Data) -> [NapsterAlbums] {
         let decoder = JSONDecoder()
         var temp = [NapsterAlbums]()
-        var trackName: [String] = []
         var albumID: [String] = []
         
         do {
             let decodedData = try decoder.decode(AlbumID.self, from: data)
-            if let trackJSON = decodedData.search.data.artists.first!.albumGroups.singlesAndEPs {
-                trackName = trackJSON
-                albumID = trackName
+            if let albumJSON = decodedData.search.data.artists.first!.albumGroups.singlesAndEPs {
+                albumID = albumJSON
             }
             let artistName = decodedData.search.data.artists.first!.name
-            let albumInfo = NapsterAlbums(trackName: trackName, artistName: artistName, albumID: albumID)
+            let albumInfo = NapsterAlbums(albumID: albumID, artistName: artistName)
             temp.append(albumInfo)
         } catch {
             print(error)
