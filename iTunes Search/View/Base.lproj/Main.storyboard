@@ -30,32 +30,30 @@
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AlbumCell" id="mjX-F7-oMQ" customClass="AlbumCell" customModule="iTunes_Search" customModuleProvider="target">
                                         <rect key="frame" x="28" y="18" width="120" height="170"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eLZ-Li-rxq">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="AKZ-aR-XYx">
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="170"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ENl-kg-pgK" customClass="ImageStyle" customModule="iTunes_Search" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="120" id="3sU-MZ-OZo"/>
-                                                        <constraint firstAttribute="height" constant="120" id="rXS-4Q-ipv"/>
+                                                        <constraint firstAttribute="width" constant="120" id="1IW-ZY-fTw"/>
+                                                        <constraint firstAttribute="height" constant="120" id="1aR-Qq-iYY"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nG-di-eTw">
                                                     <rect key="frame" x="0.0" y="128" width="120" height="20"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="CxG-EW-VRC"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="aRF-aO-9jt"/>
+                                                        <constraint firstAttribute="height" constant="20" id="EBG-E5-jHH"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O27-fD-UQa">
-                                                    <rect key="frame" x="0.0" y="144" width="120" height="20"/>
+                                                    <rect key="frame" x="0.0" y="151" width="120" height="15"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="Ack-US-mYb"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="P9M-rV-pxx"/>
+                                                        <constraint firstAttribute="height" constant="15" id="VFV-lv-a3d"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
@@ -63,18 +61,19 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="4nG-di-eTw" firstAttribute="leading" secondItem="eLZ-Li-rxq" secondAttribute="leading" id="0Gf-L7-oRH"/>
-                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="leading" secondItem="eLZ-Li-rxq" secondAttribute="leading" id="0qk-mO-O9H"/>
-                                                <constraint firstItem="O27-fD-UQa" firstAttribute="leading" secondItem="eLZ-Li-rxq" secondAttribute="leading" id="4f6-Fe-gSw"/>
-                                                <constraint firstAttribute="trailing" secondItem="4nG-di-eTw" secondAttribute="trailing" id="4l0-ME-Ny9"/>
-                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="top" secondItem="eLZ-Li-rxq" secondAttribute="top" id="IYr-ts-4tM"/>
-                                                <constraint firstAttribute="trailing" secondItem="O27-fD-UQa" secondAttribute="trailing" id="S5l-zG-exG"/>
-                                                <constraint firstAttribute="trailing" secondItem="ENl-kg-pgK" secondAttribute="trailing" id="Zxx-XC-7OQ"/>
-                                                <constraint firstAttribute="bottom" secondItem="O27-fD-UQa" secondAttribute="bottom" constant="6" id="n8a-Vq-jAi"/>
-                                                <constraint firstItem="O27-fD-UQa" firstAttribute="top" secondItem="4nG-di-eTw" secondAttribute="bottom" constant="-4" id="pLP-Ck-7p2"/>
-                                                <constraint firstItem="4nG-di-eTw" firstAttribute="top" secondItem="ENl-kg-pgK" secondAttribute="bottom" constant="8" symbolic="YES" id="r0s-FO-0QA"/>
+                                                <constraint firstAttribute="trailing" secondItem="ENl-kg-pgK" secondAttribute="trailing" id="BC0-CC-ast"/>
+                                                <constraint firstItem="4nG-di-eTw" firstAttribute="top" secondItem="ENl-kg-pgK" secondAttribute="bottom" constant="8" symbolic="YES" id="UUd-m7-9U6"/>
+                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="aK4-kw-qM7"/>
+                                                <constraint firstItem="O27-fD-UQa" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="e5L-9v-2J4"/>
+                                                <constraint firstAttribute="trailing" secondItem="4nG-di-eTw" secondAttribute="trailing" id="fNJ-Qw-Uo9"/>
+                                                <constraint firstAttribute="bottom" secondItem="O27-fD-UQa" secondAttribute="bottom" constant="4" id="gwZ-7v-FRh"/>
+                                                <constraint firstItem="O27-fD-UQa" firstAttribute="top" secondItem="4nG-di-eTw" secondAttribute="bottom" constant="3" id="gzq-S1-gYW"/>
+                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="top" secondItem="AKZ-aR-XYx" secondAttribute="top" id="kdU-Ab-i2E"/>
+                                                <constraint firstAttribute="trailing" secondItem="O27-fD-UQa" secondAttribute="trailing" id="lCj-xy-UTu"/>
+                                                <constraint firstItem="4nG-di-eTw" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="pxO-Sg-5z1"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <size key="customSize" width="120" height="170"/>
                                         <connections>
                                             <outlet property="songArtist" destination="O27-fD-UQa" id="a2C-05-CHG"/>
                                             <outlet property="songImage" destination="ENl-kg-pgK" id="vgR-Kx-Glo"/>

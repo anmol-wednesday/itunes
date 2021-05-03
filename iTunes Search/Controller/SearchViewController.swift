@@ -38,28 +38,34 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.placeholder = "Enter artist name"
         searchController.definesPresentationContext = true
         
-                let alert = UIAlertController(title: K.selectTitle, message: K.select, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                present(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: K.selectTitle, message: K.select, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
     }
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchQuery = searchController.searchBar.text else { return }
         
         if selectedAPI == K.apple {
-            artistHits = []
-            SearchManager.instance.getArtists(search: searchQuery) { (requestedArtists) in
-                self.artistHits = requestedArtists
-                DispatchQueue.main.async {
-                    self.searchTable.reloadData()
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                SearchManager.instance.getArtists(search: searchQuery) { (requestedArtists) in
+                    self?.artistHits = requestedArtists
                 }
             }
-        } else if selectedAPI == K.napster {
-            artistHits = []
-            artistHits = SearchManager.instance.getNapsterArtists(searchQuery)
+            
             DispatchQueue.main.async {
                 self.searchTable.reloadData()
             }
+        } else if selectedAPI == K.napster {
+            
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                self?.artistHits = SearchManager.instance.getNapsterArtists(searchQuery)
+            }
+            
+            DispatchQueue.main.async {
+                self.searchTable.reloadData()
+            }
+            
         } else {
             artistHits = []
         }
@@ -109,20 +115,25 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         searchController.searchBar.resignFirstResponder()
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
         if selectedAPI == K.apple {
-            SearchManager.instance.getAlbum(searchRequest: artistHits[indexPath.row]) { (requestedAlbums) in
-                detail.albums = requestedAlbums
-                detail.resultName = self.artistHits[indexPath.row]
-                detail.selectedAPI = self.K.apple
-                DispatchQueue.main.async {
-                    self.navigationController?.pushViewController(detail, animated: true)
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                SearchManager.instance.getAlbum(searchRequest: (self?.artistHits[indexPath.row])!) { (requestedAlbums) in
+                    detail.albums = requestedAlbums
+                    detail.resultName = (self?.artistHits[indexPath.row])!
+                    detail.selectedAPI = (self?.K.apple)!
                 }
             }
-        } else if selectedAPI == K.napster {
-            SearchManager.instance.getNapsterAlbums(string: artistHits[indexPath.row]) { (request) in
-                detail.napster = request
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(detail, animated: true)
             }
-            detail.selectedAPI = self.K.napster
-            detail.resultName = self.artistHits[indexPath.row]
+        } else if selectedAPI == K.napster {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                SearchManager.instance.getNapsterAlbums(string: (self?.artistHits[indexPath.row])!) { (request) in
+                    detail.napster = request
+                }
+                
+                detail.selectedAPI = (self?.K.napster)!
+                detail.resultName = (self?.artistHits[indexPath.row])!
+            }
             DispatchQueue.main.async {
                 self.navigationController?.pushViewController(detail, animated: true)
             }
