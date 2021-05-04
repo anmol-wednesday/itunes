@@ -54,12 +54,11 @@ class APISelectVC: UITableViewController {
                 if cellName == K.apple {
                     print(cellName)
                     SearchViewController.selectedAPI = K.apple
-                    dismiss(animated: true, completion: nil)
+//                    Call api assign method from search vc
                 } else if cellName == K.napster {
                     print(cellName)
                     SearchViewController.selectedAPI = K.napster
-                    searchVC.selectedAPI(name: SearchViewController.selectedAPI)
-                    dismiss(animated: true, completion: nil)
+//                    Call api assign method from search vc
                 }
             }
         }
@@ -69,6 +68,13 @@ class APISelectVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         if let cell = tableView.cellForRow(at: indexPath) {
             cell.accessoryType = .none
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let indexPath = IndexPath(row: 0, section: 0)
+        if let cell = tableView.cellForRow(at: indexPath) {
+            print(indexPath.row)
         }
     }
 }
