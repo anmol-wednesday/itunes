@@ -121,7 +121,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
         if selectedAPI == K.apple {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getAlbum(searchRequest: (self?.artistHits[indexPath.row])!) { [self] (requestedAlbums) in
+                SearchManager.instance.getAlbum(searchRequest: (self?.artistHits[indexPath.row])!) { (requestedAlbums) in
                     self?.albums = requestedAlbums
                     
                     for album in self!.albums {
@@ -147,9 +147,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             }
         } else if selectedAPI == K.napster {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getNapsterAlbums(string: (self?.artistHits[indexPath.row])!) { [self] (request) in
+                SearchManager.instance.getNapsterAlbums(string: (self?.artistHits[indexPath.row])!) { (request) in
                     self?.napsterAlbums = request
-//                    print(self?.napsterAlbums[0].albumID)
                     if let counter = self?.napsterAlbums[0].albumID.count {
                         for i in 0..<counter {
                             let image = self?.napsterAlbums[0].albumID[i]

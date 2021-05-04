@@ -13,7 +13,7 @@ class AlbumCell: UICollectionViewCell {
     @IBOutlet weak var songArtist: UILabel!
     
     func updateCell (album: CollectionCellData) {
-        print("collection cell \(album)")
+        print("collection cell \(album.artistName), \(album.image), \(album.trackName)")
         DispatchQueue.global(qos: .userInitiated).async {
             let imageUrl = URL(string: album.image)
             DispatchQueue.global().async {
