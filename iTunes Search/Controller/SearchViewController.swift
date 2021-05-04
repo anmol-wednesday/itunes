@@ -12,27 +12,22 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
     let searchController = UISearchController(searchResultsController: nil)
     let K = Constants()
     
+    static var selectedAPI = "Select API"
     var artistHits = [String]()
-    var selectedAPI: String?
     var searchQuery = ""
     
     var albums = [Album]()
     var napsterAlbums = [NapsterAlbums]()
     var common = [CollectionCellData]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        let apiSelect = UIBarButtonItem(title: SearchViewController.selectedAPI, style: .plain, target: self, action: #selector(promptAPISelect))
         
-        let appleAPI = UIBarButtonItem(image: UIImage(named: "apple"), style: .plain, target: self, action: #selector(appleAPI))
-        let napsterAPI = UIBarButtonItem(image: UIImage(named: "napster"), style: .plain, target: self, action: #selector(napsterAPI))
+        navigationItem.rightBarButtonItems = [apiSelect]
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Search"
         navigationItem.searchController = searchController
-        navigationItem.rightBarButtonItems = [napsterAPI, appleAPI]
-        
-        searchTable.delegate = self
-        searchTable.dataSource = self
         
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchResultsUpdater = self
@@ -41,66 +36,42 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
         searchController.definesPresentationContext = true
-        
-//        let alert = UIAlertController(title: K.selectTitle, message: K.select, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-//        present(alert, animated: true, completion: nil)
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchTable.delegate = self
+        searchTable.dataSource = self
+    }
+
+    //MARK: - UISearchContoller Method
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchQuery = searchController.searchBar.text else { return }
-        
-        if selectedAPI == K.apple {
+        if SearchViewController.selectedAPI == K.apple {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getArtists(search: searchQuery) { (request) in
                     self?.artistHits = request
                 }
             }
-            
             DispatchQueue.main.async {
                 self.searchTable.reloadData()
             }
-        } else if selectedAPI == K.napster {
+        } else if SearchViewController.selectedAPI == K.napster {
             
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 self?.artistHits = SearchManager.instance.getNapsterArtists(searchQuery)
             }
-            
             DispatchQueue.main.async {
                 self.searchTable.reloadData()
             }
-            
         } else {
             artistHits = []
         }
     }
-    
-    @objc func appleAPI() {
-        let api = "https://itunes.apple.com/search?term="
-        let name = K.apple
-        selectedAPI = name
-        showAlert(name)
-        artistHits = []
-        SearchManager.instance.baseURL = api
-    }
-    
-    @objc func napsterAPI() {
-        let name = K.napster
-        selectedAPI = name
-        let apiKey = "NmJiYmYzNTItOTgyNi00ZjdmLTgxZDYtYWVkYmI0NDVlOWQ4"
-        let api = "https://api.napster.com/v2.2/search?apikey=\(apiKey)&type=artist&query="
-        showAlert(name)
-        artistHits = []
-        SearchManager.instance.baseURL = api
-    }
-    
-    func showAlert(_ name: String) {
-        let alert = UIAlertController(title: K.apiTitle, message: "\(K.api)\(name) API.", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-    }
 }
+
+//MARK: - UITableView Delegate and Datasource
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -119,7 +90,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
-        if selectedAPI == K.apple {
+        if SearchViewController.selectedAPI == K.apple {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getAlbum(searchRequest: (self?.artistHits[indexPath.row])!) { (requestedAlbums) in
                     self?.albums = requestedAlbums
@@ -131,21 +102,22 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                         let image = album.artwork
                         let name = album.artistName
                         let song = album.songName
-                        
                         let cellInfo = CollectionCellData(image: image, artistName: name, trackName: song)
                         self?.common.append(cellInfo)
                     }
-                    
                     detail.cellData = self!.common
                     detail.resultName = (self?.artistHits[indexPath.row])!
                     detail.selectedAPI = (self?.K.apple)!
-                    
                 }
                 DispatchQueue.main.async {
-                    self?.navigationController?.pushViewController(detail, animated: true)
+                    if self!.common.isEmpty {
+                        self?.makeErrorView()
+                    } else {
+                        self?.navigationController?.pushViewController(detail, animated: true)
+                    }
                 }
             }
-        } else if selectedAPI == K.napster {
+        } else if SearchViewController.selectedAPI == K.napster {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getNapsterAlbums(string: (self?.artistHits[indexPath.row])!) { (request) in
                     self?.napsterAlbums = request
@@ -154,22 +126,88 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                             let image = self?.napsterAlbums[0].albumID[i]
                             let name = self?.artistHits[indexPath.row]
                             let song = image
-                            
                             let cellInfo = CollectionCellData(image: image ?? "alb.301258656", artistName: name ?? "", trackName: song ?? "alb.301258656")
                             self?.common.append(cellInfo)
                         }
                     }
                     detail.cellData = self!.common
                 }
-                
                 print("In search vc \(self!.common)")
                 
                 detail.selectedAPI = (self?.K.napster)!
                 detail.resultName = (self?.artistHits[indexPath.row])!
             }
             DispatchQueue.main.async {
-                self.navigationController?.pushViewController(detail, animated: true)
+                if self.common.isEmpty {
+                    self.makeErrorView()
+                } else {
+                    self.navigationController?.pushViewController(detail, animated: true)
+                }
             }
         }
+    }
+}
+
+//MARK: - Class methods
+
+extension SearchViewController {
+    
+    @objc func promptAPISelect() {
+        guard let APISelectVC = storyboard?.instantiateViewController(identifier: "apiVC") as? APISelectVC else { return }
+        navigationController?.pushViewController(APISelectVC, animated: true)
+    }
+    
+    func appleAPI(name: String) {
+        let api = "https://itunes.apple.com/search?term="
+        SearchViewController.selectedAPI = name
+        showAlert(name)
+        artistHits = []
+        SearchManager.instance.baseURL = api
+    }
+    
+    func napsterAPI(name: String) {
+        SearchViewController.selectedAPI = name
+        let apiKey = "NmJiYmYzNTItOTgyNi00ZjdmLTgxZDYtYWVkYmI0NDVlOWQ4"
+        let api = "https://api.napster.com/v2.2/search?apikey=\(apiKey)&type=artist&query="
+        showAlert(name)
+        artistHits = []
+        SearchManager.instance.baseURL = api
+    }
+    
+    func selectedAPI(name: String) {
+        if name == K.apple {
+            appleAPI(name: SearchViewController.selectedAPI)
+        } else if name == K.napster {
+            napsterAPI(name: SearchViewController.selectedAPI)
+        }
+    }
+    
+    func showAlert(_ name: String) {
+        let alert = UIAlertController(title: K.apiTitle, message: "\(K.api)\(name) API.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func makeErrorView() {
+        let errorView = UIView()
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(errorView)
+        
+        let errorText = UILabel()
+        errorText.translatesAutoresizingMaskIntoConstraints = false
+        errorText.text = "Error in loading data! Please try again."
+        errorText.font = UIFont.systemFont(ofSize: 32)
+        errorView.addSubview(errorView)
+        
+        NSLayoutConstraint.activate([
+            errorView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            errorView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            errorView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+            errorView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            
+            errorText.centerXAnchor.constraint(equalTo: errorView.centerXAnchor),
+            errorText.centerYAnchor.constraint(equalTo: errorView.centerYAnchor)
+        ])
     }
 }
