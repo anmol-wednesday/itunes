@@ -7,14 +7,6 @@
 
 import Foundation
 
-//protocol SearchManagerDelegate {
-//    func getAlbums(searchRequest: String, completion: @escaping ([Album]) -> Void)
-//    func getArtists(search: String, completion: @escaping ([String]) -> Void)
-//    func getNapsterArtists(_ searchString: String) -> [String]
-//    func getNapsterAlbums(string: String, completion: @escaping ([NapsterAlbums]) -> Void)
-//    func parseJSON(_ data: Data) -> [NapsterAlbums]
-//}
-
 class SearchManager {
     var baseURL = ""
     static let instance = SearchManager()
@@ -63,7 +55,7 @@ class SearchManager {
                             for artist in artistResults {
                                 if let artistInfo = artist as? [String: AnyObject] {
                                     guard let artistName = artistInfo["artistName"] as? String else { return }
-                                    
+
                                     let artist = Artists(name: artistName)
                                     artists.append(artist.name)
                                 }

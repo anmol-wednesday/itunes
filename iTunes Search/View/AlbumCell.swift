@@ -12,9 +12,10 @@ class AlbumCell: UICollectionViewCell {
     @IBOutlet weak var songName: UILabel!
     @IBOutlet weak var songArtist: UILabel!
     
-    func updateCell (album: Album) {
+    func updateCell (album: CollectionCellData) {
+        print("collection cell \(album)")
         DispatchQueue.global(qos: .userInitiated).async {
-            let imageUrl = URL(string: album.artwork)
+            let imageUrl = URL(string: album.image)
             DispatchQueue.global().async {
                 if let imageData = try? Data(contentsOf: imageUrl!) {
                     DispatchQueue.main.async {
@@ -24,17 +25,18 @@ class AlbumCell: UICollectionViewCell {
             }
 
         }
-        songName.text = album.songName
+        songName.text = album.trackName
         songArtist.text = album.artistName
     }
     
-    func getNapsterCell(with albums: String, name: String) {
+    func getNapsterCell(with albums: CollectionCellData, name: String) {
         let baseURL = "https://api.napster.com/imageserver/v2/albums/"
         let size = "200x200"
         let imageExtension = ".jpg"
-            songName.text = albums.uppercased()
+        
+        songName.text = albums.image.uppercased()
         DispatchQueue.global(qos: .userInitiated).async {
-            let imageURL = "\(baseURL)\(albums)/images/\(size)\(imageExtension)"
+            let imageURL = "\(baseURL)\(albums.image)/images/\(size)\(imageExtension)"
             if let url = URL(string: imageURL) {
                 DispatchQueue.global().async {
                     if let imageData = try? Data(contentsOf: url) {

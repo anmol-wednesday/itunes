@@ -8,8 +8,6 @@
 import Foundation
 
 struct Constants {
-    let errorTitle = "Error"
-    let error = "There was an error, please try again!"
     
     let apiTitle = "API Switched"
     let api = "The API has switched to "
@@ -19,4 +17,7 @@ struct Constants {
     
     let apple = "Apple"
     let napster = "Napster"
+    
+    let errorTitle = "Error"
+    let error = "There was an error, please try again!"
 }
