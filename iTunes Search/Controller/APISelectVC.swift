@@ -70,11 +70,4 @@ class APISelectVC: UITableViewController {
             cell.accessoryType = .none
         }
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        let indexPath = IndexPath(row: 0, section: 0)
-        if let cell = tableView.cellForRow(at: indexPath) {
-            print(indexPath.row)
-        }
-    }
 }
