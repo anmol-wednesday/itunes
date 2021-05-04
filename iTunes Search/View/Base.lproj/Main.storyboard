@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0zb-aH-B9Z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0zb-aH-B9Z">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -17,64 +17,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZIR-Ud-8aA">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZIR-Ud-8aA">
                                 <rect key="frame" x="0.0" y="44" width="390" height="766"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="20" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="Ggk-CZ-Duc">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="TYH-7E-3hb">
                                     <size key="itemSize" width="120" height="170"/>
+                                    <size key="estimatedItemSize" width="120" height="170"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="20" minY="10" maxX="22" maxY="10"/>
+                                    <inset key="sectionInset" minX="20" minY="10" maxX="20" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AlbumCell" id="mjX-F7-oMQ" customClass="AlbumCell" customModule="iTunes_Search" customModuleProvider="target">
-                                        <rect key="frame" x="28" y="18" width="120" height="170"/>
+                                        <rect key="frame" x="20" y="10" width="120" height="170"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eLZ-Li-rxq">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="AKZ-aR-XYx">
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="170"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ENl-kg-pgK" customClass="ImageStyle" customModule="iTunes_Search" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="120" id="3sU-MZ-OZo"/>
-                                                        <constraint firstAttribute="height" constant="120" id="rXS-4Q-ipv"/>
-                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nG-di-eTw">
-                                                    <rect key="frame" x="0.0" y="128" width="120" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="CxG-EW-VRC"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="aRF-aO-9jt"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="0.0" y="131" width="120" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O27-fD-UQa">
-                                                    <rect key="frame" x="0.0" y="144" width="120" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="Ack-US-mYb"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="P9M-rV-pxx"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="0.0" y="151" width="120" height="15"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="4nG-di-eTw" firstAttribute="leading" secondItem="eLZ-Li-rxq" secondAttribute="leading" id="0Gf-L7-oRH"/>
-                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="leading" secondItem="eLZ-Li-rxq" secondAttribute="leading" id="0qk-mO-O9H"/>
-                                                <constraint firstItem="O27-fD-UQa" firstAttribute="leading" secondItem="eLZ-Li-rxq" secondAttribute="leading" id="4f6-Fe-gSw"/>
-                                                <constraint firstAttribute="trailing" secondItem="4nG-di-eTw" secondAttribute="trailing" id="4l0-ME-Ny9"/>
-                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="top" secondItem="eLZ-Li-rxq" secondAttribute="top" id="IYr-ts-4tM"/>
-                                                <constraint firstAttribute="trailing" secondItem="O27-fD-UQa" secondAttribute="trailing" id="S5l-zG-exG"/>
-                                                <constraint firstAttribute="trailing" secondItem="ENl-kg-pgK" secondAttribute="trailing" id="Zxx-XC-7OQ"/>
-                                                <constraint firstAttribute="bottom" secondItem="O27-fD-UQa" secondAttribute="bottom" constant="6" id="n8a-Vq-jAi"/>
-                                                <constraint firstItem="O27-fD-UQa" firstAttribute="top" secondItem="4nG-di-eTw" secondAttribute="bottom" constant="-4" id="pLP-Ck-7p2"/>
-                                                <constraint firstItem="4nG-di-eTw" firstAttribute="top" secondItem="ENl-kg-pgK" secondAttribute="bottom" constant="8" symbolic="YES" id="r0s-FO-0QA"/>
+                                                <constraint firstAttribute="bottom" secondItem="O27-fD-UQa" secondAttribute="bottom" constant="4" id="5eA-KR-ZDW"/>
+                                                <constraint firstAttribute="trailing" secondItem="ENl-kg-pgK" secondAttribute="trailing" id="DMm-tr-C0n"/>
+                                                <constraint firstItem="O27-fD-UQa" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="PBn-cL-5j8"/>
+                                                <constraint firstAttribute="trailing" secondItem="O27-fD-UQa" secondAttribute="trailing" id="QcF-hm-J0r"/>
+                                                <constraint firstItem="4nG-di-eTw" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="TL9-kM-JWM"/>
+                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="top" secondItem="AKZ-aR-XYx" secondAttribute="top" id="dh4-as-bL5"/>
+                                                <constraint firstItem="O27-fD-UQa" firstAttribute="top" secondItem="4nG-di-eTw" secondAttribute="bottom" constant="3" id="ptT-yq-udG"/>
+                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="sGV-CY-egq"/>
+                                                <constraint firstAttribute="bottom" secondItem="ENl-kg-pgK" secondAttribute="bottom" constant="50" id="xvY-cT-NtF"/>
+                                                <constraint firstAttribute="trailing" secondItem="4nG-di-eTw" secondAttribute="trailing" id="xzD-fa-3F7"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <size key="customSize" width="120" height="170"/>
                                         <connections>
                                             <outlet property="songArtist" destination="O27-fD-UQa" id="a2C-05-CHG"/>
                                             <outlet property="songImage" destination="ENl-kg-pgK" id="vgR-Kx-Glo"/>
@@ -86,12 +77,6 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="ZIR-Ud-8aA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7ri-s6-SFh"/>
-                            <constraint firstItem="ZIR-Ud-8aA" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Jxh-b0-ML2"/>
-                            <constraint firstItem="ZIR-Ud-8aA" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="SdC-X4-nfX"/>
-                            <constraint firstItem="ZIR-Ud-8aA" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="kFQ-dt-xdd"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="tnk-sZ-XPG"/>
                     <connections>
@@ -115,7 +100,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="artist" textLabel="04J-tS-0W9" style="IBUITableViewCellStyleDefault" id="YeZ-Xu-aJ5">
-                                        <rect key="frame" x="0.0" y="28" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="24.333333969116211" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YeZ-Xu-aJ5" id="1Rj-hN-vH5">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>

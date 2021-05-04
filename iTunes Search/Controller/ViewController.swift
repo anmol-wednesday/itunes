@@ -8,30 +8,41 @@
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    let K = Constants()
 
-    var albums = [Album]()
     var resultName: String = ""
+    var selectedAPI = ""
+    
+    var cellData = [CollectionCellData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         collectionView.delegate = self
         collectionView.dataSource = self
         title = resultName
+        
+        print(cellData)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return albums.count
+        print("number of items\(cellData.count)")
+        return cellData.count
+        
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCell", for: indexPath) as? AlbumCell{
-            cell.updateCell(album: albums[indexPath.row])
+        print("cellforitem \(cellData.count)")
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCell", for: indexPath) as? AlbumCell {
+            if selectedAPI == K.apple {
+                print("Index in cell for item\(indexPath.row)")
+                cell.updateCell(album: cellData[indexPath.row])
+            }
+            if selectedAPI == K.napster {
+                cell.getNapsterCell(with: cellData[indexPath.row], name: resultName)
+            }
             return cell
         }
-        collectionView.reloadData()
         return UICollectionViewCell()
-    }        
+    }
 }

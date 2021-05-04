@@ -7,11 +7,10 @@
 
 import Foundation
 
-class Album{
+class Album {
     var artwork: String
     var songName: String
     var artistName: String
-    
     init(artwork: String, songName: String, artistName: String) {
         self.artwork = artwork
         self.songName = songName
