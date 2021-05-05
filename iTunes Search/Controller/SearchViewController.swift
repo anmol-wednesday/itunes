@@ -89,7 +89,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //common = []
+        common = []
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
@@ -114,8 +114,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     detail.selectedAPI = (self?.K.apple)!
                     self?.count = detail.cellData.count
                 }
-                DispatchQueue.main.async { //fails
-                    if self?.count == 0 || self!.artistHits.isEmpty {
+                DispatchQueue.main.async {
+                    if self?.count == 0 {
                         self!.showAlert()
                     } else {
                         self?.navigationController?.pushViewController(detail, animated: true)
@@ -130,27 +130,25 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                         for i in 0..<counter {
                             let image = self?.napsterAlbums[0].albumID[i]
                             let name = self?.artistHits[indexPath.row]
-                            let song = image
-                            let collection = image
-                            let cellInfo = CollectionCellData(image: image ?? "alb.301258656", artistName: name ?? "", trackName: song ?? "alb.301258656", collectionName: collection ?? "alb.301258656")
+                            let cellInfo = CollectionCellData(image: image ?? "alb.301258656", artistName: name ?? "", trackName: image ?? "alb.301258656", collectionName: image ?? "alb.301258656")
                             self?.common.append(cellInfo)
                         }
+                        detail.cellData = self!.common
+                        self?.count = self?.common.count
                     }
-                    detail.cellData = self!.common
-                    
                 }
                 detail.selectedAPI = (self?.K.napster)!
                 detail.resultName = (self?.artistHits[indexPath.row])!
-                self?.count = self?.common.count
+                
             }
             
             DispatchQueue.main.async {
-//                if self.count == 0 || self.artistHits.isEmpty {//fails
-//                    print(self.common.count)
-//                    self.showAlert()
-//                } else {
+                if self.count == 0 {
+                    print(self.common.count)
+                    self.showAlert()
+                } else {
                     self.navigationController?.pushViewController(detail, animated: true)
-//                }
+                }
             }
         }
     }
@@ -168,7 +166,6 @@ extension SearchViewController {
     func appleAPI(name: String) {
         let api = "https://itunes.apple.com/search?term="
         SearchViewController.selectedAPI = name
-        //artistHits = []
         SearchManager.instance.baseURL = api
     }
     
@@ -176,7 +173,6 @@ extension SearchViewController {
         SearchViewController.selectedAPI = name
         let apiKey = "NmJiYmYzNTItOTgyNi00ZjdmLTgxZDYtYWVkYmI0NDVlOWQ4"
         let api = "https://api.napster.com/v2.2/search?apikey=\(apiKey)&type=artist&query="
-        artistHits = []
         SearchManager.instance.baseURL = api
     }
     

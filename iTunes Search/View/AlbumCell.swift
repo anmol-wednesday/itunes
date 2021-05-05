@@ -37,6 +37,7 @@ class AlbumCell: UICollectionViewCell {
         let imageExtension = ".jpg"
         
         songName.text = albums.image.uppercased()
+        collectionName.text = albums.image.uppercased()
         DispatchQueue.global(qos: .userInitiated).async {
             let imageURL = "\(baseURL)\(albums.image)/images/\(size)\(imageExtension)"
             if let url = URL(string: imageURL) {
@@ -50,6 +51,5 @@ class AlbumCell: UICollectionViewCell {
             }
         }
         songArtist.text = name
-        collectionName.text = albums.image.uppercased()
     }
 }
