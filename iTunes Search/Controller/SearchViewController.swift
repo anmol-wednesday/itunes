@@ -22,8 +22,14 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
     
     override func viewWillAppear(_ animated: Bool) {
         let apiSelect = UIBarButtonItem(title: SearchViewController.selectedAPI, style: .plain, target: self, action: #selector(promptAPISelect))
-        
         navigationItem.rightBarButtonItems = [apiSelect]
+        selectedAPI(name: SearchViewController.selectedAPI)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchTable.delegate = self
+        searchTable.dataSource = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
         title = "Search"
@@ -36,14 +42,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
         searchController.definesPresentationContext = true
-        
-        selectedAPI(name: SearchViewController.selectedAPI)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        searchTable.delegate = self
-        searchTable.dataSource = self
+
     }
 
     //MARK: - UISearchContoller Method
@@ -112,8 +111,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     detail.selectedAPI = (self?.K.apple)!
                 }
                 DispatchQueue.main.async {
-//                    if self!.common.isEmpty {
-//                        self?.makeErrorView()
+//                    if detail.cellData.isEmpty {
+//                        self!.showAlert()
 //                    } else {
                         self?.navigationController?.pushViewController(detail, animated: true)
 //                    }
@@ -140,8 +139,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 detail.resultName = (self?.artistHits[indexPath.row])!
             }
             DispatchQueue.main.async {
-//                if self.common.isEmpty {
-//                    self.makeErrorView()
+//                if detail.cellData.isEmpty {
+//                    self.showAlert()
 //                } else {
                     self.navigationController?.pushViewController(detail, animated: true)
 //                }
@@ -184,32 +183,10 @@ extension SearchViewController {
         }
     }
     
-    func showAlert(_ name: String) {
-        let alert = UIAlertController(title: K.apiTitle, message: "\(K.api)\(name) API.", preferredStyle: .alert)
+    func showAlert() {
+        let alert = UIAlertController(title: K.errorTitle, message: "\(K.error)", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-    }
-    
-    func makeErrorView() {
-        let errorView = UIView()
-        errorView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(errorView)
-        
-        let errorText = UILabel()
-        errorText.translatesAutoresizingMaskIntoConstraints = false
-        errorText.text = "Error in loading data! Please try again."
-        errorText.font = UIFont.systemFont(ofSize: 32)
-        errorView.addSubview(errorView)
-        
-        NSLayoutConstraint.activate([
-            errorView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
-            errorView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            errorView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
-            errorView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            
-            errorText.centerXAnchor.constraint(equalTo: errorView.centerXAnchor),
-            errorText.centerYAnchor.constraint(equalTo: errorView.centerYAnchor)
-        ])
     }
 }

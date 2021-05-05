@@ -39,7 +39,6 @@ class APISelectVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
         if let cell = tableView.cellForRow(at: indexPath) {
             if cell.accessoryType == .checkmark {
                 cell.accessoryType = .none
@@ -54,11 +53,9 @@ class APISelectVC: UITableViewController {
                 if cellName == K.apple {
                     print(cellName)
                     SearchViewController.selectedAPI = K.apple
-//                    Call api assign method from search vc
                 } else if cellName == K.napster {
                     print(cellName)
                     SearchViewController.selectedAPI = K.napster
-//                    Call api assign method from search vc
                 }
             }
         }
