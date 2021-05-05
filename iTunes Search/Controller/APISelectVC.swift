@@ -58,9 +58,11 @@ class APISelectVC: UITableViewController {
                 if cellName == K.apple {
                     print(cellName)
                     SearchViewController.selectedAPI = K.apple
+                    navigationController?.popToRootViewController(animated: true)
                 } else if cellName == K.napster {
                     print(cellName)
                     SearchViewController.selectedAPI = K.napster
+                    navigationController?.popToRootViewController(animated: true)
                 }
             }
         }

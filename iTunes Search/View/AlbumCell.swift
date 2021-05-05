@@ -11,6 +11,7 @@ class AlbumCell: UICollectionViewCell {
     @IBOutlet weak var songImage: UIImageView!
     @IBOutlet weak var songName: UILabel!
     @IBOutlet weak var songArtist: UILabel!
+    @IBOutlet weak var collectionName: UILabel!
     
     func updateCell (album: CollectionCellData) {
         print("collection cell \(album.artistName), \(album.image), \(album.trackName)")
@@ -27,6 +28,7 @@ class AlbumCell: UICollectionViewCell {
         }
         songName.text = album.trackName
         songArtist.text = album.artistName
+        collectionName.text = album.collectionName ?? ""
     }
     
     func getNapsterCell(with albums: CollectionCellData, name: String) {
@@ -48,5 +50,6 @@ class AlbumCell: UICollectionViewCell {
             }
         }
         songArtist.text = name
+        collectionName.text = albums.image.uppercased()
     }
 }

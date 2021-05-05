@@ -25,7 +25,8 @@ class SearchManager {
                                 guard let artworkUrl100 = albumInfo["artworkUrl100"] as? String else {return}
                                 guard let trackName = albumInfo["trackName"] as? String else {return}
                                 guard let artistName = albumInfo["artistName"] as? String else {return}
-                                let albumInstance = Album(artwork: artworkUrl100, songName: trackName, artistName: artistName)
+                                guard let detail = albumInfo["collectionName"] as? String else { return }
+                                let albumInstance = Album(artwork: artworkUrl100, songName: trackName, artistName: artistName, collectionName: detail)
                                 albums.append(albumInstance)
                             }
                         }

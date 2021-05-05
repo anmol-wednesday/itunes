@@ -89,7 +89,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        common = []
+        //common = []
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
@@ -105,7 +105,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                         let image = album.artwork
                         let name = album.artistName
                         let song = album.songName
-                        let cellInfo = CollectionCellData(image: image, artistName: name, trackName: song)
+                        let collection = album.collectionName
+                        let cellInfo = CollectionCellData(image: image, artistName: name, trackName: song, collectionName: collection)
                         self?.common.append(cellInfo)
                     }
                     detail.cellData = self!.common
@@ -130,7 +131,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                             let image = self?.napsterAlbums[0].albumID[i]
                             let name = self?.artistHits[indexPath.row]
                             let song = image
-                            let cellInfo = CollectionCellData(image: image ?? "alb.301258656", artistName: name ?? "", trackName: song ?? "alb.301258656")
+                            let collection = image
+                            let cellInfo = CollectionCellData(image: image ?? "alb.301258656", artistName: name ?? "", trackName: song ?? "alb.301258656", collectionName: collection ?? "alb.301258656")
                             self?.common.append(cellInfo)
                         }
                     }
@@ -143,12 +145,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             DispatchQueue.main.async {
-                if self.count == 0 || self.artistHits.isEmpty {//fails
-                    print(self.common.count)
-                    self.showAlert()
-                } else {
+//                if self.count == 0 || self.artistHits.isEmpty {//fails
+//                    print(self.common.count)
+//                    self.showAlert()
+//                } else {
                     self.navigationController?.pushViewController(detail, animated: true)
-                }
+//                }
             }
         }
     }
@@ -166,7 +168,7 @@ extension SearchViewController {
     func appleAPI(name: String) {
         let api = "https://itunes.apple.com/search?term="
         SearchViewController.selectedAPI = name
-        artistHits = []
+        //artistHits = []
         SearchManager.instance.baseURL = api
     }
     

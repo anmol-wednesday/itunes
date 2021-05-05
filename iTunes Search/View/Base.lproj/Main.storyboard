@@ -22,50 +22,60 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ha8-EV-TGn">
-                                    <size key="itemSize" width="120" height="170"/>
+                                    <size key="itemSize" width="330" height="120"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="10"/>
+                                    <inset key="sectionInset" minX="20" minY="60" maxX="20" maxY="20"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AlbumCell" id="mjX-F7-oMQ" customClass="AlbumCell" customModule="iTunes_Search" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="20" width="120" height="170"/>
+                                        <rect key="frame" x="30" y="60" width="330" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="AKZ-aR-XYx">
-                                            <rect key="frame" x="0.0" y="0.0" width="120" height="170"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="330" height="120"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ENl-kg-pgK" customClass="ImageStyle" customModule="iTunes_Search" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nG-di-eTw">
-                                                    <rect key="frame" x="0.0" y="131" width="120" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nG-di-eTw">
+                                                    <rect key="frame" x="130" y="8" width="200" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O27-fD-UQa">
-                                                    <rect key="frame" x="0.0" y="151" width="120" height="15"/>
+                                                    <rect key="frame" x="130" y="33" width="200" height="15"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rgf-Gw-nFJ">
+                                                    <rect key="frame" x="128" y="55" width="200" height="14.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="O27-fD-UQa" secondAttribute="bottom" constant="4" id="5eA-KR-ZDW"/>
-                                                <constraint firstAttribute="trailing" secondItem="ENl-kg-pgK" secondAttribute="trailing" id="DMm-tr-C0n"/>
-                                                <constraint firstItem="O27-fD-UQa" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="PBn-cL-5j8"/>
-                                                <constraint firstAttribute="trailing" secondItem="O27-fD-UQa" secondAttribute="trailing" id="QcF-hm-J0r"/>
-                                                <constraint firstItem="4nG-di-eTw" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="TL9-kM-JWM"/>
-                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="top" secondItem="AKZ-aR-XYx" secondAttribute="top" id="dh4-as-bL5"/>
-                                                <constraint firstItem="O27-fD-UQa" firstAttribute="top" secondItem="4nG-di-eTw" secondAttribute="bottom" constant="3" id="ptT-yq-udG"/>
-                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="sGV-CY-egq"/>
-                                                <constraint firstAttribute="bottom" secondItem="ENl-kg-pgK" secondAttribute="bottom" constant="50" id="xvY-cT-NtF"/>
-                                                <constraint firstAttribute="trailing" secondItem="4nG-di-eTw" secondAttribute="trailing" id="xzD-fa-3F7"/>
+                                                <constraint firstAttribute="trailing" secondItem="O27-fD-UQa" secondAttribute="trailing" id="7KG-86-p1c"/>
+                                                <constraint firstItem="Rgf-Gw-nFJ" firstAttribute="top" secondItem="O27-fD-UQa" secondAttribute="bottom" constant="7" id="9Qy-kM-18Q"/>
+                                                <constraint firstAttribute="trailing" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="210" id="CFG-sO-7pB"/>
+                                                <constraint firstItem="Rgf-Gw-nFJ" firstAttribute="leading" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="8" symbolic="YES" id="I34-fj-18C"/>
+                                                <constraint firstItem="O27-fD-UQa" firstAttribute="top" secondItem="4nG-di-eTw" secondAttribute="bottom" constant="8" symbolic="YES" id="R2L-hH-YnP"/>
+                                                <constraint firstAttribute="trailing" secondItem="Rgf-Gw-nFJ" secondAttribute="trailing" constant="2" id="UMa-z2-5an"/>
+                                                <constraint firstAttribute="bottom" secondItem="ENl-kg-pgK" secondAttribute="bottom" id="Vsb-sS-zE0"/>
+                                                <constraint firstItem="4nG-di-eTw" firstAttribute="leading" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="10" id="XJA-2w-C6R"/>
+                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="dyc-4r-Z2c"/>
+                                                <constraint firstItem="4nG-di-eTw" firstAttribute="top" secondItem="AKZ-aR-XYx" secondAttribute="top" constant="8" id="eL9-yY-ff0"/>
+                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="top" secondItem="AKZ-aR-XYx" secondAttribute="top" id="plV-e0-2YO"/>
+                                                <constraint firstAttribute="trailing" secondItem="4nG-di-eTw" secondAttribute="trailing" id="rjL-nf-E1c"/>
+                                                <constraint firstItem="O27-fD-UQa" firstAttribute="leading" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="10" id="vuc-BP-EmL"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="120" height="170"/>
+                                        <size key="customSize" width="330" height="120"/>
                                         <connections>
+                                            <outlet property="collectionName" destination="Rgf-Gw-nFJ" id="bjk-BI-g5m"/>
                                             <outlet property="songArtist" destination="O27-fD-UQa" id="a2C-05-CHG"/>
                                             <outlet property="songImage" destination="ENl-kg-pgK" id="vgR-Kx-Glo"/>
                                             <outlet property="songName" destination="4nG-di-eTw" id="7iP-aB-aON"/>
