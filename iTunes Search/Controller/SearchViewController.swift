@@ -20,6 +20,8 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
     var napsterAlbums = [NapsterAlbums]()
     var common = [CollectionCellData]()
     
+    var count: Int?
+    
     override func viewWillAppear(_ animated: Bool) {
         let apiSelect = UIBarButtonItem(title: SearchViewController.selectedAPI, style: .plain, target: self, action: #selector(promptAPISelect))
         navigationItem.rightBarButtonItems = [apiSelect]
@@ -42,9 +44,9 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
         searchController.definesPresentationContext = true
-
+        
     }
-
+    
     //MARK: - UISearchContoller Method
     
     func updateSearchResults(for searchController: UISearchController) {
@@ -109,10 +111,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     detail.cellData = self!.common
                     detail.resultName = (self?.artistHits[indexPath.row])!
                     detail.selectedAPI = (self?.K.apple)!
-                    print(detail.cellData)
+                    self?.count = detail.cellData.count
                 }
-                DispatchQueue.main.async {
-                    if detail.cellData.isEmpty {
+                DispatchQueue.main.async { //fails
+                    if self?.count == 0 || self!.artistHits.isEmpty {
                         self!.showAlert()
                     } else {
                         self?.navigationController?.pushViewController(detail, animated: true)
@@ -133,13 +135,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                         }
                     }
                     detail.cellData = self!.common
+                    
                 }
                 detail.selectedAPI = (self?.K.napster)!
                 detail.resultName = (self?.artistHits[indexPath.row])!
-                print(detail.cellData)
+                self?.count = self?.common.count
             }
+            
             DispatchQueue.main.async {
-                if detail.cellData.isEmpty {
+                if self.count == 0 || self.artistHits.isEmpty {//fails
+                    print(self.common.count)
                     self.showAlert()
                 } else {
                     self.navigationController?.pushViewController(detail, animated: true)
