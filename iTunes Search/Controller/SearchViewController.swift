@@ -109,13 +109,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     detail.cellData = self!.common
                     detail.resultName = (self?.artistHits[indexPath.row])!
                     detail.selectedAPI = (self?.K.apple)!
+                    print(detail.cellData)
                 }
                 DispatchQueue.main.async {
-//                    if detail.cellData.isEmpty {
-//                        self!.showAlert()
-//                    } else {
+                    if detail.cellData.isEmpty {
+                        self!.showAlert()
+                    } else {
                         self?.navigationController?.pushViewController(detail, animated: true)
-//                    }
+                    }
                 }
             }
         } else if SearchViewController.selectedAPI == K.napster {
@@ -133,17 +134,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     detail.cellData = self!.common
                 }
-                print("In search vc \(self!.common)")
-                
                 detail.selectedAPI = (self?.K.napster)!
                 detail.resultName = (self?.artistHits[indexPath.row])!
+                print(detail.cellData)
             }
             DispatchQueue.main.async {
-//                if detail.cellData.isEmpty {
-//                    self.showAlert()
-//                } else {
+                if detail.cellData.isEmpty {
+                    self.showAlert()
+                } else {
                     self.navigationController?.pushViewController(detail, animated: true)
-//                }
+                }
             }
         }
     }
@@ -161,7 +161,6 @@ extension SearchViewController {
     func appleAPI(name: String) {
         let api = "https://itunes.apple.com/search?term="
         SearchViewController.selectedAPI = name
-        //showAlert(name)
         artistHits = []
         SearchManager.instance.baseURL = api
     }
@@ -170,7 +169,6 @@ extension SearchViewController {
         SearchViewController.selectedAPI = name
         let apiKey = "NmJiYmYzNTItOTgyNi00ZjdmLTgxZDYtYWVkYmI0NDVlOWQ4"
         let api = "https://api.napster.com/v2.2/search?apikey=\(apiKey)&type=artist&query="
-        //showAlert(name)
         artistHits = []
         SearchManager.instance.baseURL = api
     }

@@ -23,19 +23,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collectionView.dataSource = self
         title = resultName
         
-        print(cellData)
+        print("Cell data in view controller : \(cellData)")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("number of items\(cellData.count)")
         return cellData.count
-        
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cellforitem \(cellData.count)")
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCell", for: indexPath) as? AlbumCell {
             if selectedAPI == K.apple {
-                print("Index in cell for item\(indexPath.row)")
                 cell.updateCell(album: cellData[indexPath.row])
             }
             if selectedAPI == K.napster {
