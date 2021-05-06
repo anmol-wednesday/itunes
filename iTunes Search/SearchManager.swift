@@ -42,8 +42,9 @@ class SearchManager {
         }.resume()
     }
     
-    func getArtists(search: String, completion: @escaping ([String]) -> Void) {
+    func getArtists(search: String, completion: @escaping (([String], [String])) -> Void) {
         var artists = [String]()
+        var collections = [String]()
         let search = search.replacingOccurrences(of: " ", with: "+")
         let url = URL(string: "\(baseURL)\(search)")
         let session = URLSession.shared
@@ -56,12 +57,16 @@ class SearchManager {
                             for artist in artistResults {
                                 if let artistInfo = artist as? [String: AnyObject] {
                                     guard let artistName = artistInfo["artistName"] as? String else { return }
+                                    guard let collectionName = artistInfo["collectionName"] as? String else { return }
 
                                     let artist = Artists(name: artistName)
                                     artists.append(artist.name)
+                                    
+                                    let collection = Collection(collectionName: collectionName)
+                                    collections.append(collection.collectionName)
                                 }
                             }
-                            completion(artists)
+                            completion((artists, collections))
                         }
                     } catch {
                         print(error)

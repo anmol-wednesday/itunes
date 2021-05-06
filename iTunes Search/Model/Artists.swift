@@ -8,5 +8,9 @@
 import Foundation
 
 struct Artists {
-    let name: String
+    var name: String
+}
+
+struct Collection {
+    var collectionName: String
 }
