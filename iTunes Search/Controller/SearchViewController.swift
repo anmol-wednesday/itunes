@@ -103,11 +103,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         searchController.searchBar.resignFirstResponder()
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
         
-        let query = artistHits[indexPath.row]
-        
         if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getAlbum(searchRequest: query) { (requestedAlbums) in
+                SearchManager.instance.getAlbum(searchRequest: (self?.artistHits[indexPath.row])!) { (requestedAlbums) in
                     self?.albums = requestedAlbums
                     
                     for album in self!.albums {
@@ -136,7 +134,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             }
         } else if SearchViewController.selectedAPI == API.Napster.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getNapsterAlbums(string: query) { (request) in
+                SearchManager.instance.getNapsterAlbums(string: (self?.artistHits[indexPath.row])!) { (request) in
                     self?.napsterAlbums = request
                     if let counter = self?.napsterAlbums[0].albumID.count {
                         for i in 0..<counter {

@@ -12,16 +12,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let K = Constants()
 
-    var resultName: String = ""
+    var resultName: String?
     var selectedAPI = ""
     
     var cellData = [CollectionCellData]()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        title = resultName
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        title = resultName
         
         print("Cell data in view controller : \(cellData)")
     }
@@ -36,7 +39,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 cell.updateCell(album: cellData[indexPath.row])
             }
             if selectedAPI == API.Napster.rawValue {
-                cell.getNapsterCell(with: cellData[indexPath.row], name: resultName)
+                cell.getNapsterCell(with: cellData[indexPath.row], name: resultName!)
             }
             return cell
         }

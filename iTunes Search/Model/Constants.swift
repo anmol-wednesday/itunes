@@ -8,7 +8,6 @@
 import Foundation
 
 struct Constants {
-    
     let errorTitle = "Error"
     let error = "There was an error, please try again!"
 }
