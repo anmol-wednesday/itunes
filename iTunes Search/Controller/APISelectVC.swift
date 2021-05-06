@@ -11,6 +11,7 @@ class APISelectVC: UITableViewController {
     let K = Constants()
     let searchVC = SearchViewController()
     let apiNames = ["Apple", "Napster"]
+    let defaults = UserDefaults.standard
     var selectedIndexPath = IndexPath(row: 2, section: 0)
     
     override func viewDidLoad() {
@@ -55,13 +56,15 @@ class APISelectVC: UITableViewController {
         selectedIndexPath = indexPath
         if let cell = tableView.cellForRow(at: indexPath) {
             if let cellName = cell.textLabel?.text {
-                if cellName == K.apple {
+                if cellName == API.Apple.rawValue {
                     print(cellName)
-                    SearchViewController.selectedAPI = K.apple
+                    SearchViewController.selectedAPI = API.Apple.rawValue
+                    searchVC.defaults.setValue(API.Apple.rawValue, forKey: "SelectedAPI")
                     navigationController?.popToRootViewController(animated: true)
-                } else if cellName == K.napster {
+                } else if cellName == API.Napster.rawValue {
                     print(cellName)
-                    SearchViewController.selectedAPI = K.napster
+                    SearchViewController.selectedAPI = API.Napster.rawValue
+                    searchVC.defaults.setValue(API.Napster.rawValue, forKey: "SelectedAPI")
                     navigationController?.popToRootViewController(animated: true)
                 }
             }

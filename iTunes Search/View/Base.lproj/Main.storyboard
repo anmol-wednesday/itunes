@@ -25,7 +25,7 @@
                                     <size key="itemSize" width="330" height="120"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="20" minY="50" maxX="20" maxY="20"/>
+                                    <inset key="sectionInset" minX="20" minY="50" maxX="20" maxY="30"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AlbumCell" id="mjX-F7-oMQ" customClass="AlbumCell" customModule="iTunes_Search" customModuleProvider="target">
@@ -51,7 +51,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rgf-Gw-nFJ">
-                                                    <rect key="frame" x="128" y="55" width="200" height="14.333333333333329"/>
+                                                    <rect key="frame" x="130" y="55" width="198" height="14.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -61,7 +61,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="O27-fD-UQa" secondAttribute="trailing" id="7KG-86-p1c"/>
                                                 <constraint firstItem="Rgf-Gw-nFJ" firstAttribute="top" secondItem="O27-fD-UQa" secondAttribute="bottom" constant="7" id="9Qy-kM-18Q"/>
                                                 <constraint firstAttribute="trailing" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="210" id="CFG-sO-7pB"/>
-                                                <constraint firstItem="Rgf-Gw-nFJ" firstAttribute="leading" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="8" symbolic="YES" id="I34-fj-18C"/>
+                                                <constraint firstItem="Rgf-Gw-nFJ" firstAttribute="leading" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="10" id="I34-fj-18C"/>
                                                 <constraint firstItem="O27-fD-UQa" firstAttribute="top" secondItem="4nG-di-eTw" secondAttribute="bottom" constant="8" symbolic="YES" id="R2L-hH-YnP"/>
                                                 <constraint firstAttribute="trailing" secondItem="Rgf-Gw-nFJ" secondAttribute="trailing" constant="2" id="UMa-z2-5an"/>
                                                 <constraint firstAttribute="bottom" secondItem="ENl-kg-pgK" secondAttribute="bottom" id="Vsb-sS-zE0"/>

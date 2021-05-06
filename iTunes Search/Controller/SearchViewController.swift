@@ -9,12 +9,13 @@ import UIKit
 
 class SearchViewController: UIViewController, UISearchResultsUpdating {
     @IBOutlet weak var searchTable: UITableView!
-    let searchController = UISearchController(searchResultsController: nil)
     let K = Constants()
+    let searchController = UISearchController(searchResultsController: nil)
     
     static var selectedAPI = "Select API"
     var artistHits = [String]()
     var searchQuery = ""
+    var defaults = UserDefaults.standard
     
     var albums = [Album]()
     var napsterAlbums = [NapsterAlbums]()
@@ -23,7 +24,16 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
     var count: Int?
     
     override func viewWillAppear(_ animated: Bool) {
-        let apiSelect = UIBarButtonItem(title: SearchViewController.selectedAPI, style: .plain, target: self, action: #selector(promptAPISelect))
+        
+        if defaults.object(forKey: "SelectedAPI") as? String == API.Apple.rawValue {
+            appleAPI(name: API.Apple.rawValue)
+        } else if defaults.object(forKey: "SelectedAPI") as? String == API.Napster.rawValue {
+            napsterAPI(name: API.Napster.rawValue)
+        } else if defaults.object(forKey: "SelectedAPI") == nil {
+            defaults.setValue("Select API", forKey: "SelectedAPI")
+        }
+        
+        let apiSelect = UIBarButtonItem(title: defaults.object(forKey: "SelectedAPI") as? String, style: .plain, target: self, action: #selector(promptAPISelect))
         navigationItem.rightBarButtonItems = [apiSelect]
         selectedAPI(name: SearchViewController.selectedAPI)
     }
@@ -44,14 +54,13 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
         searchController.definesPresentationContext = true
-        
     }
     
     //MARK: - UISearchContoller Method
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchQuery = searchController.searchBar.text else { return }
-        if SearchViewController.selectedAPI == K.apple {
+        if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getArtists(search: searchQuery) { (request) in
                     self?.artistHits = request
@@ -60,7 +69,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
             DispatchQueue.main.async {
                 self.searchTable.reloadData()
             }
-        } else if SearchViewController.selectedAPI == K.napster {
+        } else if SearchViewController.selectedAPI == API.Napster.rawValue {
             
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 self?.artistHits = SearchManager.instance.getNapsterArtists(searchQuery)
@@ -93,9 +102,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
-        if SearchViewController.selectedAPI == K.apple {
+        
+        let query = artistHits[indexPath.row]
+        
+        if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getAlbum(searchRequest: (self?.artistHits[indexPath.row])!) { (requestedAlbums) in
+                SearchManager.instance.getAlbum(searchRequest: query) { (requestedAlbums) in
                     self?.albums = requestedAlbums
                     
                     for album in self!.albums {
@@ -111,7 +123,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                     detail.cellData = self!.common
                     detail.resultName = (self?.artistHits[indexPath.row])!
-                    detail.selectedAPI = (self?.K.apple)!
+                    detail.selectedAPI = API.Apple.rawValue
                     self?.count = detail.cellData.count
                 }
                 DispatchQueue.main.async {
@@ -122,9 +134,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             }
-        } else if SearchViewController.selectedAPI == K.napster {
+        } else if SearchViewController.selectedAPI == API.Napster.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getNapsterAlbums(string: (self?.artistHits[indexPath.row])!) { (request) in
+                SearchManager.instance.getNapsterAlbums(string: query) { (request) in
                     self?.napsterAlbums = request
                     if let counter = self?.napsterAlbums[0].albumID.count {
                         for i in 0..<counter {
@@ -137,9 +149,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                         self?.count = self?.common.count
                     }
                 }
-                detail.selectedAPI = (self?.K.napster)!
+                detail.selectedAPI = API.Napster.rawValue
                 detail.resultName = (self?.artistHits[indexPath.row])!
-                
             }
             
             DispatchQueue.main.async {
@@ -177,9 +188,9 @@ extension SearchViewController {
     }
     
     func selectedAPI(name: String) {
-        if name == K.apple {
+        if name == API.Apple.rawValue {
             appleAPI(name: SearchViewController.selectedAPI)
-        } else if name == K.napster {
+        } else if name == API.Napster.rawValue {
             napsterAPI(name: SearchViewController.selectedAPI)
         }
     }

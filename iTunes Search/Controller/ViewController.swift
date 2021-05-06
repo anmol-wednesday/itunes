@@ -32,10 +32,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCell", for: indexPath) as? AlbumCell {
-            if selectedAPI == K.apple {
+            if selectedAPI == API.Apple.rawValue {
                 cell.updateCell(album: cellData[indexPath.row])
             }
-            if selectedAPI == K.napster {
+            if selectedAPI == API.Napster.rawValue {
                 cell.getNapsterCell(with: cellData[indexPath.row], name: resultName)
             }
             return cell
