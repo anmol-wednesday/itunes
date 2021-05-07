@@ -115,10 +115,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//      fix selected indexpath
         common = []
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
-        getCollectionViewData(from: indexPath)
+        getCollectionViewData(for: indexPath)
     }
 }
 
@@ -159,11 +160,12 @@ extension SearchViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func getCollectionViewData(from indexPath: IndexPath) {
+    func getCollectionViewData(for indexPath: IndexPath) {
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
         if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getAlbum(searchRequest: (self?.artistHits[indexPath.row])!) { (requestedAlbums) in
+                let search = ("\(self!.artistHits[indexPath.row]) \(self!.collections[indexPath.row])")
+                SearchManager.instance.getAlbum(searchRequest: search) { (requestedAlbums) in
                     self?.albums = requestedAlbums
                     
                     for album in self!.albums {
