@@ -61,7 +61,6 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchQuery = searchController.searchBar.text else { return }
-        //artistHits = []
         if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getArtists(search: searchQuery) { [self] (namesResponse, collectionResponse) in
@@ -115,11 +114,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//      fix selected indexpath
         common = []
+        var value = ""
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
-        getCollectionViewData(for: indexPath)
+        
+        if SearchViewController.selectedAPI == API.Apple.rawValue {
+            value = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
+        } else if SearchViewController.selectedAPI == API.Napster.rawValue {
+            value = artistHits[indexPath.row]
+        }
+        getCollectionViewData(for: value)
     }
 }
 
@@ -160,11 +165,11 @@ extension SearchViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func getCollectionViewData(for indexPath: IndexPath) {
+    func getCollectionViewData(for value: String) {
         guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
         if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                let search = ("\(self!.artistHits[indexPath.row]) \(self!.collections[indexPath.row])")
+                let search = value
                 SearchManager.instance.getAlbum(searchRequest: search) { (requestedAlbums) in
                     self?.albums = requestedAlbums
                     
@@ -180,8 +185,7 @@ extension SearchViewController {
                         self?.common.append(cellInfo)
                     }
                     detail.cellData = self!.common
-                    detail.resultName = (self?.artistHits[indexPath.row])!
-                    print(indexPath.row)
+                    detail.resultName = value
                     detail.selectedAPI = API.Apple.rawValue
                     self?.count = detail.cellData.count
                     DispatchQueue.main.async {
@@ -196,13 +200,13 @@ extension SearchViewController {
             }
         } else if SearchViewController.selectedAPI == API.Napster.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getNapsterAlbums(string: (self?.artistHits[indexPath.row])!) { (request) in
+                SearchManager.instance.getNapsterAlbums(string: value) { (request) in
                     self?.napsterAlbums = request
                     if let counter = self?.napsterAlbums[0].albumID.count {
                         for i in 0..<counter {
                             let image = self?.napsterAlbums[0].albumID[i]
-                            let name = self?.artistHits[indexPath.row]
-                            let cellInfo = CollectionCellData(image: image ?? "alb.301258656", artistName: name ?? "", trackName: image ?? "alb.301258656", collectionName: image ?? "alb.301258656")
+                            let name = value
+                            let cellInfo = CollectionCellData(image: image ?? "alb.301258656", artistName: name, trackName: image ?? "alb.301258656", collectionName: image ?? "alb.301258656")
                             self?.common.append(cellInfo)
                         }
                         detail.cellData = self!.common
@@ -210,7 +214,7 @@ extension SearchViewController {
                     }
                 }
                 detail.selectedAPI = API.Napster.rawValue
-                detail.resultName = (self?.artistHits[indexPath.row])!
+                detail.resultName = value
             }
             
             DispatchQueue.main.async {
