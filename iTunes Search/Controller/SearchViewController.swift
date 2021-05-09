@@ -54,7 +54,7 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         searchController.searchBar.enablesReturnKeyAutomatically = true
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
-        searchController.definesPresentationContext = true
+        //searchController.definesPresentationContext = true
     }
     
     //MARK: - UISearchContoller Method
