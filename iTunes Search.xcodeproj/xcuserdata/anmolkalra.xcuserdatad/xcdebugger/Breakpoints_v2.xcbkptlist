@@ -27,5 +27,257 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BF5C8F1B-7CFF-452F-A288-7B1FB196ED12"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iTunes Search/Controller/SearchViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "05671258-2161-46B6-A502-8571749B41E7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iTunes Search/Controller/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "ViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "05671258-2161-46B6-A502-8571749B41E7 - fb72036c5bb22fd1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iTunes_Search.ViewController.cellData.getter : Swift.Array&lt;iTunes_Search.CollectionCellData&gt;"
+                  moduleName = "iTunes Search"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anmolkalra/Documents/Xcode%20Misc/itunes/iTunes%20Search/Controller/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "122">
+               </Location>
+               <Location
+                  uuid = "05671258-2161-46B6-A502-8571749B41E7 - 2085e9837328a3c5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iTunes_Search.ViewController.cellData.setter : Swift.Array&lt;iTunes_Search.CollectionCellData&gt;"
+                  moduleName = "iTunes Search"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anmolkalra/Documents/Xcode%20Misc/itunes/iTunes%20Search/Controller/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "05671258-2161-46B6-A502-8571749B41E7 - 4a13dcfe984e5322"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iTunes_Search.ViewController.cellData.modify : Swift.Array&lt;iTunes_Search.CollectionCellData&gt;"
+                  moduleName = "iTunes Search"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anmolkalra/Documents/Xcode%20Misc/itunes/iTunes%20Search/Controller/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "05671258-2161-46B6-A502-8571749B41E7 - 55961b85583fa4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iTunes_Search.ViewController.cellData.modify : Swift.Array&lt;iTunes_Search.CollectionCellData&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "iTunes Search"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anmolkalra/Documents/Xcode%20Misc/itunes/iTunes%20Search/Controller/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "8">
+               </Location>
+               <Location
+                  uuid = "05671258-2161-46B6-A502-8571749B41E7 - 1e165c19c836abf8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iTunes_Search.ViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; iTunes_Search.ViewController"
+                  moduleName = "iTunes Search"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anmolkalra/Documents/Xcode%20Misc/itunes/iTunes%20Search/Controller/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "436">
+               </Location>
+               <Location
+                  uuid = "05671258-2161-46B6-A502-8571749B41E7 - 9d90f8533a23bee3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iTunes_Search.ViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;iTunes_Search.ViewController&gt;"
+                  moduleName = "iTunes Search"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anmolkalra/Documents/Xcode%20Misc/itunes/iTunes%20Search/Controller/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "374">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7F548E51-B196-435A-BE64-5278055738B0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iTunes Search/Controller/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9491ED3E-4DF1-46BF-A77F-3D2BFB5CED66"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iTunes Search/Controller/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3F8B19E1-5DB7-4135-BABB-5221E0CEA4CC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iTunes Search/Controller/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D9BCB015-6B0B-4CFA-A906-5CBFF551ED02"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iTunes Search/Controller/SearchViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "getCollectionViewData(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "71897C76-BF46-46A8-83AC-3A74062DC917"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iTunes Search/Controller/SearchViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "getCollectionViewData(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BF374755-5791-4069-AA02-731E6C2DFDAB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iTunes Search/Controller/SearchViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "getCollectionViewData(for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BF374755-5791-4069-AA02-731E6C2DFDAB - 2afcd526f7c56f58"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in iTunes_Search.SearchViewController.getCollectionViewData(for: Swift.String) -&gt; ()"
+                  moduleName = "iTunes Search"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anmolkalra/Documents/Xcode%20Misc/itunes/iTunes%20Search/Controller/SearchViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "204"
+                  endingLineNumber = "204"
+                  offsetFromSymbolStart = "69">
+               </Location>
+               <Location
+                  uuid = "BF374755-5791-4069-AA02-731E6C2DFDAB - 7402f0bd5291ed95"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;iTunes_Search.NapsterAlbums&gt;) -&gt; () in closure #2 () -&gt; () in iTunes_Search.SearchViewController.getCollectionViewData(for: Swift.String) -&gt; ()"
+                  moduleName = "iTunes Search"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/anmolkalra/Documents/Xcode%20Misc/itunes/iTunes%20Search/Controller/SearchViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203"
+                  offsetFromSymbolStart = "362">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

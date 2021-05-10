@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7B1BD6DA263801E6006C6658 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B1BD6D9263801E6006C6658 /* .swiftlint.yml */; };
-		7B25FB7F2639611200731422 /* napster.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B25FB7E2639611200731422 /* napster.png */; };
-		7B25FB812639611800731422 /* apple.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B25FB802639611800731422 /* apple.png */; };
 		7B25FB8926397A7300731422 /* NapsterArtists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8826397A7300731422 /* NapsterArtists.swift */; };
 		7B25FB8B26399C0700731422 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8A26399C0700731422 /* Constants.swift */; };
 		7B6AC5B92618427B000A4B45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5B82618427B000A4B45 /* AppDelegate.swift */; };
@@ -21,6 +19,8 @@
 		7B6AC5D2261842A9000A4B45 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5D1261842A9000A4B45 /* Album.swift */; };
 		7B6AC5DA26184369000A4B45 /* AlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5D926184369000A4B45 /* AlbumCell.swift */; };
 		7B6AC5DD26184477000A4B45 /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5DC26184477000A4B45 /* SearchManager.swift */; };
+		7B6F6FF22643BB9200C9586D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6F6FF12643BB9200C9586D /* API.swift */; };
+		7B7D3E5C2641571B00ACB485 /* APISelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7D3E5B2641571B00ACB485 /* APISelectVC.swift */; };
 		7BA1D6A6263A8F4700F23A15 /* NapsterAlbums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA1D6A5263A8F4700F23A15 /* NapsterAlbums.swift */; };
 		7BA1D6AA263AC53700F23A15 /* AlbumID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA1D6A9263AC53700F23A15 /* AlbumID.swift */; };
 		7BC2242226187D8B00B53474 /* ImageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2242126187D8B00B53474 /* ImageStyle.swift */; };
@@ -31,8 +31,6 @@
 
 /* Begin PBXFileReference section */
 		7B1BD6D9263801E6006C6658 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		7B25FB7E2639611200731422 /* napster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = napster.png; sourceTree = "<group>"; };
-		7B25FB802639611800731422 /* apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple.png; sourceTree = "<group>"; };
 		7B25FB8826397A7300731422 /* NapsterArtists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NapsterArtists.swift; sourceTree = "<group>"; };
 		7B25FB8A26399C0700731422 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7B6AC5B52618427B000A4B45 /* iTunes Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,6 +44,8 @@
 		7B6AC5D1261842A9000A4B45 /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		7B6AC5D926184369000A4B45 /* AlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCell.swift; sourceTree = "<group>"; };
 		7B6AC5DC26184477000A4B45 /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
+		7B6F6FF12643BB9200C9586D /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		7B7D3E5B2641571B00ACB485 /* APISelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISelectVC.swift; sourceTree = "<group>"; };
 		7BA1D6A5263A8F4700F23A15 /* NapsterAlbums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NapsterAlbums.swift; sourceTree = "<group>"; };
 		7BA1D6A9263AC53700F23A15 /* AlbumID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumID.swift; sourceTree = "<group>"; };
 		7BC2242126187D8B00B53474 /* ImageStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStyle.swift; sourceTree = "<group>"; };
@@ -94,8 +94,6 @@
 				7B6AC5C32618427B000A4B45 /* LaunchScreen.storyboard */,
 				7B6AC5C62618427B000A4B45 /* Info.plist */,
 				7B1BD6D9263801E6006C6658 /* .swiftlint.yml */,
-				7B25FB7E2639611200731422 /* napster.png */,
-				7B25FB802639611800731422 /* apple.png */,
 			);
 			path = "iTunes Search";
 			sourceTree = "<group>";
@@ -105,6 +103,7 @@
 			children = (
 				7BC49EAC263047A4007FED3B /* SearchViewController.swift */,
 				7B6AC5BC2618427B000A4B45 /* ViewController.swift */,
+				7B7D3E5B2641571B00ACB485 /* APISelectVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -124,11 +123,12 @@
 			children = (
 				7B6AC5D1261842A9000A4B45 /* Album.swift */,
 				7BA1D6A9263AC53700F23A15 /* AlbumID.swift */,
+				7B6F6FF12643BB9200C9586D /* API.swift */,
 				7BC49EAF26304AFB007FED3B /* Artists.swift */,
+				7BDD270A2640060F009E7289 /* CollectionCellData.swift */,
 				7B25FB8A26399C0700731422 /* Constants.swift */,
 				7BA1D6A5263A8F4700F23A15 /* NapsterAlbums.swift */,
 				7B25FB8826397A7300731422 /* NapsterArtists.swift */,
-				7BDD270A2640060F009E7289 /* CollectionCellData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -195,8 +195,6 @@
 				7B6AC5C52618427B000A4B45 /* LaunchScreen.storyboard in Resources */,
 				7B6AC5C22618427B000A4B45 /* Assets.xcassets in Resources */,
 				7B6AC5C02618427B000A4B45 /* Main.storyboard in Resources */,
-				7B25FB812639611800731422 /* apple.png in Resources */,
-				7B25FB7F2639611200731422 /* napster.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,10 +235,12 @@
 				7B6AC5DA26184369000A4B45 /* AlbumCell.swift in Sources */,
 				7B6AC5DD26184477000A4B45 /* SearchManager.swift in Sources */,
 				7B25FB8B26399C0700731422 /* Constants.swift in Sources */,
+				7B7D3E5C2641571B00ACB485 /* APISelectVC.swift in Sources */,
 				7BC2242226187D8B00B53474 /* ImageStyle.swift in Sources */,
 				7B6AC5BB2618427B000A4B45 /* SceneDelegate.swift in Sources */,
 				7B25FB8926397A7300731422 /* NapsterArtists.swift in Sources */,
 				7B6AC5D2261842A9000A4B45 /* Album.swift in Sources */,
+				7B6F6FF22643BB9200C9586D /* API.swift in Sources */,
 				7BA1D6A6263A8F4700F23A15 /* NapsterAlbums.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
