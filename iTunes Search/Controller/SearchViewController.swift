@@ -67,21 +67,10 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
                     (self!.artistHits, self!.collections) = (namesResponse, collectionResponse)
                 }
             }
-            
-            DispatchQueue.main.async {
-                self.searchTable.reloadData()
-            }
-            
         } else if SearchViewController.selectedAPI == API.Napster.rawValue {
-            
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 self?.artistHits = SearchManager.instance.getNapsterArtists(searchQuery)
             }
-            
-            DispatchQueue.main.async {
-                self.searchTable.reloadData()
-            }
-            
         } else {
             artistHits = []
         }
@@ -186,15 +175,8 @@ extension SearchViewController {
                     detail.resultName = value
                     detail.selectedAPI = API.Apple.rawValue
                     self?.count = detail.cellData.count
-                    DispatchQueue.main.async {
-                        if self?.count == 0 {
-                            self!.showAlert()
-                        } else {
-                            self?.navigationController?.pushViewController(detail, animated: true)
-                        }
-                    }
+                    self?.nextVC(named: detail)
                 }
-                
             }
         } else if SearchViewController.selectedAPI == API.Napster.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -210,18 +192,20 @@ extension SearchViewController {
                         detail.cellData = self!.common
                         self?.count = self?.common.count
                     }
+                    detail.selectedAPI = API.Napster.rawValue
+                    detail.resultName = value
+                    self?.nextVC(named: detail)
                 }
-                detail.selectedAPI = API.Napster.rawValue
-                detail.resultName = value
             }
-            
-            DispatchQueue.main.async {
-                if self.count == 0 {
-                    print(self.common.count)
-                    self.showAlert()
-                } else {
-                    self.navigationController?.pushViewController(detail, animated: true)
-                }
+        }
+    }
+    
+    func nextVC(named: UIViewController) {
+        DispatchQueue.main.async {
+            if self.count == 0 {
+                self.showAlert()
+            } else {
+                self.navigationController?.pushViewController(named, animated: true)
             }
         }
     }
