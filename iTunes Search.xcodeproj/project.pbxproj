@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7B1BD6DA263801E6006C6658 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B1BD6D9263801E6006C6658 /* .swiftlint.yml */; };
-		7B25FB7F2639611200731422 /* napster.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B25FB7E2639611200731422 /* napster.png */; };
-		7B25FB812639611800731422 /* apple.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B25FB802639611800731422 /* apple.png */; };
 		7B25FB8926397A7300731422 /* NapsterArtists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8826397A7300731422 /* NapsterArtists.swift */; };
 		7B25FB8B26399C0700731422 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8A26399C0700731422 /* Constants.swift */; };
 		7B6AC5B92618427B000A4B45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5B82618427B000A4B45 /* AppDelegate.swift */; };
@@ -33,8 +31,6 @@
 
 /* Begin PBXFileReference section */
 		7B1BD6D9263801E6006C6658 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		7B25FB7E2639611200731422 /* napster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = napster.png; sourceTree = "<group>"; };
-		7B25FB802639611800731422 /* apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple.png; sourceTree = "<group>"; };
 		7B25FB8826397A7300731422 /* NapsterArtists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NapsterArtists.swift; sourceTree = "<group>"; };
 		7B25FB8A26399C0700731422 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7B6AC5B52618427B000A4B45 /* iTunes Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,8 +94,6 @@
 				7B6AC5C32618427B000A4B45 /* LaunchScreen.storyboard */,
 				7B6AC5C62618427B000A4B45 /* Info.plist */,
 				7B1BD6D9263801E6006C6658 /* .swiftlint.yml */,
-				7B25FB7E2639611200731422 /* napster.png */,
-				7B25FB802639611800731422 /* apple.png */,
 			);
 			path = "iTunes Search";
 			sourceTree = "<group>";
@@ -201,8 +195,6 @@
 				7B6AC5C52618427B000A4B45 /* LaunchScreen.storyboard in Resources */,
 				7B6AC5C22618427B000A4B45 /* Assets.xcassets in Resources */,
 				7B6AC5C02618427B000A4B45 /* Main.storyboard in Resources */,
-				7B25FB812639611800731422 /* apple.png in Resources */,
-				7B25FB7F2639611200731422 /* napster.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
