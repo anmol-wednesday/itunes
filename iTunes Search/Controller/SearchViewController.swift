@@ -121,10 +121,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         
         if SearchViewController.selectedAPI == API.Apple.rawValue {
             value = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
+            getCollectionViewData(for: value)
         } else if SearchViewController.selectedAPI == API.Napster.rawValue {
             value = artistHits[indexPath.row]
+            getCollectionViewData(for: value)
         }
-        getCollectionViewData(for: value)
     }
 }
 
@@ -174,9 +175,6 @@ extension SearchViewController {
                     self?.albums = requestedAlbums
                     
                     for album in self!.albums {
-                        if self?.common.count == 49 {
-                            break
-                        }
                         let image = album.artwork
                         let name = album.artistName
                         let song = album.songName
@@ -204,9 +202,9 @@ extension SearchViewController {
                     self?.napsterAlbums = request
                     if let counter = self?.napsterAlbums[0].albumID.count {
                         for i in 0..<counter {
-                            let image = self?.napsterAlbums[0].albumID[i]
+                            let image = (self?.napsterAlbums[0].albumID[i])!
                             let name = value
-                            let cellInfo = CollectionCellData(image: image ?? "alb.301258656", artistName: name, trackName: image ?? "alb.301258656", collectionName: image ?? "alb.301258656")
+                            let cellInfo = CollectionCellData(image: image, artistName: name, trackName: image, collectionName: image)
                             self?.common.append(cellInfo)
                         }
                         detail.cellData = self!.common

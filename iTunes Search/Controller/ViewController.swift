@@ -11,6 +11,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var collectionView: UICollectionView!
     
     let K = Constants()
+    let searchVC = SearchViewController()
 
     var resultName: String?
     var selectedAPI = ""
@@ -18,6 +19,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var cellData = [CollectionCellData]()
     
     override func viewWillAppear(_ animated: Bool) {
+        searchVC.getCollectionViewData(for: resultName!)
         title = resultName
     }
     
