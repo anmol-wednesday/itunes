@@ -49,6 +49,8 @@ class SearchViewController: UIViewController {
         searchController.searchBar.enablesReturnKeyAutomatically = true
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
+        
+        artistHits = []
     }
 }
     
@@ -56,7 +58,10 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
         if searchText == "" {
+            artistHits = []
+            searchTable.reloadData()
             return
         } else {
             if SearchViewController.selectedAPI == API.Apple.rawValue {

@@ -19,16 +19,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var albums = [Album]()
     var napsterAlbums = [NapsterAlbums]()
-    var cellData = [CollectionCellData]()
+    var cellData = [CollectionCellData]() {
+        didSet {
+            collectionView.performSelector(onMainThread: #selector(UICollectionView.reloadData), with: nil, waitUntilDone: false)
+        }
+    }// add set property
     
     override func viewWillAppear(_ animated: Bool) {
-        spinner.startAnimating()
         getCollectionViewData(for: resultName!) { response in
             self.cellData = response
+            self.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
             if self.cellData.isEmpty {
                 self.showAlert()
-            } else {
-                self.collectionView.performSelector(onMainThread: #selector(UICollectionView.reloadData), with: nil, waitUntilDone: false)
             }
         }
         title = resultName
@@ -40,6 +42,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collectionView.dataSource = self
         
         spinner.hidesWhenStopped = true
+        spinner.startAnimating()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -62,7 +65,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
 extension ViewController {
     func getCollectionViewData(for value: String, completion: @escaping ([CollectionCellData]) -> Void) {
-        spinner.startAnimating()
         if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 let search = value
@@ -92,11 +94,11 @@ extension ViewController {
                             self?.cellData.append(cellInfo)
                         }
                         completion(self!.cellData)
+                        
                     }
                 }
             }
         }
-        spinner.stopAnimating()
     }
     
     func showAlert() {
