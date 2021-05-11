@@ -23,7 +23,6 @@ class AlbumCell: UICollectionViewCell {
                     }
                 }
             }
-
         }
         songName.text = album.trackName
         songArtist.text = album.artistName

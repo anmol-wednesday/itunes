@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     let K = Constants()
     let searchVC = SearchViewController()
@@ -16,10 +17,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var resultName: String?
     var selectedAPI = ""
     
+    var albums = [Album]()
+    var napsterAlbums = [NapsterAlbums]()
     var cellData = [CollectionCellData]()
     
     override func viewWillAppear(_ animated: Bool) {
-//        searchVC.getCollectionViewData(for: resultName!)
+        spinner.startAnimating()
+        getCollectionViewData(for: resultName!) { response in
+            self.cellData = response
+            if self.cellData.isEmpty {
+                self.showAlert()
+            } else {
+                self.collectionView.performSelector(onMainThread: #selector(UICollectionView.reloadData), with: nil, waitUntilDone: false)
+            }
+        }
         title = resultName
     }
     
@@ -28,7 +39,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        print("Cell data in view controller : \(cellData)")
+        spinner.hidesWhenStopped = true
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -46,5 +57,54 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             return cell
         }
         return UICollectionViewCell()
+    }
+}
+
+extension ViewController {
+    func getCollectionViewData(for value: String, completion: @escaping ([CollectionCellData]) -> Void) {
+        spinner.startAnimating()
+        if SearchViewController.selectedAPI == API.Apple.rawValue {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                let search = value
+                SearchManager.instance.getAlbum(searchRequest: search) { (requestedAlbums) in
+                    self?.albums = requestedAlbums
+                    
+                    for album in self!.albums {
+                        let image = album.artwork
+                        let name = album.artistName
+                        let song = album.songName
+                        let collection = album.collectionName
+                        let cellInfo = CollectionCellData(image: image, artistName: name, trackName: song, collectionName: collection)
+                        self?.cellData.append(cellInfo)
+                    }
+                    completion(self!.cellData)
+                }
+            }
+        } else if SearchViewController.selectedAPI == API.Napster.rawValue {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                SearchManager.instance.getNapsterAlbums(string: value) { (request) in
+                    self?.napsterAlbums = request
+                    if let counter = self?.napsterAlbums[0].albumID.count {
+                        for i in 0..<counter {
+                            let image = (self?.napsterAlbums[0].albumID[i])!
+                            let name = value
+                            let cellInfo = CollectionCellData(image: image, artistName: name, trackName: image, collectionName: image)
+                            self?.cellData.append(cellInfo)
+                        }
+                        completion(self!.cellData)
+                    }
+                }
+            }
+        }
+        spinner.stopAnimating()
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: K.errorTitle, message: "\(K.error)", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel) { _ in
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
     }
 }

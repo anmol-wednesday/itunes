@@ -79,7 +79,7 @@ class SearchManager {
         }
     }
     
-    func getNapsterArtists(_ searchString: String) -> [String] {
+    func getNapsterArtists(_ searchString: String, completion: @escaping ([String]) -> Void) {
         var artistName = [String]()
         let search = searchString.replacingOccurrences(of: " ", with: "+")
         if let url = URL(string: "\(baseURL)\(search)") {
@@ -89,10 +89,10 @@ class SearchManager {
                     for names in jsonArtists.search.data.artists {
                         artistName.append(names.name)
                     }
+                    completion(artistName)
                 }
             }
         }
-        return artistName
     }
     
     func parseJSON(_ data: Data) -> [NapsterAlbums] {
