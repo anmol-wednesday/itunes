@@ -23,14 +23,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         didSet {
             collectionView.performSelector(onMainThread: #selector(UICollectionView.reloadData), with: nil, waitUntilDone: false)
         }
-    }// add set property
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         getCollectionViewData(for: resultName!) { response in
             self.cellData = response
             self.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
             if self.cellData.isEmpty {
-                self.showAlert()
+                DispatchQueue.main.async {
+                    self.showAlert()
+                }
             }
         }
         title = resultName

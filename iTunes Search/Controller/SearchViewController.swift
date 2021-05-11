@@ -81,9 +81,10 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
         }
     }
     
-//    func didDismissSearchController(_ searchController: UISearchController) {
-//        artistHits.removeAll(keepingCapacity: true)
-//    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        artistHits = []
+        searchTable.reloadData()
+    }
 }
 
 //MARK: - UITableView Delegate and Datasource

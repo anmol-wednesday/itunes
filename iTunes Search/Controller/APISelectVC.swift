@@ -39,6 +39,17 @@ class APISelectVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        checkCell(with: indexPath)
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            cell.accessoryType = .none
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func checkCell(with indexPath: IndexPath) {
         if indexPath == selectedIndexPath {
             return
         }
@@ -69,12 +80,5 @@ class APISelectVC: UITableViewController {
                 }
             }
         }
-    }
-    
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) {
-            cell.accessoryType = .none
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
