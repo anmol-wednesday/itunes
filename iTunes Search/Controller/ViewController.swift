@@ -73,20 +73,21 @@ extension ViewController {
                 SearchManager.instance.getAlbum(searchRequest: search) { [self] (requestedAlbums) in
                     self?.albums = requestedAlbums
                     
-//                    self?.cellData = self!.albums.map {
-//                        let cellInfo = CollectionCellData(image: $0.artwork, artistName: $0.artistName, trackName: $0.songName, collectionName: $0.collectionName)
-//                        self?.cellData.append(cellInfo)
-//                    }
-
-                    for album in self!.albums {
-                        let image = album.artwork
-                        let name = album.artistName
-                        let song = album.songName
-                        let collection = album.collectionName
-                        let cellInfo = CollectionCellData(image: image, artistName: name, trackName: song, collectionName: collection)
-                        self?.cellData.append(cellInfo)
-                    } // remove for loop and use map function
+                    self?.cellData = self!.albums.map {
+                        CollectionCellData(image: $0.artwork, artistName: $0.artistName, trackName: $0.songName, collectionName: $0.collectionName)
+                        
+                    }
                     completion(self!.cellData)
+
+//                    for album in self!.albums {
+//                        let image = album.artwork
+//                        let name = album.artistName
+//                        let song = album.songName
+//                        let collection = album.collectionName
+//                        let cellInfo = CollectionCellData(image: image, artistName: name, trackName: song, collectionName: collection)
+//                        self?.cellData.append(cellInfo)
+//                    } // remove for loop and use map function
+//                    completion(self!.cellData)
                 }
             }
         } else if SearchViewController.selectedAPI == API.Napster.rawValue {
@@ -94,6 +95,11 @@ extension ViewController {
                 SearchManager.instance.getNapsterAlbums(string: value) { (request) in
                     self?.napsterAlbums = request
                     if let counter = self?.napsterAlbums[0].albumID.count {
+                        
+                        self?.cellData = self!.napsterAlbums[0].albumID.map {
+                            CollectionCellData(image: $0, artistName: self!.resultName!, trackName: $0, collectionName: $0)
+                        }
+                        
                         for i in 0..<counter {
                             let image = (self?.napsterAlbums[0].albumID[i])!
                             let name = value
