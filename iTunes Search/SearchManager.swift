@@ -105,8 +105,7 @@ class SearchManager {
             if let albumJSON = decodedData.search.data.artists.first!.albumGroups.singlesAndEPs {
                 albumID = albumJSON
             }
-            let artistName = decodedData.search.data.artists.first!.name //x
-            let albumInfo = NapsterAlbums(albumID: albumID, artistName: artistName) //change
+            let albumInfo = NapsterAlbums(albumID: albumID) //change
             temp.append(albumInfo)
         } catch {
             print(error)

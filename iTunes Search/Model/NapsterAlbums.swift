@@ -10,10 +10,8 @@ import Foundation
 class NapsterAlbums {
     
     var albumID: [String]
-    var artistName: String
     
-    init(albumID: [String], artistName: String) {
+    init(albumID: [String]) {
         self.albumID = albumID
-        self.artistName = artistName
     }
 }
