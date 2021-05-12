@@ -50,7 +50,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         title = resultName
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cellData.count
     }
@@ -78,36 +78,16 @@ extension ViewController {
                         
                     }
                     completion(self!.cellData)
-
-//                    for album in self!.albums {
-//                        let image = album.artwork
-//                        let name = album.artistName
-//                        let song = album.songName
-//                        let collection = album.collectionName
-//                        let cellInfo = CollectionCellData(image: image, artistName: name, trackName: song, collectionName: collection)
-//                        self?.cellData.append(cellInfo)
-//                    } // remove for loop and use map function
-//                    completion(self!.cellData)
                 }
             }
         } else if SearchViewController.selectedAPI == API.Napster.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getNapsterAlbums(string: value) { (request) in
                     self?.napsterAlbums = request
-                    if let counter = self?.napsterAlbums[0].albumID.count {
-                        
-                        self?.cellData = self!.napsterAlbums[0].albumID.map {
-                            CollectionCellData(image: $0, artistName: self!.resultName!, trackName: $0, collectionName: $0)
-                        }
-                        
-                        for i in 0..<counter {
-                            let image = (self?.napsterAlbums[0].albumID[i])!
-                            let name = value
-                            let cellInfo = CollectionCellData(image: image, artistName: name, trackName: image, collectionName: image)
-                            self?.cellData.append(cellInfo)
-                        } // remove for loop and use map function
-                        completion(self!.cellData)
+                    self?.cellData = self!.napsterAlbums[0].albumID.map {
+                        CollectionCellData(image: $0, artistName: self!.resultName!, trackName: $0, collectionName: $0)
                     }
+                    completion(self!.cellData)
                 }
             }
         }
