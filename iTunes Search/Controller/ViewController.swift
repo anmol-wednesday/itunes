@@ -11,9 +11,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
+    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var button: UIButton!
+    
     let K = Constants()
     let searchVC = SearchViewController()
-
     var resultName: String?
     var selectedAPI = ""
     
@@ -21,21 +23,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var napsterAlbums = [NapsterAlbums]()
     var cellData = [CollectionCellData]() {
         didSet {
-            collectionView.performSelector(onMainThread: #selector(UICollectionView.reloadData), with: nil, waitUntilDone: false)
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        getCollectionViewData(for: resultName!) { response in
-            self.cellData = response
-            self.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
-            if self.cellData.isEmpty {
-                DispatchQueue.main.async {
-                    self.showAlert()
-                }
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
             }
         }
-        title = resultName
     }
     
     override func viewDidLoad() {
@@ -45,23 +36,35 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         spinner.hidesWhenStopped = true
         spinner.startAnimating()
+        
+        errorView.isHidden = true
+        
+        getCollectionViewData(for: resultName!) { response in
+            self.cellData = response
+            self.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
+            if self.cellData.isEmpty {
+                DispatchQueue.main.async {
+                    self.errorView.isHidden = false
+                }
+            }
+        }
+        title = resultName
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cellData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCell", for: indexPath) as? AlbumCell {
-            if selectedAPI == API.Apple.rawValue {
-                cell.updateCell(album: cellData[indexPath.row])
-            }
-            if selectedAPI == API.Napster.rawValue {
-                cell.getNapsterCell(with: cellData[indexPath.row], name: resultName!)
-            }
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.collectionViewCell, for: indexPath) as? AlbumCell {
+            cell.updateCell(album: cellData[indexPath.row])
+            
             return cell
         }
         return UICollectionViewCell()
+    }
+    @IBAction func buttonTapped(_ sender: UIButton) {
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 
@@ -80,7 +83,7 @@ extension ViewController {
                         let collection = album.collectionName
                         let cellInfo = CollectionCellData(image: image, artistName: name, trackName: song, collectionName: collection)
                         self?.cellData.append(cellInfo)
-                    }
+                    } // remove for loop and use map function
                     completion(self!.cellData)
                 }
             }
@@ -94,21 +97,11 @@ extension ViewController {
                             let name = value
                             let cellInfo = CollectionCellData(image: image, artistName: name, trackName: image, collectionName: image)
                             self?.cellData.append(cellInfo)
-                        }
+                        } // remove for loop and use map function
                         completion(self!.cellData)
-                        
                     }
                 }
             }
         }
-    }
-    
-    func showAlert() {
-        let alert = UIAlertController(title: K.errorTitle, message: "\(K.error)", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel) { _ in
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
     }
 }

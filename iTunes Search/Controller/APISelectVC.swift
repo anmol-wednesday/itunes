@@ -10,7 +10,7 @@ import UIKit
 class APISelectVC: UITableViewController {
     let K = Constants()
     let searchVC = SearchViewController()
-    let apiNames = ["Apple", "Napster"]
+    let apiNames = [API.Apple.rawValue, API.Napster.rawValue]
     let defaults = UserDefaults.standard
     var selectedIndexPath = IndexPath(row: 2, section: 0)
     
@@ -25,7 +25,7 @@ class APISelectVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "API", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.apiTable, for: indexPath)
         
         if indexPath == selectedIndexPath {
             cell.accessoryType = UITableViewCell.AccessoryType.checkmark
@@ -70,12 +70,12 @@ class APISelectVC: UITableViewController {
                 if cellName == API.Apple.rawValue {
                     print(cellName)
                     SearchViewController.selectedAPI = API.Apple.rawValue
-                    searchVC.defaults.setValue(API.Apple.rawValue, forKey: "SelectedAPI")
+                    searchVC.defaults.setValue(API.Apple.rawValue, forKey: K.userDefaultsKey)
                     navigationController?.popToRootViewController(animated: true)
                 } else if cellName == API.Napster.rawValue {
                     print(cellName)
                     SearchViewController.selectedAPI = API.Napster.rawValue
-                    searchVC.defaults.setValue(API.Napster.rawValue, forKey: "SelectedAPI")
+                    searchVC.defaults.setValue(API.Napster.rawValue, forKey: K.userDefaultsKey)
                     navigationController?.popToRootViewController(animated: true)
                 }
             }

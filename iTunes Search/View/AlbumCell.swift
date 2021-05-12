@@ -13,41 +13,46 @@ class AlbumCell: UICollectionViewCell {
     @IBOutlet weak var songArtist: UILabel!
     @IBOutlet weak var collectionName: UILabel!
     
-    func updateCell (album: CollectionCellData) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let imageUrl = URL(string: album.image)
-            DispatchQueue.global().async {
-                if let imageData = try? Data(contentsOf: imageUrl!) {
-                    DispatchQueue.main.async {
-                        self.songImage.image = UIImage(data: imageData)
-                    }
-                }
-            }
-        }
-        songName.text = album.trackName
-        songArtist.text = album.artistName
-        collectionName.text = album.collectionName ?? ""
-    }
+    let defaults = UserDefaults.standard
+    let K = Constants()
     
-    func getNapsterCell(with albums: CollectionCellData, name: String) {
-        let baseURL = "https://api.napster.com/imageserver/v2/albums/"
-        let size = "200x200"
-        let imageExtension = ".jpg"
-        
-        songName.text = albums.image.uppercased()
-        collectionName.text = albums.image.uppercased()
-        DispatchQueue.global(qos: .userInitiated).async {
-            let imageURL = "\(baseURL)\(albums.image)/images/\(size)\(imageExtension)"
-            if let url = URL(string: imageURL) {
+    func updateCell(album: CollectionCellData) {
+        if defaults.object(forKey: K.userDefaultsKey) as? String == API.Apple.rawValue {
+            DispatchQueue.global(qos: .userInitiated).async {
+                let imageUrl = URL(string: album.image)
                 DispatchQueue.global().async {
-                    if let imageData = try? Data(contentsOf: url) {
+                    if let imageData = try? Data(contentsOf: imageUrl!) {
                         DispatchQueue.main.async {
                             self.songImage.image = UIImage(data: imageData)
                         }
                     }
                 }
             }
+            songName.text = album.trackName
+            songArtist.text = album.artistName
+            collectionName.text = album.collectionName ?? ""
         }
-        songArtist.text = name
+        
+        if defaults.object(forKey: K.userDefaultsKey) as? String == API.Napster.rawValue {
+            let baseURL = "https://api.napster.com/imageserver/v2/albums/"
+            let size = "200x200"
+            let imageExtension = ".jpg"
+            
+            songName.text = album.image.uppercased()
+            collectionName.text = album.image.uppercased()
+            DispatchQueue.global(qos: .userInitiated).async {
+                let imageURL = "\(baseURL)\(album.image)/images/\(size)\(imageExtension)"
+                if let url = URL(string: imageURL) {
+                    DispatchQueue.global().async {
+                        if let imageData = try? Data(contentsOf: url) {
+                            DispatchQueue.main.async {
+                                self.songImage.image = UIImage(data: imageData)
+                            }
+                        }
+                    }
+                }
+            }
+            songArtist.text = album.artistName
+        }
     }
 }
