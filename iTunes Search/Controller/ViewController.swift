@@ -10,9 +10,7 @@ import UIKit
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
     @IBOutlet weak var errorView: UIView!
-    @IBOutlet weak var button: UIButton!
     
     let K = Constants()
     let searchVC = SearchViewController()
@@ -37,6 +35,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         spinner.hidesWhenStopped = true
         spinner.startAnimating()
         
+        collectionView.isHidden = false
         errorView.isHidden = true
         
         getCollectionViewData(for: resultName!) { response in
@@ -44,6 +43,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
             if self.cellData.isEmpty {
                 DispatchQueue.main.async {
+                    self.collectionView.isHidden = true
                     self.errorView.isHidden = false
                 }
             }
@@ -63,9 +63,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         return UICollectionViewCell()
     }
-    @IBAction func buttonTapped(_ sender: UIButton) {
-        navigationController?.popToRootViewController(animated: true)
-    }
 }
 
 extension ViewController {
@@ -73,9 +70,14 @@ extension ViewController {
         if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 let search = value
-                SearchManager.instance.getAlbum(searchRequest: search) { (requestedAlbums) in
+                SearchManager.instance.getAlbum(searchRequest: search) { [self] (requestedAlbums) in
                     self?.albums = requestedAlbums
                     
+//                    self?.cellData = self!.albums.map {
+//                        let cellInfo = CollectionCellData(image: $0.artwork, artistName: $0.artistName, trackName: $0.songName, collectionName: $0.collectionName)
+//                        self?.cellData.append(cellInfo)
+//                    }
+
                     for album in self!.albums {
                         let image = album.artwork
                         let name = album.artistName

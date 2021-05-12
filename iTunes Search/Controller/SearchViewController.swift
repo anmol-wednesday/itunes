@@ -130,7 +130,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 //MARK: - Class methods
 
 extension SearchViewController {
-    
     @objc func promptAPISelect() {
         guard let APISelectVC = storyboard?.instantiateViewController(identifier: K.apiID) as? APISelectVC else { return }
         navigationController?.pushViewController(APISelectVC, animated: true)
