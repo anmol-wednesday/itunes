@@ -9,7 +9,7 @@ import Foundation
 
 class SearchManager {
     var baseURL = ""
-    static let instance = SearchManager()
+    static let instance = SearchManager()    
     func getAlbum(searchRequest: String, completion: @escaping ([Album]) -> Void) {
         var albums = [Album]()
         let searchString = searchRequest.replacingOccurrences(of: " ", with: "+")
@@ -20,6 +20,7 @@ class SearchManager {
                 do {
                     let json = try JSONSerialization.jsonObject(with: safeData, options: []) as? [String: Any]
                     if let albumResults = json!["results"] as? NSArray {
+                        
                         for album in albumResults {
                             if let albumInfo = album as? [String: AnyObject] {
                                 guard let artworkUrl100 = albumInfo["artworkUrl100"] as? String else {return}
@@ -58,7 +59,7 @@ class SearchManager {
                                 if let artistInfo = artist as? [String: AnyObject] {
                                     guard let artistName = artistInfo["artistName"] as? String else { return }
                                     guard let collectionName = artistInfo["collectionName"] as? String else { return }
-
+                                    
                                     let artist = Artists(name: artistName)
                                     artists.append(artist.name)
                                     
