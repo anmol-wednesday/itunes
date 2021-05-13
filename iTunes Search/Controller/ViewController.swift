@@ -9,14 +9,20 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
-    @IBOutlet weak var errorView: UIView!
+//    @IBOutlet weak var spinner: UIActivityIndicatorView!
+//    @IBOutlet weak var errorView: UIView!
     
     let K = Constants()
     let searchVC = SearchViewController()
+    let errorView: EmptyView = {
+        let view = EmptyView()
+        return view
+    }()
+    
     var resultName: String?
     var selectedAPI = ""
     
+    var spinner: UIActivityIndicatorView!
     var albums = [Album]()
     var napsterAlbums = [NapsterAlbums]()
     var cellData = [CollectionCellData]() {
@@ -31,12 +37,33 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.isHidden = false
         collectionView.contentInset = UIEdgeInsets(top: 0, left: -40.0, bottom: 0.0, right: 0.0)
+        
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        
+        spinner = UIActivityIndicatorView(style: .large)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.hidesWhenStopped = true
         spinner.startAnimating()
         
-        collectionView.isHidden = false
-        errorView.isHidden = true
+        view.addSubview(errorView)
+        view.addSubview(spinner)
+        
+        NSLayoutConstraint.activate([
+            errorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            
+            errorView.widthAnchor.constraint(equalToConstant: 300),
+            errorView.heightAnchor.constraint(equalToConstant: 95),
+            
+            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            spinner.heightAnchor.constraint(equalToConstant: 100)
+        ])
+        
+        self.errorView.isHidden = true
+        
         collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
         getCollectionViewData(for: resultName!) { response in
             self.cellData = response

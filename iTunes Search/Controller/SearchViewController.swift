@@ -41,6 +41,8 @@ class SearchViewController: UIViewController {
         searchController.searchBar.enablesReturnKeyAutomatically = true
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
+        
+        searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
     }
     
     override func viewWillAppear(_ animated: Bool) {

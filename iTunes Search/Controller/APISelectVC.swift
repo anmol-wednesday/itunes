@@ -18,6 +18,8 @@ class APISelectVC: UITableViewController {
         super.viewDidLoad()
         tableView.allowsMultipleSelection = false
         title = "Select API"
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: K.apiTable)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

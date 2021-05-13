@@ -48,10 +48,7 @@ class AlbumCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func setUpView() {
-        
-        contentView.backgroundColor = .red
         addSubview(albumImageView)
         addSubview(songNameLabel)
         addSubview(artistNameLabel)
@@ -69,14 +66,12 @@ class AlbumCell: UICollectionViewCell {
             songNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8.0),
             songNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8.0),
         
-            
-            // songNameLabel constraints
+            // artistNameLabel constraints
             artistNameLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 10.0),
             artistNameLabel.topAnchor.constraint(equalTo: songNameLabel.bottomAnchor, constant: 8.0),
             artistNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8.0),
-            
 
-            // songNameLabel constraints
+            // collectionNameLabel constraints
             collectionNameLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 10.0),
             collectionNameLabel.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: 8.0),
             collectionNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8.0)
