@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0zb-aH-B9Z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0zb-aH-B9Z">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -25,64 +24,9 @@
                                     <size key="itemSize" width="330" height="120"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="20" minY="45" maxX="20" maxY="30"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AlbumCell" id="mjX-F7-oMQ" customClass="AlbumCell" customModule="iTunes_Search" customModuleProvider="target">
-                                        <rect key="frame" x="30" y="45" width="330" height="120"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="AKZ-aR-XYx">
-                                            <rect key="frame" x="0.0" y="0.0" width="330" height="120"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ENl-kg-pgK" customClass="ImageStyle" customModule="iTunes_Search" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nG-di-eTw">
-                                                    <rect key="frame" x="130" y="5.6666666666666661" width="200" height="19.333333333333336"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O27-fD-UQa">
-                                                    <rect key="frame" x="130" y="33" width="200" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rgf-Gw-nFJ">
-                                                    <rect key="frame" x="130" y="55" width="200" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="O27-fD-UQa" firstAttribute="leading" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="10" id="4q0-X0-iOQ"/>
-                                                <constraint firstItem="O27-fD-UQa" firstAttribute="top" secondItem="4nG-di-eTw" secondAttribute="bottom" constant="8" symbolic="YES" id="7Ap-fC-iCq"/>
-                                                <constraint firstAttribute="bottom" secondItem="Rgf-Gw-nFJ" secondAttribute="bottom" constant="48" id="HJG-K0-EH6"/>
-                                                <constraint firstAttribute="bottom" secondItem="ENl-kg-pgK" secondAttribute="bottom" id="NBa-ng-kjM"/>
-                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="top" secondItem="AKZ-aR-XYx" secondAttribute="top" id="Rmw-8u-vVF"/>
-                                                <constraint firstItem="Rgf-Gw-nFJ" firstAttribute="leading" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="10" id="Sgd-Xe-2tX"/>
-                                                <constraint firstAttribute="trailing" secondItem="4nG-di-eTw" secondAttribute="trailing" id="YhF-d9-F1t"/>
-                                                <constraint firstItem="Rgf-Gw-nFJ" firstAttribute="top" secondItem="O27-fD-UQa" secondAttribute="bottom" constant="5" id="ZWh-Nl-giO"/>
-                                                <constraint firstItem="4nG-di-eTw" firstAttribute="leading" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="10" id="fMS-gn-hIj"/>
-                                                <constraint firstItem="ENl-kg-pgK" firstAttribute="leading" secondItem="AKZ-aR-XYx" secondAttribute="leading" id="fvn-F7-ESw"/>
-                                                <constraint firstItem="4nG-di-eTw" firstAttribute="top" secondItem="AKZ-aR-XYx" secondAttribute="top" constant="5.6666666666666661" id="hbf-Ug-Ub3"/>
-                                                <constraint firstAttribute="trailing" secondItem="O27-fD-UQa" secondAttribute="trailing" id="lYH-LY-RK3"/>
-                                                <constraint firstAttribute="trailing" secondItem="ENl-kg-pgK" secondAttribute="trailing" constant="210" id="mfS-hD-W2U"/>
-                                                <constraint firstAttribute="trailing" secondItem="Rgf-Gw-nFJ" secondAttribute="trailing" id="tQy-aD-4w1"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="330" height="120"/>
-                                        <connections>
-                                            <outlet property="collectionName" destination="Rgf-Gw-nFJ" id="bjk-BI-g5m"/>
-                                            <outlet property="songArtist" destination="O27-fD-UQa" id="a2C-05-CHG"/>
-                                            <outlet property="songImage" destination="ENl-kg-pgK" id="vgR-Kx-Glo"/>
-                                            <outlet property="songName" destination="4nG-di-eTw" id="7iP-aB-aON"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
+                                <cells/>
                             </collectionView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="ffs-4I-YbF">
                                 <rect key="frame" x="145" y="372" width="100" height="100"/>
@@ -150,7 +94,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="API" id="yme-Nw-VWB">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="390" height="43.666667938232422"/>
+                                <rect key="frame" x="0.0" y="28" width="390" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yme-Nw-VWB" id="syW-o0-HIQ">
                                     <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
@@ -181,7 +125,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="artist" textLabel="04J-tS-0W9" detailTextLabel="rLh-Ok-gsL" style="IBUITableViewCellStyleSubtitle" id="YeZ-Xu-aJ5">
-                                        <rect key="frame" x="0.0" y="24.333333969116211" width="390" height="43.666667938232422"/>
+                                        <rect key="frame" x="0.0" y="28" width="390" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YeZ-Xu-aJ5" id="1Rj-hN-vH5">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>

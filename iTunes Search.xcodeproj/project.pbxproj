@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		514355A0264D1FEC0047F576 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5143559D264D1FEC0047F576 /* CustomCell.swift */; };
+		514355A1264D1FEC0047F576 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5143559E264D1FEC0047F576 /* EmptyView.swift */; };
 		7B1BD6DA263801E6006C6658 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B1BD6D9263801E6006C6658 /* .swiftlint.yml */; };
 		7B25FB8926397A7300731422 /* NapsterArtists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8826397A7300731422 /* NapsterArtists.swift */; };
 		7B25FB8B26399C0700731422 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8A26399C0700731422 /* Constants.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5143559D264D1FEC0047F576 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		5143559E264D1FEC0047F576 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		7B1BD6D9263801E6006C6658 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		7B25FB8826397A7300731422 /* NapsterArtists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NapsterArtists.swift; sourceTree = "<group>"; };
 		7B25FB8A26399C0700731422 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -111,6 +115,8 @@
 		7B6AC5CF2618428C000A4B45 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5143559D264D1FEC0047F576 /* CustomCell.swift */,
+				5143559E264D1FEC0047F576 /* EmptyView.swift */,
 				7B6AC5BE2618427B000A4B45 /* Main.storyboard */,
 				7B6AC5D926184369000A4B45 /* AlbumCell.swift */,
 				7BC2242126187D8B00B53474 /* ImageStyle.swift */,
@@ -230,6 +236,8 @@
 				7B6AC5BD2618427B000A4B45 /* ViewController.swift in Sources */,
 				7B6AC5B92618427B000A4B45 /* AppDelegate.swift in Sources */,
 				7BC49EB026304AFB007FED3B /* Artists.swift in Sources */,
+				514355A0264D1FEC0047F576 /* CustomCell.swift in Sources */,
+				514355A1264D1FEC0047F576 /* EmptyView.swift in Sources */,
 				7BC49EAD263047A4007FED3B /* SearchViewController.swift in Sources */,
 				7BDD270B2640060F009E7289 /* CollectionCellData.swift in Sources */,
 				7B6AC5DA26184369000A4B45 /* AlbumCell.swift in Sources */,

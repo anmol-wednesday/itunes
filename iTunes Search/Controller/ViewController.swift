@@ -31,13 +31,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: -40.0, bottom: 0.0, right: 0.0)
         spinner.hidesWhenStopped = true
         spinner.startAnimating()
         
         collectionView.isHidden = false
         errorView.isHidden = true
-        
+        collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
         getCollectionViewData(for: resultName!) { response in
             self.cellData = response
             self.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
@@ -56,7 +56,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.collectionViewCell, for: indexPath) as? AlbumCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCell.description(), for: indexPath) as? AlbumCell {
             cell.updateCell(album: cellData[indexPath.row])
             
             return cell
