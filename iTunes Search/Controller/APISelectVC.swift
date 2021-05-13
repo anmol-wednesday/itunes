@@ -54,6 +54,8 @@ class APISelectVC: UITableViewController {
             return
         }
         
+        //use user defaults for checkmark
+        
         let newCell = tableView.cellForRow(at: indexPath)
         if newCell?.accessoryType == UITableViewCell.AccessoryType.none {
             newCell?.accessoryType = UITableViewCell.AccessoryType.checkmark
