@@ -8,7 +8,8 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-    @IBOutlet weak var searchTable: UITableView!
+    
+    var searchTable: UITableView!
     
     let K = Constants()
     let searchController = UISearchController(searchResultsController: nil)
@@ -27,12 +28,12 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchTable.delegate = self
-        searchTable.dataSource = self
+        
         searchController.delegate = self
         searchController.searchBar.delegate = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isTranslucent = true
         title = "Search"
         navigationItem.searchController = searchController
         
@@ -42,7 +43,19 @@ class SearchViewController: UIViewController {
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
         
+        searchTable = UITableView()
+        self.view.addSubview(searchTable)
+        searchTable.delegate = self
+        searchTable.dataSource = self
+        searchTable.translatesAutoresizingMaskIntoConstraints = false
         searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
+        
+        NSLayoutConstraint.activate([
+            searchTable.topAnchor.constraint(equalTo: view.topAnchor),
+            searchTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchTable.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            searchTable.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,7 +127,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let detail = storyboard?.instantiateViewController(identifier: K.collectionViewID) as? ViewController else { return }
+        let detail = ViewController()
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
         
@@ -133,7 +146,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchViewController {
     @objc func promptAPISelect() {
-        guard let APISelectVC = storyboard?.instantiateViewController(identifier: K.apiID) as? APISelectVC else { return }
+        let APISelectVC = APISelectVC()
         navigationController?.pushViewController(APISelectVC, animated: true)
     }
     

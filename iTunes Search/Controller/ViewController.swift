@@ -8,9 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    @IBOutlet weak var collectionView: UICollectionView!
-//    @IBOutlet weak var spinner: UIActivityIndicatorView!
-//    @IBOutlet weak var errorView: UIView!
+    var collectionView: UICollectionView!
     
     let K = Constants()
     let searchVC = SearchViewController()
@@ -35,10 +33,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: -40.0, bottom: 0.0, right: 0.0)
+        layout.itemSize = CGSize(width: 330, height: 120)
+        
+        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        self.view.addSubview(collectionView)
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.isHidden = false
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: -40.0, bottom: 0.0, right: 0.0)
         
         errorView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -51,6 +58,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         view.addSubview(spinner)
         
         NSLayoutConstraint.activate([
+            
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
             errorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             errorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             

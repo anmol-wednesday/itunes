@@ -12,6 +12,8 @@ class AlbumCell: UICollectionViewCell {
     let albumImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
+        imageView.layer.borderColor = UIColor(named: "artworkBorder")?.cgColor
+        imageView.layer.borderWidth = 3
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -19,15 +21,16 @@ class AlbumCell: UICollectionViewCell {
     
     let songNameLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "System", size: 14.0)
+        label.numberOfLines = 1
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let artistNameLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -35,6 +38,7 @@ class AlbumCell: UICollectionViewCell {
     let collectionNameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

@@ -18,7 +18,6 @@ class APISelectVC: UITableViewController {
         super.viewDidLoad()
         tableView.allowsMultipleSelection = false
         title = "Select API"
-        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: K.apiTable)
     }
     
@@ -30,9 +29,9 @@ class APISelectVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: K.apiTable, for: indexPath)
         
         if indexPath == selectedIndexPath {
-            cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType = UITableViewCell.AccessoryType.none
+            cell.accessoryType = .none
         }
         
         cell.textLabel?.text = apiNames[indexPath.row]
@@ -55,8 +54,6 @@ class APISelectVC: UITableViewController {
         if indexPath == selectedIndexPath {
             return
         }
-        
-        //use user defaults for checkmark
         
         let newCell = tableView.cellForRow(at: indexPath)
         if newCell?.accessoryType == UITableViewCell.AccessoryType.none {

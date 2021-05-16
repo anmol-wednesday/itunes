@@ -26,7 +26,7 @@ class SearchManager {
                                 guard let artworkUrl100 = albumInfo["artworkUrl100"] as? String else {return}
                                 guard let trackName = albumInfo["trackName"] as? String else {return}
                                 guard let artistName = albumInfo["artistName"] as? String else {return}
-                                guard let detail = albumInfo["collectionName"] as? String else { return }
+                                guard let detail = albumInfo["collectionName"] as? String else {return}
                                 let albumInstance = Album(artwork: artworkUrl100, songName: trackName, artistName: artistName, collectionName: detail)
                                 albums.append(albumInstance)
                             }
@@ -100,7 +100,6 @@ class SearchManager {
         let decoder = JSONDecoder()
         var temp = [NapsterAlbums]()
         var albumID: [String] = []
-        
         do {
             let decodedData = try decoder.decode(AlbumID.self, from: data)
             if let albumJSON = decodedData.search.data.artists.first!.albumGroups.singlesAndEPs {
@@ -118,6 +117,7 @@ class SearchManager {
         var napsterAlbums: [NapsterAlbums] = []
         let searchString = string.replacingOccurrences(of: " ", with: "+")
         if let url = URL(string: "\(baseURL)\(searchString)") {
+            print(url)
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, _, error in
                 if error != nil {
