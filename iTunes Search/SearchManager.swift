@@ -9,7 +9,7 @@ import Foundation
 
 class SearchManager {
     var baseURL = ""
-    static let instance = SearchManager()    
+    static let instance = SearchManager()
     func getAlbum(searchRequest: String, completion: @escaping ([Album]) -> Void) {
         var albums = [Album]()
         let searchString = searchRequest.replacingOccurrences(of: " ", with: "+")
@@ -117,7 +117,6 @@ class SearchManager {
         var napsterAlbums: [NapsterAlbums] = []
         let searchString = string.replacingOccurrences(of: " ", with: "+")
         if let url = URL(string: "\(baseURL)\(searchString)") {
-            print(url)
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, _, error in
                 if error != nil {
