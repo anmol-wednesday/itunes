@@ -22,7 +22,13 @@ class SearchViewController: UIViewController {
             }
         }
     }
-    var collections = [String]()
+    var collections = [String]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.searchTable.reloadData()
+            }
+        }
+    }
     var searchQuery = ""
     var defaults = UserDefaults.standard
     
@@ -77,9 +83,9 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         if searchText.isEmpty {
             artistHits = []
+            collections = []
         } else {
             if SearchViewController.selectedAPI == API.Apple.rawValue {
                 DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -99,6 +105,7 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         artistHits = []
+        collections = []
     }
 }
 

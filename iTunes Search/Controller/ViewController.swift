@@ -40,6 +40,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         self.view.addSubview(collectionView)
+        collectionView.backgroundColor = .white
         
         collectionView.delegate = self
         collectionView.dataSource = self
