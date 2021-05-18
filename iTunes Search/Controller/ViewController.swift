@@ -33,7 +33,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "viewColor")
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: -40.0, bottom: 0.0, right: 0.0)
@@ -41,7 +41,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         self.view.addSubview(collectionView)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor(named: "viewColor")
         
         collectionView.delegate = self
         collectionView.dataSource = self

@@ -60,14 +60,18 @@ class SearchViewController: UIViewController {
         
         spinner = UIActivityIndicatorView(style: .large)
         spinner.hidesWhenStopped = true
-        self.searchTable.addSubview(spinner)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        searchTable.addSubview(spinner)
         spinner.isHidden = true
         
         NSLayoutConstraint.activate([
             searchTable.topAnchor.constraint(equalTo: view.topAnchor),
             searchTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchTable.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            searchTable.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            searchTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
     }
     
@@ -96,6 +100,9 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
         if searchText.isEmpty {
             artistHits = []
             collections = []
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+            }
         } else {
             timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(callAPI), userInfo: nil, repeats: false)
         }
