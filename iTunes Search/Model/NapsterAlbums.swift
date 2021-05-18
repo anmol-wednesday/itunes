@@ -7,13 +7,7 @@
 
 import Foundation
 
-class NapsterAlbums {
+struct NapsterAlbums {
     
     var albumID: [String]
-    var artistName: String
-    
-    init(albumID: [String], artistName: String) {
-        self.albumID = albumID
-        self.artistName = artistName
-    }
 }

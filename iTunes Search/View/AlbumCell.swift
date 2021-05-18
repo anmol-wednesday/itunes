@@ -8,47 +8,120 @@
 import UIKit
 
 class AlbumCell: UICollectionViewCell {
-    @IBOutlet weak var songImage: UIImageView!
-    @IBOutlet weak var songName: UILabel!
-    @IBOutlet weak var songArtist: UILabel!
-    @IBOutlet weak var collectionName: UILabel!
     
-    func updateCell (album: CollectionCellData) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let imageUrl = URL(string: album.image)
-            DispatchQueue.global().async {
-                if let imageData = try? Data(contentsOf: imageUrl!) {
-                    DispatchQueue.main.async {
-                        self.songImage.image = UIImage(data: imageData)
-                    }
-                }
-            }
-
-        }
-        songName.text = album.trackName
-        songArtist.text = album.artistName
-        collectionName.text = album.collectionName ?? ""
+    let albumImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 15
+        imageView.layer.borderColor = UIColor(named: "artworkBorder")?.cgColor
+        imageView.layer.borderWidth = 3
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    let songNameLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let artistNameLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let collectionNameLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setUpView()
     }
     
-    func getNapsterCell(with albums: CollectionCellData, name: String) {
-        let baseURL = "https://api.napster.com/imageserver/v2/albums/"
-        let size = "200x200"
-        let imageExtension = ".jpg"
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setUpView() {
+        addSubview(albumImageView)
+        addSubview(songNameLabel)
+        addSubview(artistNameLabel)
+        addSubview(collectionNameLabel)
         
-        songName.text = albums.image.uppercased()
-        collectionName.text = albums.image.uppercased()
-        DispatchQueue.global(qos: .userInitiated).async {
-            let imageURL = "\(baseURL)\(albums.image)/images/\(size)\(imageExtension)"
-            if let url = URL(string: imageURL) {
+        NSLayoutConstraint.activate([
+            //albumImageView constraints
+            self.leadingAnchor.constraint(equalTo: albumImageView.leadingAnchor, constant: 0.0),
+            self.topAnchor.constraint(equalTo: albumImageView.topAnchor, constant: 0.0),
+            albumImageView.widthAnchor.constraint(equalToConstant: 120.0),
+            albumImageView.heightAnchor.constraint(equalToConstant: 120.0),
+            
+            // songNameLabel constraints
+            songNameLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 10.0),
+            songNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8.0),
+            songNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8.0),
+        
+            // artistNameLabel constraints
+            artistNameLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 10.0),
+            artistNameLabel.topAnchor.constraint(equalTo: songNameLabel.bottomAnchor, constant: 8.0),
+            artistNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8.0),
+
+            // collectionNameLabel constraints
+            collectionNameLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 10.0),
+            collectionNameLabel.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: 8.0),
+            collectionNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8.0)
+        ])
+    }
+    
+    let defaults = UserDefaults.standard
+    let K = Constants()
+    
+    func updateCell(album: CollectionCellData) {
+        if defaults.object(forKey: K.userDefaultsKey) as? String == API.Apple.rawValue {
+            DispatchQueue.global(qos: .userInitiated).async {
+                let imageUrl = URL(string: album.image)
                 DispatchQueue.global().async {
-                    if let imageData = try? Data(contentsOf: url) {
+                    if let imageData = try? Data(contentsOf: imageUrl!) {
                         DispatchQueue.main.async {
-                            self.songImage.image = UIImage(data: imageData)
+                            self.albumImageView.image = UIImage(data: imageData)
                         }
                     }
                 }
             }
+            songNameLabel.text = album.trackName
+            artistNameLabel.text = album.artistName
+            collectionNameLabel.text = album.collectionName ?? ""
         }
-        songArtist.text = name
+        
+        if defaults.object(forKey: K.userDefaultsKey) as? String == API.Napster.rawValue {
+            let baseURL = "https://api.napster.com/imageserver/v2/albums/"
+            let size = "200x200"
+            let imageExtension = ".jpg"
+            
+            songNameLabel.text = album.image.uppercased()
+            collectionNameLabel.text = album.image.uppercased()
+            DispatchQueue.global(qos: .userInitiated).async {
+                let imageURL = "\(baseURL)\(album.image)/images/\(size)\(imageExtension)"
+                if let url = URL(string: imageURL) {
+                    DispatchQueue.global().async {
+                        if let imageData = try? Data(contentsOf: url) {
+                            DispatchQueue.main.async {
+                                self.albumImageView.image = UIImage(data: imageData)
+                            }
+                        }
+                    }
+                }
+            }
+            artistNameLabel.text = album.artistName
+        }
     }
 }

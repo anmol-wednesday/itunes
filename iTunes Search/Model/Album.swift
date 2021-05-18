@@ -7,15 +7,9 @@
 
 import Foundation
 
-class Album {
+struct Album {
     var artwork: String
     var songName: String
     var artistName: String
     var collectionName: String
-    init(artwork: String, songName: String, artistName: String, collectionName: String) {
-        self.artwork = artwork
-        self.songName = songName
-        self.artistName = artistName
-        self.collectionName = collectionName
-    }
 }

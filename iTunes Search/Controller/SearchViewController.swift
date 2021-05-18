@@ -7,86 +7,142 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchResultsUpdating {
-    @IBOutlet weak var searchTable: UITableView!
+class SearchViewController: UIViewController {
+    
+    var searchTable: UITableView!
+    var spinner: UIActivityIndicatorView!
+
+    
     let K = Constants()
     let searchController = UISearchController(searchResultsController: nil)
+    var timer: Timer?
     
     static var selectedAPI = "Select API"
-    var artistHits = [String]()
-    var collections = [String]()
+    var artistHits = [String]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.searchTable.reloadData()
+            }
+        }
+    }
+    var collections = [String]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.searchTable.reloadData()
+            }
+        }
+    }
     var searchQuery = ""
     var defaults = UserDefaults.standard
     
-    var albums = [Album]()
-    var napsterAlbums = [NapsterAlbums]()
-    var common = [CollectionCellData]()
-    
-    var count: Int?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        if defaults.object(forKey: "SelectedAPI") as? String == API.Apple.rawValue {
-            appleAPI(name: API.Apple.rawValue)
-        } else if defaults.object(forKey: "SelectedAPI") as? String == API.Napster.rawValue {
-            napsterAPI(name: API.Napster.rawValue)
-        } else if defaults.object(forKey: "SelectedAPI") == nil {
-            defaults.setValue("Select API", forKey: "SelectedAPI")
-        }
-        
-        let apiSelect = UIBarButtonItem(title: defaults.object(forKey: "SelectedAPI") as? String, style: .plain, target: self, action: #selector(promptAPISelect))
-        navigationItem.rightBarButtonItems = [apiSelect]
-        selectedAPI(name: SearchViewController.selectedAPI)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchTable.delegate = self
-        searchTable.dataSource = self
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isTranslucent = true
         title = "Search"
         navigationItem.searchController = searchController
         
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.enablesReturnKeyAutomatically = true
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
-        //searchController.definesPresentationContext = true
+        
+        searchTable = UITableView()
+        self.view.addSubview(searchTable)
+        searchTable.delegate = self
+        searchTable.dataSource = self
+        searchTable.translatesAutoresizingMaskIntoConstraints = false
+        searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
+        
+        spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        searchTable.addSubview(spinner)
+        spinner.isHidden = true
+        
+        NSLayoutConstraint.activate([
+            searchTable.topAnchor.constraint(equalTo: view.topAnchor),
+            searchTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchTable.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            searchTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
     }
     
-    //MARK: - UISearchContoller Method
+    override func viewWillAppear(_ animated: Bool) {
+        if defaults.object(forKey: K.userDefaultsKey) as? String == API.Apple.rawValue {
+            selectedAPI(name: API.Apple.rawValue)
+        } else if defaults.object(forKey: K.userDefaultsKey) as? String == API.Napster.rawValue {
+            selectedAPI(name: API.Napster.rawValue)
+        } else if defaults.object(forKey: K.userDefaultsKey) == nil {
+            defaults.setValue("Select API", forKey: K.userDefaultsKey)
+        }
+        
+        let apiSelect = UIBarButtonItem(title: defaults.object(forKey: K.userDefaultsKey) as? String, style: .plain, target: self, action: #selector(promptAPISelect))
+        navigationItem.rightBarButtonItems = [apiSelect]
+        selectedAPI(name: SearchViewController.selectedAPI)
+    }
+}
+    
+    //MARK: - Search Bar and Controller Delegates
 
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let searchQuery = searchController.searchBar.text else { return }
+extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        timer?.invalidate()
+        
+        if searchText.isEmpty {
+            artistHits = []
+            collections = []
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+            }
+        } else {
+            timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(callAPI), userInfo: nil, repeats: false)
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        artistHits = []
+        collections = []
+    }
+    
+    @objc func callAPI() {
+        spinner.isHidden = false
+        spinner.startAnimating()
+        print("Method called by \(searchController.searchBar.text!)")
+        
+        let search = searchController.searchBar.text!
         if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getArtists(search: searchQuery) { [self] (namesResponse, collectionResponse) in
+                SearchManager.instance.getArtists(search: search) { [self] (namesResponse, collectionResponse) in
                     (self!.artistHits, self!.collections) = (namesResponse, collectionResponse)
+                    DispatchQueue.main.async {
+                        self?.spinner.stopAnimating()
+                    }
                 }
             }
-            
-            DispatchQueue.main.async {
-                self.searchTable.reloadData()
-            }
-            
         } else if SearchViewController.selectedAPI == API.Napster.rawValue {
-            
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                self?.artistHits = SearchManager.instance.getNapsterArtists(searchQuery)
+                SearchManager.instance.getNapsterArtists(search, completion: { response in
+                    self?.artistHits = response
+                    DispatchQueue.main.async {
+                        self?.spinner.stopAnimating()
+                    }
+                })
             }
-            
-            DispatchQueue.main.async {
-                self.searchTable.reloadData()
-            }
-            
-        } else {
-            artistHits = []
         }
-        searchTable.reloadData()
     }
+    
+//    func didDismissSearchController(_ searchController: UISearchController) {
+//        artistHits.removeAll(keepingCapacity: true)
+//    }
 }
 
 //MARK: - UITableView Delegate and Datasource
@@ -98,7 +154,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "artist", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.searchTable, for: indexPath)
         
         if SearchViewController.selectedAPI == API.Apple.rawValue {
             cell.textLabel?.text = artistHits[indexPath.row]
@@ -114,115 +170,37 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        common = []
-        var value = ""
+        let detail = ViewController()
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
         
-        if SearchViewController.selectedAPI == API.Apple.rawValue {
-            value = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
-            getCollectionViewData(for: value)
-        } else if SearchViewController.selectedAPI == API.Napster.rawValue {
-            value = artistHits[indexPath.row]
-            getCollectionViewData(for: value)
-        }
+        SearchViewController.selectedAPI == API.Apple.rawValue ? {
+            detail.resultName = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
+            detail.selectedAPI = SearchViewController.selectedAPI
+        }() : {
+            detail.resultName = artistHits[indexPath.row]
+            detail.selectedAPI = SearchViewController.selectedAPI
+        }()
+        navigationController?.pushViewController(detail, animated: true)
     }
 }
-
 //MARK: - Class methods
 
 extension SearchViewController {
-    
     @objc func promptAPISelect() {
-        guard let APISelectVC = storyboard?.instantiateViewController(identifier: "apiVC") as? APISelectVC else { return }
-        navigationController?.pushViewController(APISelectVC, animated: true)
+        let apiSelectVC = APISelectVC()
+        navigationController?.pushViewController(apiSelectVC, animated: true)
     }
-    
-    func appleAPI(name: String) {
-        let api = "https://itunes.apple.com/search?term="
-        SearchViewController.selectedAPI = name
-        SearchManager.instance.baseURL = api
-    }
-    
-    func napsterAPI(name: String) {
-        SearchViewController.selectedAPI = name
-        let apiKey = "NmJiYmYzNTItOTgyNi00ZjdmLTgxZDYtYWVkYmI0NDVlOWQ4"
-        let api = "https://api.napster.com/v2.2/search?apikey=\(apiKey)&type=artist&query="
-        SearchManager.instance.baseURL = api
-    }
-    
     func selectedAPI(name: String) {
         if name == API.Apple.rawValue {
-            appleAPI(name: SearchViewController.selectedAPI)
+            let api = "https://itunes.apple.com/search?term="
+            SearchViewController.selectedAPI = name
+            SearchManager.instance.baseURL = api
         } else if name == API.Napster.rawValue {
-            napsterAPI(name: SearchViewController.selectedAPI)
-        }
-    }
-    
-    func showAlert() {
-        let alert = UIAlertController(title: K.errorTitle, message: "\(K.error)", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func getCollectionViewData(for value: String) {
-        guard let detail = storyboard?.instantiateViewController(identifier: "AlbumCollection") as? ViewController else { return }
-        if SearchViewController.selectedAPI == API.Apple.rawValue {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                let search = value
-                SearchManager.instance.getAlbum(searchRequest: search) { (requestedAlbums) in
-                    self?.albums = requestedAlbums
-                    
-                    for album in self!.albums {
-                        let image = album.artwork
-                        let name = album.artistName
-                        let song = album.songName
-                        let collection = album.collectionName
-                        let cellInfo = CollectionCellData(image: image, artistName: name, trackName: song, collectionName: collection)
-                        self?.common.append(cellInfo)
-                    }
-                    detail.cellData = self!.common
-                    detail.resultName = value
-                    detail.selectedAPI = API.Apple.rawValue
-                    self?.count = detail.cellData.count
-                    DispatchQueue.main.async {
-                        if self?.count == 0 {
-                            self!.showAlert()
-                        } else {
-                            self?.navigationController?.pushViewController(detail, animated: true)
-                        }
-                    }
-                }
-                
-            }
-        } else if SearchViewController.selectedAPI == API.Napster.rawValue {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getNapsterAlbums(string: value) { (request) in
-                    self?.napsterAlbums = request
-                    if let counter = self?.napsterAlbums[0].albumID.count {
-                        for i in 0..<counter {
-                            let image = (self?.napsterAlbums[0].albumID[i])!
-                            let name = value
-                            let cellInfo = CollectionCellData(image: image, artistName: name, trackName: image, collectionName: image)
-                            self?.common.append(cellInfo)
-                        }
-                        detail.cellData = self!.common
-                        self?.count = self?.common.count
-                    }
-                }
-                detail.selectedAPI = API.Napster.rawValue
-                detail.resultName = value
-            }
-            
-            DispatchQueue.main.async {
-                if self.count == 0 {
-                    print(self.common.count)
-                    self.showAlert()
-                } else {
-                    self.navigationController?.pushViewController(detail, animated: true)
-                }
-            }
+            let apiKey = "NmJiYmYzNTItOTgyNi00ZjdmLTgxZDYtYWVkYmI0NDVlOWQ4"
+            let api = "https://api.napster.com/v2.2/search?apikey=\(apiKey)&type=artist&query="
+            SearchViewController.selectedAPI = name
+            SearchManager.instance.baseURL = api
         }
     }
 }

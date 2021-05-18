@@ -10,4 +10,13 @@ import Foundation
 struct Constants {
     let errorTitle = "Error"
     let error = "There was an error, please try again!"
+    
+    let userDefaultsKey = "SelectedAPI"
+    
+    let searchTable = "artist"
+    let collectionViewID = "AlbumCollection"
+    let apiID = "apiVC"
+    
+    let collectionViewCell = "AlbumCell"
+    let apiTable = "API"
 }
