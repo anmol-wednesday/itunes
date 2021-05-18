@@ -188,7 +188,6 @@ extension SearchViewController {
         let APISelectVC = APISelectVC()
         navigationController?.pushViewController(APISelectVC, animated: true)
     }
-    
     func selectedAPI(name: String) {
         if name == API.Apple.rawValue {
             let api = "https://itunes.apple.com/search?term="
