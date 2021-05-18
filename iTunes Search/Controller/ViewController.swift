@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var collectionView: UICollectionView!
+
     
     let K = Constants()
     let searchVC = SearchViewController()
@@ -19,7 +20,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var resultName: String?
     var selectedAPI = ""
-    
     var spinner: UIActivityIndicatorView!
     var albums = [Album]()
     var napsterAlbums = [NapsterAlbums]()
@@ -115,7 +115,6 @@ extension ViewController {
                     
                     self?.cellData = self!.albums.map {
                         CollectionCellData(image: $0.artwork, artistName: $0.artistName, trackName: $0.songName, collectionName: $0.collectionName)
-                        
                     }
                     completion(self!.cellData)
                 }

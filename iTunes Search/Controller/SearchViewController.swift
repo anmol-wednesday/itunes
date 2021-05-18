@@ -11,6 +11,7 @@ class SearchViewController: UIViewController {
     
     var searchTable: UITableView!
     var spinner: UIActivityIndicatorView!
+
     
     let K = Constants()
     let searchController = UISearchController(searchResultsController: nil)
@@ -36,7 +37,6 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         searchController.delegate = self
         searchController.searchBar.delegate = self
         
@@ -139,6 +139,10 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
             }
         }
     }
+    
+//    func didDismissSearchController(_ searchController: UISearchController) {
+//        artistHits.removeAll(keepingCapacity: true)
+//    }
 }
 
 //MARK: - UITableView Delegate and Datasource
@@ -177,7 +181,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             detail.resultName = artistHits[indexPath.row]
             detail.selectedAPI = SearchViewController.selectedAPI
         }()
-        
         navigationController?.pushViewController(detail, animated: true)
     }
 }
