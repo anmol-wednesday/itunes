@@ -120,20 +120,17 @@ class SearchManager {
 
     func getNapsterAlbums(string: String, completion: @escaping ([NapsterAlbums]) -> Void) {
         var napsterAlbums: [NapsterAlbums] = []
-        let searchString = string.replacingOccurrences(of: " ", with: "+")
-        if let url = URL(string: "\(baseURL)\(searchString)") {
-            let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) { data, _, error in
-                if error != nil {
-                    print(error!)
-                    return
-                }
-                if let safeData = data {
-                    napsterAlbums = self.parseJSON(safeData)
-                    completion(napsterAlbums)
-                }
+        makeAPICall(searchQuery: string) { data, response, error in
+            
+            if error != nil {
+                print(error!)
+                return
             }
-            task.resume()
+            
+            if let safeData = data {
+                napsterAlbums = self.parseJSON(safeData)
+                completion(napsterAlbums)
+            }
         }
     }
 }
