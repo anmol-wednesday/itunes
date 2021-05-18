@@ -9,8 +9,6 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var collectionView: UICollectionView!
-
-    
     let K = Constants()
     let searchVC = SearchViewController()
     let errorView: EmptyView = {

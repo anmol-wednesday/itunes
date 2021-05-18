@@ -19,4 +19,7 @@ struct Constants {
     
     let collectionViewCell = "AlbumCell"
     let apiTable = "API"
+    
+    let appleAPI = "https://itunes.apple.com/search?term="
+    let napsterAPI = "https://api.napster.com/v2.2/search?apikey=NmJiYmYzNTItOTgyNi00ZjdmLTgxZDYtYWVkYmI0NDVlOWQ4&type=artist&query="
 }
