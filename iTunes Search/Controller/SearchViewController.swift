@@ -185,8 +185,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchViewController {
     @objc func promptAPISelect() {
-        let APISelectVC = APISelectVC()
-        navigationController?.pushViewController(APISelectVC, animated: true)
+        let apiSelectVC = APISelectVC()
+        navigationController?.pushViewController(apiSelectVC, animated: true)
     }
     func selectedAPI(name: String) {
         if name == API.Apple.rawValue {

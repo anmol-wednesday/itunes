@@ -15,7 +15,6 @@
 		7B6AC5B92618427B000A4B45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5B82618427B000A4B45 /* AppDelegate.swift */; };
 		7B6AC5BB2618427B000A4B45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */; };
 		7B6AC5BD2618427B000A4B45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BC2618427B000A4B45 /* ViewController.swift */; };
-		7B6AC5C02618427B000A4B45 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BE2618427B000A4B45 /* Main.storyboard */; };
 		7B6AC5C22618427B000A4B45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B6AC5C12618427B000A4B45 /* Assets.xcassets */; };
 		7B6AC5C52618427B000A4B45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B6AC5C32618427B000A4B45 /* LaunchScreen.storyboard */; };
 		7B6AC5D2261842A9000A4B45 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5D1261842A9000A4B45 /* Album.swift */; };
@@ -25,7 +24,6 @@
 		7B7D3E5C2641571B00ACB485 /* APISelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7D3E5B2641571B00ACB485 /* APISelectVC.swift */; };
 		7BA1D6A6263A8F4700F23A15 /* NapsterAlbums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA1D6A5263A8F4700F23A15 /* NapsterAlbums.swift */; };
 		7BA1D6AA263AC53700F23A15 /* AlbumID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA1D6A9263AC53700F23A15 /* AlbumID.swift */; };
-		7BC2242226187D8B00B53474 /* ImageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC2242126187D8B00B53474 /* ImageStyle.swift */; };
 		7BC49EAD263047A4007FED3B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC49EAC263047A4007FED3B /* SearchViewController.swift */; };
 		7BC49EB026304AFB007FED3B /* Artists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC49EAF26304AFB007FED3B /* Artists.swift */; };
 		7BDD270B2640060F009E7289 /* CollectionCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD270A2640060F009E7289 /* CollectionCellData.swift */; };
@@ -41,7 +39,6 @@
 		7B6AC5B82618427B000A4B45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		7B6AC5BC2618427B000A4B45 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7B6AC5BF2618427B000A4B45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7B6AC5C12618427B000A4B45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7B6AC5C42618427B000A4B45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B6AC5C62618427B000A4B45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,7 +49,6 @@
 		7B7D3E5B2641571B00ACB485 /* APISelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISelectVC.swift; sourceTree = "<group>"; };
 		7BA1D6A5263A8F4700F23A15 /* NapsterAlbums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NapsterAlbums.swift; sourceTree = "<group>"; };
 		7BA1D6A9263AC53700F23A15 /* AlbumID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumID.swift; sourceTree = "<group>"; };
-		7BC2242126187D8B00B53474 /* ImageStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStyle.swift; sourceTree = "<group>"; };
 		7BC49EAC263047A4007FED3B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		7BC49EAF26304AFB007FED3B /* Artists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artists.swift; sourceTree = "<group>"; };
 		7BDD270A2640060F009E7289 /* CollectionCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCellData.swift; sourceTree = "<group>"; };
@@ -117,9 +113,7 @@
 			children = (
 				5143559D264D1FEC0047F576 /* CustomCell.swift */,
 				5143559E264D1FEC0047F576 /* EmptyView.swift */,
-				7B6AC5BE2618427B000A4B45 /* Main.storyboard */,
 				7B6AC5D926184369000A4B45 /* AlbumCell.swift */,
-				7BC2242126187D8B00B53474 /* ImageStyle.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -200,7 +194,6 @@
 				7B1BD6DA263801E6006C6658 /* .swiftlint.yml in Resources */,
 				7B6AC5C52618427B000A4B45 /* LaunchScreen.storyboard in Resources */,
 				7B6AC5C22618427B000A4B45 /* Assets.xcassets in Resources */,
-				7B6AC5C02618427B000A4B45 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,7 +237,6 @@
 				7B6AC5DD26184477000A4B45 /* SearchManager.swift in Sources */,
 				7B25FB8B26399C0700731422 /* Constants.swift in Sources */,
 				7B7D3E5C2641571B00ACB485 /* APISelectVC.swift in Sources */,
-				7BC2242226187D8B00B53474 /* ImageStyle.swift in Sources */,
 				7B6AC5BB2618427B000A4B45 /* SceneDelegate.swift in Sources */,
 				7B25FB8926397A7300731422 /* NapsterArtists.swift in Sources */,
 				7B6AC5D2261842A9000A4B45 /* Album.swift in Sources */,
@@ -256,14 +248,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		7B6AC5BE2618427B000A4B45 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7B6AC5BF2618427B000A4B45 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		7B6AC5C32618427B000A4B45 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
