@@ -10,9 +10,11 @@ import UIKit
 class SearchViewController: UIViewController {
     
     var searchTable: UITableView!
+    var spinner: UIActivityIndicatorView!
     
     let K = Constants()
     let searchController = UISearchController(searchResultsController: nil)
+    var timer: Timer?
     
     static var selectedAPI = "Select API"
     var artistHits = [String]() {
@@ -56,6 +58,11 @@ class SearchViewController: UIViewController {
         searchTable.translatesAutoresizingMaskIntoConstraints = false
         searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
         
+        spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        self.searchTable.addSubview(spinner)
+        spinner.isHidden = true
+        
         NSLayoutConstraint.activate([
             searchTable.topAnchor.constraint(equalTo: view.topAnchor),
             searchTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -83,29 +90,47 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        timer?.invalidate()
+        
         if searchText.isEmpty {
             artistHits = []
             collections = []
         } else {
-            if SearchViewController.selectedAPI == API.Apple.rawValue {
-                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                    SearchManager.instance.getArtists(search: searchText) { [self] (namesResponse, collectionResponse) in
-                        (self!.artistHits, self!.collections) = (namesResponse, collectionResponse)
-                    }
-                }
-            } else if SearchViewController.selectedAPI == API.Napster.rawValue {
-                DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                    SearchManager.instance.getNapsterArtists(searchText, completion: { response in
-                        self?.artistHits = response
-                    })
-                }
-            }
+            timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(callAPI), userInfo: nil, repeats: false)
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         artistHits = []
         collections = []
+    }
+    
+    @objc func callAPI() {
+        spinner.isHidden = false
+        spinner.startAnimating()
+        print("Method called by \(searchController.searchBar.text!)")
+        
+        let search = searchController.searchBar.text!
+        if SearchViewController.selectedAPI == API.Apple.rawValue {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                SearchManager.instance.getArtists(search: search) { [self] (namesResponse, collectionResponse) in
+                    (self!.artistHits, self!.collections) = (namesResponse, collectionResponse)
+                    DispatchQueue.main.async {
+                        self?.spinner.stopAnimating()
+                    }
+                }
+            }
+        } else if SearchViewController.selectedAPI == API.Napster.rawValue {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                SearchManager.instance.getNapsterArtists(search, completion: { response in
+                    self?.artistHits = response
+                    DispatchQueue.main.async {
+                        self?.spinner.stopAnimating()
+                    }
+                })
+            }
+        }
     }
 }
 

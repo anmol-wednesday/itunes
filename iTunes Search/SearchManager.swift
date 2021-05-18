@@ -25,7 +25,7 @@ class SearchManager {
 
     func getAlbum(searchRequest: String, completion: @escaping ([Album]) -> Void) {
         var albums = [Album]()
-        makeAPICall(searchQuery: searchRequest) { data, response, error in
+        makeAPICall(searchQuery: searchRequest) { data, _, error in
             if let safeData = data {
                 do {
                     let json = try JSONSerialization.jsonObject(with: safeData, options: []) as? [String: Any]
@@ -56,7 +56,7 @@ class SearchManager {
     func getArtists(search: String, completion: @escaping (([String], [String])) -> Void) {
         var artists = [String]()
         var collections = [String]()
-        makeAPICall(searchQuery: search) { data, response, error in
+        makeAPICall(searchQuery: search) { data, _, error in
             if let safeData = data {
                 do {
                     let json = try JSONSerialization.jsonObject(with: safeData, options: []) as? [String: Any]
@@ -120,13 +120,11 @@ class SearchManager {
 
     func getNapsterAlbums(string: String, completion: @escaping ([NapsterAlbums]) -> Void) {
         var napsterAlbums: [NapsterAlbums] = []
-        makeAPICall(searchQuery: string) { data, response, error in
-            
+        makeAPICall(searchQuery: string) { data, _, error in
             if error != nil {
                 print(error!)
                 return
             }
-            
             if let safeData = data {
                 napsterAlbums = self.parseJSON(safeData)
                 completion(napsterAlbums)
