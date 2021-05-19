@@ -195,5 +195,3 @@ extension SearchViewController {
         }
     }
 }
-
-//read query parameters

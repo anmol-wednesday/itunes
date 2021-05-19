@@ -12,7 +12,7 @@ class AlbumCell: UICollectionViewCell {
     let albumImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
-        imageView.layer.borderColor = UIColor(named: "artworkBorder")?.cgColor
+        imageView.layer.borderColor = UIColor(named: "artworkBorder")!.cgColor
         imageView.layer.borderWidth = 3
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +37,7 @@ class AlbumCell: UICollectionViewCell {
     
     let collectionNameLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -60,10 +60,10 @@ class AlbumCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             //albumImageView constraints
-            self.leadingAnchor.constraint(equalTo: albumImageView.leadingAnchor, constant: 0.0),
+            self.leadingAnchor.constraint(equalTo: albumImageView.leadingAnchor, constant: 0),
             self.topAnchor.constraint(equalTo: albumImageView.topAnchor, constant: 0.0),
-            albumImageView.widthAnchor.constraint(equalToConstant: 120.0),
-            albumImageView.heightAnchor.constraint(equalToConstant: 120.0),
+            albumImageView.widthAnchor.constraint(equalToConstant: 100.0),
+            albumImageView.heightAnchor.constraint(equalToConstant: 100.0),
             
             // songNameLabel constraints
             songNameLabel.leadingAnchor.constraint(equalTo: albumImageView.trailingAnchor, constant: 10.0),
