@@ -135,15 +135,15 @@ class SearchManager {
         
         var components = URLComponents()
         
+        components.scheme = K.scheme
+        
         if selectedAPI == API.Apple.rawValue {
-            components.scheme = K.scheme
             components.host = K.appleHost
             components.path = K.applePath
             components.queryItems = [
                 URLQueryItem(name: "term", value: searchString)
             ]
         } else {
-            components.scheme = K.scheme
             components.host = K.napsterHost
             components.path = K.napsterPath
             components.queryItems = [
