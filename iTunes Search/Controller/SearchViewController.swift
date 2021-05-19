@@ -188,10 +188,10 @@ extension SearchViewController {
     func selectedAPI(name: String) {
         if name == API.Apple.rawValue {
             SearchViewController.selectedAPI = name
-            SearchManager.instance.baseURL = K.appleAPI
+            SearchManager.instance.selectedAPI = name
         } else if name == API.Napster.rawValue {
             SearchViewController.selectedAPI = name
-            SearchManager.instance.baseURL = K.napsterAPI
+            SearchManager.instance.selectedAPI = name
         }
     }
 }

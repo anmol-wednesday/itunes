@@ -59,23 +59,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         view.addSubview(errorView)
         view.addSubview(spinner)
         
-        NSLayoutConstraint.activate([
-            
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            errorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            errorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            
-            errorView.widthAnchor.constraint(equalToConstant: 300),
-            errorView.heightAnchor.constraint(equalToConstant: 95),
-            
-            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            spinner.heightAnchor.constraint(equalToConstant: 100)
-        ])
+        setConstraints()
         
         self.errorView.isHidden = true
         
@@ -132,5 +116,25 @@ extension ViewController {
                 }
             }
         }
+    }
+    
+    func setConstraints() {
+        NSLayoutConstraint.activate([
+            
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            errorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            
+            errorView.widthAnchor.constraint(equalToConstant: 300),
+            errorView.heightAnchor.constraint(equalToConstant: 95),
+            
+            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            spinner.heightAnchor.constraint(equalToConstant: 100)
+        ])
     }
 }
