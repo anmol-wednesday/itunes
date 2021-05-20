@@ -16,13 +16,14 @@ class SearchManager {
     func makeAPICall(searchQuery: String, completion: @escaping (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
         let url = makeURL(for: searchQuery)
         var urlRequest = URLRequest(url: url)
+        print(url)
         urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         let session = URLSession.shared
         session.dataTask(with: urlRequest) { data, response, error in
             completion(data, response, error)
         }.resume()
     }
-
+    
     func getAlbum(searchRequest: String, completion: @escaping ([Album]) -> Void) {
         var albums = [Album]()
         makeAPICall(searchQuery: searchRequest) { data, _, error in
@@ -131,17 +132,13 @@ class SearchManager {
     }
     
     func makeURL(for searchQuery: String) -> URL {
-        let searchString = searchQuery.replacingOccurrences(of: " ", with: "+")
-        
         var components = URLComponents()
-        
         components.scheme = K.scheme
-        
         if selectedAPI == API.Apple.rawValue {
             components.host = K.appleHost
             components.path = K.applePath
             components.queryItems = [
-                URLQueryItem(name: "term", value: searchString)
+                URLQueryItem(name: "term", value: searchQuery)
             ]
         } else {
             components.host = K.napsterHost
