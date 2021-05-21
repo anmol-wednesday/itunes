@@ -8,6 +8,5 @@
 import Foundation
 
 struct NapsterAlbums {
-    
     var albumID: [String]
 }

@@ -11,8 +11,6 @@ class SearchViewController: UIViewController {
     
     var searchTable: UITableView!
     var spinner: UIActivityIndicatorView!
-
-    
     let K = Constants()
     let searchController = UISearchController(searchResultsController: nil)
     var timer: Timer?
@@ -139,10 +137,6 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
             }
         }
     }
-    
-//    func didDismissSearchController(_ searchController: UISearchController) {
-//        artistHits.removeAll(keepingCapacity: true)
-//    }
 }
 
 //MARK: - UITableView Delegate and Datasource
@@ -193,14 +187,11 @@ extension SearchViewController {
     }
     func selectedAPI(name: String) {
         if name == API.Apple.rawValue {
-            let api = "https://itunes.apple.com/search?term="
             SearchViewController.selectedAPI = name
-            SearchManager.instance.baseURL = api
+            SearchManager.instance.selectedAPI = name
         } else if name == API.Napster.rawValue {
-            let apiKey = "NmJiYmYzNTItOTgyNi00ZjdmLTgxZDYtYWVkYmI0NDVlOWQ4"
-            let api = "https://api.napster.com/v2.2/search?apikey=\(apiKey)&type=artist&query="
             SearchViewController.selectedAPI = name
-            SearchManager.instance.baseURL = api
+            SearchManager.instance.selectedAPI = name
         }
     }
 }

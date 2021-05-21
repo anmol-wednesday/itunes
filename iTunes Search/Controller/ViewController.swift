@@ -9,8 +9,6 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var collectionView: UICollectionView!
-
-    
     let K = Constants()
     let searchVC = SearchViewController()
     let errorView: EmptyView = {
@@ -36,8 +34,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         view.backgroundColor = UIColor(named: "viewColor")
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: -40.0, bottom: 0.0, right: 0.0)
-        layout.itemSize = CGSize(width: 330, height: 120)
+        if view.frame.size.width == 320 {
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        } else {
+            layout.sectionInset = UIEdgeInsets(top: 0, left: -40, bottom: 0, right: 0)
+        }
+        layout.itemSize = CGSize(width: 300, height: 100)
         
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         self.view.addSubview(collectionView)
@@ -57,23 +59,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         view.addSubview(errorView)
         view.addSubview(spinner)
         
-        NSLayoutConstraint.activate([
-            
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            errorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            errorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            
-            errorView.widthAnchor.constraint(equalToConstant: 300),
-            errorView.heightAnchor.constraint(equalToConstant: 95),
-            
-            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            spinner.heightAnchor.constraint(equalToConstant: 100)
-        ])
+        setConstraints()
         
         self.errorView.isHidden = true
         
@@ -130,5 +116,25 @@ extension ViewController {
                 }
             }
         }
+    }
+    
+    func setConstraints() {
+        NSLayoutConstraint.activate([
+            
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            errorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            errorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            
+            errorView.widthAnchor.constraint(equalToConstant: 300),
+            errorView.heightAnchor.constraint(equalToConstant: 95),
+            
+            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            spinner.heightAnchor.constraint(equalToConstant: 100)
+        ])
     }
 }

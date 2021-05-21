@@ -9,20 +9,21 @@ import Foundation
 
 class SearchManager {
     
-    var baseURL = ""
+    var selectedAPI = ""
+    let K = Constants()
     static let instance = SearchManager()
     
     func makeAPICall(searchQuery: String, completion: @escaping (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
-        let searchString = searchQuery.replacingOccurrences(of: " ", with: "+")
-        let url = URL(string: "\(baseURL)\(searchString)")
-        var urlRequest = URLRequest(url: url!)
+        let url = makeURL(for: searchQuery)
+        var urlRequest = URLRequest(url: url)
+        print(url)
         urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         let session = URLSession.shared
         session.dataTask(with: urlRequest) { data, response, error in
             completion(data, response, error)
         }.resume()
     }
-
+    
     func getAlbum(searchRequest: String, completion: @escaping ([Album]) -> Void) {
         var albums = [Album]()
         makeAPICall(searchQuery: searchRequest) { data, _, error in
@@ -87,16 +88,14 @@ class SearchManager {
     
     func getNapsterArtists(_ searchString: String, completion: @escaping ([String]) -> Void) {
         var artistName = [String]()
-        let search = searchString.replacingOccurrences(of: " ", with: "+")
-        if let url = URL(string: "\(baseURL)\(search)") {
-            if let data = try? Data(contentsOf: url) {
-                let decoder = JSONDecoder()
-                if let jsonArtists = try? decoder.decode(NapsterArtists.self, from: data) {
-                    for names in jsonArtists.search.data.artists {
-                        artistName.append(names.name)
-                    }
-                    completion(artistName)
+        let url = makeURL(for: searchString)
+        if let data = try? Data(contentsOf: url) {
+            let decoder = JSONDecoder()
+            if let jsonArtists = try? decoder.decode(NapsterArtists.self, from: data) {
+                for names in jsonArtists.search.data.artists {
+                    artistName.append(names.name)
                 }
+                completion(artistName)
             }
         }
     }
@@ -130,5 +129,28 @@ class SearchManager {
                 completion(napsterAlbums)
             }
         }
+    }
+    
+    func makeURL(for searchQuery: String) -> URL {
+        var components = URLComponents()
+        components.scheme = K.scheme
+        if selectedAPI == API.Apple.rawValue {
+            components.host = K.appleHost
+            components.path = K.applePath
+            components.queryItems = [
+                URLQueryItem(name: "term", value: searchQuery)
+            ]
+        } else {
+            components.host = K.napsterHost
+            components.path = K.napsterPath
+            components.queryItems = [
+                URLQueryItem(name: "apikey", value: K.napsterKey),
+                URLQueryItem(name: "type", value: "artist"),
+                URLQueryItem(name: "query", value: searchQuery)
+            ]
+        }
+        
+        guard let url = components.url else { fatalError("Cannot create URL") }
+        return url
     }
 }
