@@ -7,10 +7,7 @@
 
 import Foundation
 
-struct Constants {
-    let errorTitle = "Error"
-    let error = "There was an error, please try again!"
-    
+struct Constants {    
     let userDefaultsKey = "SelectedAPI"
     
     let searchTable = "artist"
