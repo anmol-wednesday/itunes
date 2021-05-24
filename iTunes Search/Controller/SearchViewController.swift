@@ -35,42 +35,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchController.delegate = self
-        searchController.searchBar.delegate = self
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.isTranslucent = true
-        title = "Search"
-        navigationItem.searchController = searchController
-        
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = true
-        searchController.searchBar.enablesReturnKeyAutomatically = true
-        searchController.searchBar.sizeToFit()
-        searchController.searchBar.placeholder = "Enter artist name"
-        
-        searchTable = UITableView()
-        self.view.addSubview(searchTable)
-        searchTable.delegate = self
-        searchTable.dataSource = self
-        searchTable.translatesAutoresizingMaskIntoConstraints = false
-        searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
-        
-        spinner = UIActivityIndicatorView(style: .large)
-        spinner.hidesWhenStopped = true
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        searchTable.addSubview(spinner)
-        spinner.isHidden = true
-        
-        NSLayoutConstraint.activate([
-            searchTable.topAnchor.constraint(equalTo: view.topAnchor),
-            searchTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            searchTable.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            searchTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-        ])
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -185,6 +150,7 @@ extension SearchViewController {
         let apiSelectVC = APISelectVC()
         navigationController?.pushViewController(apiSelectVC, animated: true)
     }
+    
     func selectedAPI(name: String) {
         if name == API.Apple.rawValue {
             SearchViewController.selectedAPI = name
@@ -193,5 +159,44 @@ extension SearchViewController {
             SearchViewController.selectedAPI = name
             SearchManager.instance.selectedAPI = name
         }
+    }
+    
+    func setupViews() {
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isTranslucent = true
+        title = "Search"
+        navigationItem.searchController = searchController
+        
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.searchBar.enablesReturnKeyAutomatically = true
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.placeholder = "Enter artist name"
+        
+        searchTable = UITableView()
+        self.view.addSubview(searchTable)
+        searchTable.delegate = self
+        searchTable.dataSource = self
+        searchTable.translatesAutoresizingMaskIntoConstraints = false
+        searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
+        
+        spinner = UIActivityIndicatorView(style: .large)
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        searchTable.addSubview(spinner)
+        spinner.isHidden = true
+        
+        NSLayoutConstraint.activate([
+            searchTable.topAnchor.constraint(equalTo: view.topAnchor),
+            searchTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchTable.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            searchTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
     }
 }
