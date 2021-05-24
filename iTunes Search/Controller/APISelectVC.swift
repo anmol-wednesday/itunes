@@ -34,7 +34,9 @@ class APISelectVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.checkCell(with: indexPath, for: tableView)
+        viewModel.checkCell(with: indexPath, for: tableView) {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

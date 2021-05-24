@@ -15,7 +15,7 @@ class APIViewModel {
     
     var selectedIndexPath = IndexPath(row: 2, section: 0)
     
-    func checkCell(with indexPath: IndexPath, for tableView: UITableView) {
+    func checkCell(with indexPath: IndexPath, for tableView: UITableView, completion: @escaping () -> Void) {
         if indexPath == selectedIndexPath {
             return
         }
@@ -37,14 +37,13 @@ class APIViewModel {
                     print(cellName)
                     SearchViewController.selectedAPI = API.Apple.rawValue
                     searchVC.defaults.setValue(API.Apple.rawValue, forKey: K.userDefaultsKey)
-//                    FIXME:- navigationController?.popToRootViewController(animated: true)
                 } else if cellName == API.Napster.rawValue {
                     print(cellName)
                     SearchViewController.selectedAPI = API.Napster.rawValue
                     searchVC.defaults.setValue(API.Napster.rawValue, forKey: K.userDefaultsKey)
-//                    FIXME:- navigationController?.popToRootViewController(animated: true)
                 }
             }
         }
+        completion()
     }
 }

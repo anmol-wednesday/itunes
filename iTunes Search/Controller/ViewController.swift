@@ -11,6 +11,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var collectionView: UICollectionView!
     var spinner: UIActivityIndicatorView!
     
+    let viewModel = ViewModel()
+    
     let searchVC = SearchViewController()
     let errorView: EmptyView = {
         let view = EmptyView()
@@ -33,8 +35,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "viewColor")
-        
-        let viewModel = ViewModel(resultName: resultName!)
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         if view.frame.size.width == 320 {
@@ -67,13 +67,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.errorView.isHidden = true
         
         collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
-        viewModel.getCollectionViewData(for: resultName!) { response in
-            self.cellData = response
-            self.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
-            if self.cellData.isEmpty {
+        viewModel.getCollectionViewData(for: resultName!) { [weak self] response in
+            self?.cellData = response
+            self?.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
+            if self!.cellData.isEmpty {
                 DispatchQueue.main.async {
-                    self.collectionView.isHidden = true
-                    self.errorView.isHidden = false
+                    self?.collectionView.isHidden = true
+                    self?.errorView.isHidden = false
                 }
             }
         }

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		514355A0264D1FEC0047F576 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5143559D264D1FEC0047F576 /* CustomCell.swift */; };
 		514355A1264D1FEC0047F576 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5143559E264D1FEC0047F576 /* EmptyView.swift */; };
+		7B0C2724265BB7B100B85352 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0C2723265BB7B100B85352 /* SearchViewModel.swift */; };
+		7B0C2726265BB7BB00B85352 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0C2725265BB7BB00B85352 /* ViewModel.swift */; };
+		7B0C2728265BB7C600B85352 /* APIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0C2727265BB7C600B85352 /* APIViewModel.swift */; };
 		7B1BD6DA263801E6006C6658 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B1BD6D9263801E6006C6658 /* .swiftlint.yml */; };
 		7B1D5031265628B80005F497 /* URLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1D5030265628B80005F497 /* URLTests.swift */; };
 		7B1D503B265656060005F497 /* MockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1D503A265656060005F497 /* MockTests.swift */; };
@@ -47,6 +50,9 @@
 /* Begin PBXFileReference section */
 		5143559D264D1FEC0047F576 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		5143559E264D1FEC0047F576 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		7B0C2723265BB7B100B85352 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		7B0C2725265BB7BB00B85352 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		7B0C2727265BB7C600B85352 /* APIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIViewModel.swift; sourceTree = "<group>"; };
 		7B1BD6D9263801E6006C6658 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		7B1D5030265628B80005F497 /* URLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLTests.swift; sourceTree = "<group>"; };
 		7B1D503A265656060005F497 /* MockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTests.swift; sourceTree = "<group>"; };
@@ -97,6 +103,7 @@
 		7B0C2721265BB1C900B85352 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				7B6AC5DC26184477000A4B45 /* SearchManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -104,6 +111,9 @@
 		7B0C2722265BB1CF00B85352 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B0C2723265BB7B100B85352 /* SearchViewModel.swift */,
+				7B0C2725265BB7BB00B85352 /* ViewModel.swift */,
+				7B0C2727265BB7C600B85352 /* APIViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -131,12 +141,11 @@
 			children = (
 				7B6AC5B82618427B000A4B45 /* AppDelegate.swift */,
 				7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */,
-				7B6AC5DC26184477000A4B45 /* SearchManager.swift */,
 				7B6AC5D026184291000A4B45 /* Model */,
 				7B6AC5CF2618428C000A4B45 /* View */,
 				7B0C2722265BB1CF00B85352 /* ViewModel */,
-				7B0C2721265BB1C900B85352 /* Utilities */,
 				7B6AC5CD26184286000A4B45 /* Controller */,
+				7B0C2721265BB1C900B85352 /* Utilities */,
 				7B6AC5C12618427B000A4B45 /* Assets.xcassets */,
 				7B6AC5C32618427B000A4B45 /* LaunchScreen.storyboard */,
 				7B6AC5C62618427B000A4B45 /* Info.plist */,
@@ -323,10 +332,13 @@
 				7BC49EB026304AFB007FED3B /* Artists.swift in Sources */,
 				514355A0264D1FEC0047F576 /* CustomCell.swift in Sources */,
 				514355A1264D1FEC0047F576 /* EmptyView.swift in Sources */,
+				7B0C2724265BB7B100B85352 /* SearchViewModel.swift in Sources */,
+				7B0C2728265BB7C600B85352 /* APIViewModel.swift in Sources */,
 				7BC49EAD263047A4007FED3B /* SearchViewController.swift in Sources */,
 				7BDD270B2640060F009E7289 /* CollectionCellData.swift in Sources */,
 				7B6AC5DA26184369000A4B45 /* AlbumCell.swift in Sources */,
 				7B6AC5DD26184477000A4B45 /* SearchManager.swift in Sources */,
+				7B0C2726265BB7BB00B85352 /* ViewModel.swift in Sources */,
 				7B25FB8B26399C0700731422 /* Constants.swift in Sources */,
 				7B7D3E5C2641571B00ACB485 /* APISelectVC.swift in Sources */,
 				7B6AC5BB2618427B000A4B45 /* SceneDelegate.swift in Sources */,
