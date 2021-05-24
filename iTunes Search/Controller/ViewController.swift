@@ -9,7 +9,8 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var collectionView: UICollectionView!
-    let K = Constants()
+    var spinner: UIActivityIndicatorView!
+    
     let searchVC = SearchViewController()
     let errorView: EmptyView = {
         let view = EmptyView()
@@ -18,7 +19,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var resultName: String?
     var selectedAPI = ""
-    var spinner: UIActivityIndicatorView!
+    
     var albums = [Album]()
     var napsterAlbums = [NapsterAlbums]()
     var cellData = [CollectionCellData]() {
@@ -32,6 +33,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "viewColor")
+        
+        let viewModel = ViewModel(resultName: resultName!)
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         if view.frame.size.width == 320 {
@@ -64,7 +67,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.errorView.isHidden = true
         
         collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
-        getCollectionViewData(for: resultName!) { response in
+        viewModel.getCollectionViewData(for: resultName!) { response in
             self.cellData = response
             self.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
             if self.cellData.isEmpty {
@@ -92,35 +95,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 }
 
 extension ViewController {
-    func getCollectionViewData(for value: String, completion: @escaping ([CollectionCellData]) -> Void) {
-        if SearchViewController.selectedAPI == API.Apple.rawValue {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                let search = value
-                SearchManager.instance.getAlbum(searchRequest: search) { [self] (requestedAlbums) in
-                    self?.albums = requestedAlbums
-                    
-                    self?.cellData = self!.albums.map {
-                        CollectionCellData(image: $0.artwork, artistName: $0.artistName, trackName: $0.songName, collectionName: $0.collectionName)
-                    }
-                    completion(self!.cellData)
-                }
-            }
-        } else if SearchViewController.selectedAPI == API.Napster.rawValue {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getNapsterAlbums(string: value) { (request) in
-                    self?.napsterAlbums = request
-                    self?.cellData = self!.napsterAlbums[0].albumID.map {
-                        CollectionCellData(image: $0, artistName: self!.resultName!, trackName: $0, collectionName: $0)
-                    }
-                    completion(self!.cellData)
-                }
-            }
-        }
-    }
-    
     func setConstraints() {
         NSLayoutConstraint.activate([
-            
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

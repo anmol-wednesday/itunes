@@ -8,39 +8,33 @@
 import UIKit
 
 class APISelectVC: UITableViewController {
-    let K = Constants()
-    let searchVC = SearchViewController()
-    let apiNames = [API.Apple.rawValue, API.Napster.rawValue]
-    let defaults = UserDefaults.standard
-    var selectedIndexPath = IndexPath(row: 2, section: 0)
-    
+    let viewModel = APIViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsMultipleSelection = false
         title = "Select API"
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: K.apiTable)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: viewModel.K.apiTable)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return apiNames.count
+        return viewModel.apiNames.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.apiTable, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: viewModel.K.apiTable, for: indexPath)
         
-        if indexPath == selectedIndexPath {
+        if indexPath == viewModel.selectedIndexPath {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
         }
-        
-        cell.textLabel?.text = apiNames[indexPath.row]
+        cell.textLabel?.text = viewModel.apiNames[indexPath.row]
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        checkCell(with: indexPath)
+        viewModel.checkCell(with: indexPath, for: tableView)
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -48,38 +42,5 @@ class APISelectVC: UITableViewController {
             cell.accessoryType = .none
         }
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func checkCell(with indexPath: IndexPath) {
-        if indexPath == selectedIndexPath {
-            return
-        }
-        
-        let newCell = tableView.cellForRow(at: indexPath)
-        if newCell?.accessoryType == UITableViewCell.AccessoryType.none {
-            newCell?.accessoryType = UITableViewCell.AccessoryType.checkmark
-        }
-        
-        let oldCell = tableView.cellForRow(at: selectedIndexPath)
-        if oldCell?.accessoryType == UITableViewCell.AccessoryType.checkmark {
-            oldCell?.accessoryType = UITableViewCell.AccessoryType.none
-        }
-        
-        selectedIndexPath = indexPath
-        if let cell = tableView.cellForRow(at: indexPath) {
-            if let cellName = cell.textLabel?.text {
-                if cellName == API.Apple.rawValue {
-                    print(cellName)
-                    SearchViewController.selectedAPI = API.Apple.rawValue
-                    searchVC.defaults.setValue(API.Apple.rawValue, forKey: K.userDefaultsKey)
-                    navigationController?.popToRootViewController(animated: true)
-                } else if cellName == API.Napster.rawValue {
-                    print(cellName)
-                    SearchViewController.selectedAPI = API.Napster.rawValue
-                    searchVC.defaults.setValue(API.Napster.rawValue, forKey: K.userDefaultsKey)
-                    navigationController?.popToRootViewController(animated: true)
-                }
-            }
-        }
     }
 }
