@@ -19,6 +19,7 @@
 		7B1D503F265698DE0005F497 /* napsterArtists.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B1D503E265698DE0005F497 /* napsterArtists.json */; };
 		7B25FB8926397A7300731422 /* NapsterArtists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8826397A7300731422 /* NapsterArtists.swift */; };
 		7B25FB8B26399C0700731422 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25FB8A26399C0700731422 /* Constants.swift */; };
+		7B276C12265CC3C600D65E21 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B276C11265CC3C600D65E21 /* .swiftlint.yml */; };
 		7B6AC5B92618427B000A4B45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5B82618427B000A4B45 /* AppDelegate.swift */; };
 		7B6AC5BB2618427B000A4B45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */; };
 		7B6AC5BD2618427B000A4B45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BC2618427B000A4B45 /* ViewController.swift */; };
@@ -60,6 +61,7 @@
 		7B1D503E265698DE0005F497 /* napsterArtists.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = napsterArtists.json; sourceTree = "<group>"; };
 		7B25FB8826397A7300731422 /* NapsterArtists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NapsterArtists.swift; sourceTree = "<group>"; };
 		7B25FB8A26399C0700731422 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7B276C11265CC3C600D65E21 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		7B6AC5B52618427B000A4B45 /* iTunes Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B6AC5B82618427B000A4B45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,8 +150,8 @@
 				7B0C2721265BB1C900B85352 /* Utilities */,
 				7B6AC5C12618427B000A4B45 /* Assets.xcassets */,
 				7B6AC5C32618427B000A4B45 /* LaunchScreen.storyboard */,
-				7B6AC5C62618427B000A4B45 /* Info.plist */,
 				7B1BD6D9263801E6006C6658 /* .swiftlint.yml */,
+				7B6AC5C62618427B000A4B45 /* Info.plist */,
 			);
 			path = "iTunes Search";
 			sourceTree = "<group>";
@@ -198,6 +200,7 @@
 				7B1D503A265656060005F497 /* MockTests.swift */,
 				7B1D5030265628B80005F497 /* URLTests.swift */,
 				7BD20DDC26551A4C00358B54 /* Info.plist */,
+				7B276C11265CC3C600D65E21 /* .swiftlint.yml */,
 			);
 			path = "iTunes SearchTests";
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B276C12265CC3C600D65E21 /* .swiftlint.yml in Resources */,
 				7B1D503F265698DE0005F497 /* napsterArtists.json in Resources */,
 				7B1D503D265698D40005F497 /* appleArtists.json in Resources */,
 			);

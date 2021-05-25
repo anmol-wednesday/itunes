@@ -11,6 +11,9 @@ class SearchViewController: UIViewController {
     
     var searchTable: UITableView!
     var spinner: UIActivityIndicatorView!
+    
+    let viewModel = SearchViewModel()
+    
     let K = Constants()
     let searchController = UISearchController(searchResultsController: nil)
     var timer: Timer?
@@ -39,17 +42,10 @@ class SearchViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if defaults.object(forKey: K.userDefaultsKey) as? String == API.Apple.rawValue {
-            selectedAPI(name: API.Apple.rawValue)
-        } else if defaults.object(forKey: K.userDefaultsKey) as? String == API.Napster.rawValue {
-            selectedAPI(name: API.Napster.rawValue)
-        } else if defaults.object(forKey: K.userDefaultsKey) == nil {
-            defaults.setValue("Select API", forKey: K.userDefaultsKey)
-        }
-        
+        viewModel.setSelectedAPI()
         let apiSelect = UIBarButtonItem(title: defaults.object(forKey: K.userDefaultsKey) as? String, style: .plain, target: self, action: #selector(promptAPISelect))
         navigationItem.rightBarButtonItems = [apiSelect]
-        selectedAPI(name: SearchViewController.selectedAPI)
+        viewModel.selectedAPI(name: SearchViewController.selectedAPI)
     }
 }
     
@@ -130,8 +126,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = ViewController()
-        tableView.deselectRow(at: indexPath, animated: true)
-        searchController.searchBar.resignFirstResponder()
         
         SearchViewController.selectedAPI == API.Apple.rawValue ? {
             detail.resultName = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
@@ -140,6 +134,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             detail.resultName = artistHits[indexPath.row]
             detail.selectedAPI = SearchViewController.selectedAPI
         }()
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        searchController.searchBar.resignFirstResponder()
         navigationController?.pushViewController(detail, animated: true)
     }
 }
@@ -149,16 +146,6 @@ extension SearchViewController {
     @objc func promptAPISelect() {
         let apiSelectVC = APISelectVC()
         navigationController?.pushViewController(apiSelectVC, animated: true)
-    }
-    
-    func selectedAPI(name: String) {
-        if name == API.Apple.rawValue {
-            SearchViewController.selectedAPI = name
-            SearchManager.instance.selectedAPI = name
-        } else if name == API.Napster.rawValue {
-            SearchViewController.selectedAPI = name
-            SearchManager.instance.selectedAPI = name
-        }
     }
     
     func setupViews() {
