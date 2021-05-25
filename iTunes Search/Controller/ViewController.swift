@@ -35,6 +35,37 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "viewColor")
+        setupViews()
+        
+        collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
+        viewModel.getCollectionViewData(for: resultName!) { [weak self] response in
+            self?.cellData = response
+            self?.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
+            if self!.cellData.isEmpty {
+                DispatchQueue.main.async {
+                    self?.collectionView.isHidden = true
+                    self?.errorView.isHidden = false
+                }
+            }
+        }
+        title = resultName
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return cellData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCell.description(), for: indexPath) as? AlbumCell {
+            cell.updateCell(album: cellData[indexPath.row])
+            return cell
+        }
+        return UICollectionViewCell()
+    }
+}
+
+extension ViewController {
+    func setupViews() {
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         if view.frame.size.width == 320 {
@@ -61,41 +92,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         view.addSubview(errorView)
         view.addSubview(spinner)
-        
-        setConstraints()
-        
         self.errorView.isHidden = true
         
-        collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
-        viewModel.getCollectionViewData(for: resultName!) { [weak self] response in
-            self?.cellData = response
-            self?.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
-            if self!.cellData.isEmpty {
-                DispatchQueue.main.async {
-                    self?.collectionView.isHidden = true
-                    self?.errorView.isHidden = false
-                }
-            }
-        }
-        title = resultName
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCell.description(), for: indexPath) as? AlbumCell {
-            cell.updateCell(album: cellData[indexPath.row])
-            
-            return cell
-        }
-        return UICollectionViewCell()
-    }
-}
-
-extension ViewController {
-    func setConstraints() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),

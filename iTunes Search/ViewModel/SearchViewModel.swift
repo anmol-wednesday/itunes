@@ -9,8 +9,8 @@ import Foundation
 
 class SearchViewModel {
     public let defaults = UserDefaults.standard
-    public let artistHits = [String]()
-    public let collections = [String]()
+    public var artistHits = [String]()
+    public var collections = [String]()
     public var resultName = ""
     public var selectedAPI = ""
     
@@ -34,5 +34,39 @@ class SearchViewModel {
         } else if defaults.object(forKey: K.userDefaultsKey) == nil {
             defaults.setValue("Select API", forKey: K.userDefaultsKey)
         }
+    }
+    
+    func getAPIData(for value: String, completion: @escaping ([String], [String]) -> Void) {
+        selectedAPI = defaults.value(forKey: K.userDefaultsKey) as! String
+        print("getAPIData called")
+        if selectedAPI == API.Apple.rawValue {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                SearchManager.instance.getArtists(search: value) { (namesResponse, collectionsResponse) in
+                    self?.artistHits = namesResponse
+                    self?.collections = collectionsResponse
+                    completion(self!.artistHits, self!.collections)
+                }
+            }
+        } else if selectedAPI == API.Napster.rawValue {
+            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                SearchManager.instance.getNapsterArtists(value) { response in
+                    self?.artistHits = response
+                }
+                self?.collections = []
+                completion(self!.artistHits, self!.collections)
+            }
+        }
+        
+    }
+    
+    func setupDetailVC(for indexPath: IndexPath) -> (String, String) {
+        SearchViewController.selectedAPI == API.Apple.rawValue ? {
+            resultName = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
+            selectedAPI = SearchViewController.selectedAPI
+        }() : {
+            resultName = artistHits[indexPath.row]
+            selectedAPI = SearchViewController.selectedAPI
+        }()
+        return (resultName, selectedAPI)
     }
 }

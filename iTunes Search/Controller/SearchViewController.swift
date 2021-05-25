@@ -53,9 +53,7 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         timer?.invalidate()
-        
         if searchText.isEmpty {
             artistHits = []
             collections = []
@@ -76,25 +74,14 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
         spinner.isHidden = false
         spinner.startAnimating()
         print("Method called by \(searchController.searchBar.text!)")
-        
         let search = searchController.searchBar.text!
-        if SearchViewController.selectedAPI == API.Apple.rawValue {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getArtists(search: search) { [self] (namesResponse, collectionResponse) in
-                    (self!.artistHits, self!.collections) = (namesResponse, collectionResponse)
-                    DispatchQueue.main.async {
-                        self?.spinner.stopAnimating()
-                    }
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.viewModel.getAPIData(for: search) { [weak self] artists, collection in
+                self?.artistHits = artists
+                self?.collections = collection
+                DispatchQueue.main.async {
+                    self?.spinner.stopAnimating()
                 }
-            }
-        } else if SearchViewController.selectedAPI == API.Napster.rawValue {
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getNapsterArtists(search, completion: { response in
-                    self?.artistHits = response
-                    DispatchQueue.main.async {
-                        self?.spinner.stopAnimating()
-                    }
-                })
             }
         }
     }
@@ -126,15 +113,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detail = ViewController()
-        
-        SearchViewController.selectedAPI == API.Apple.rawValue ? {
-            detail.resultName = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
-            detail.selectedAPI = SearchViewController.selectedAPI
-        }() : {
-            detail.resultName = artistHits[indexPath.row]
-            detail.selectedAPI = SearchViewController.selectedAPI
-        }()
-        
+        (detail.resultName, detail.selectedAPI) = viewModel.setupDetailVC(for: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
         navigationController?.pushViewController(detail, animated: true)
