@@ -47,6 +47,11 @@ class SearchViewController: UIViewController {
         navigationItem.rightBarButtonItems = [apiSelect]
         viewModel.selectedAPI(name: SearchViewController.selectedAPI)
     }
+    
+    @objc func promptAPISelect() {
+        let apiSelectVC = APISelectVC()
+        navigationController?.pushViewController(apiSelectVC, animated: true)
+    }
 }
     
     //MARK: - Search Bar and Controller Delegates
@@ -122,11 +127,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 //MARK: - Class methods
 
 extension SearchViewController {
-    @objc func promptAPISelect() {
-        let apiSelectVC = APISelectVC()
-        navigationController?.pushViewController(apiSelectVC, animated: true)
-    }
-    
     func setupViews() {
         searchController.delegate = self
         searchController.searchBar.delegate = self
