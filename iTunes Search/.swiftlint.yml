@@ -6,3 +6,4 @@ disabled_rules: # rule identifiers turned on by default to exclude from running
   - identifier_name
   - mark
   - type_name
+  - force_cast

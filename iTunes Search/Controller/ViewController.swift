@@ -8,12 +8,18 @@
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    var collectionView: UICollectionView!
-    var spinner: UIActivityIndicatorView!
+//    var collectionView: UICollectionView!
+//    var spinner: UIActivityIndicatorView!
     
     let viewModel = ViewModel()
-    
     let searchVC = SearchViewController()
+    
+    let detailView: DetailView = {
+        let view = DetailView()
+        view.backgroundColor = UIColor(named: "viewColor")
+        return view
+    }()
+    
     let errorView: EmptyView = {
         let view = EmptyView()
         return view
@@ -27,23 +33,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var cellData = [CollectionCellData]() {
         didSet {
             DispatchQueue.main.async {
-                self.collectionView.reloadData()
+                self.detailView.collectionView.reloadData()
             }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "viewColor")
+        view.addSubview(detailView)
         setupViews()
         
-        collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
+        detailView.collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
         viewModel.getCollectionViewData(for: resultName!) { [weak self] response in
             self?.cellData = response
-            self?.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
+            self?.detailView.spinner.performSelector(onMainThread: #selector(UIActivityIndicatorView.stopAnimating), with: nil, waitUntilDone: false)
             if self!.cellData.isEmpty {
                 DispatchQueue.main.async {
-                    self?.collectionView.isHidden = true
+                    self?.detailView.collectionView.isHidden = true
                     self?.errorView.isHidden = false
                 }
             }
@@ -66,49 +72,28 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
 extension ViewController {
     func setupViews() {
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        if view.frame.size.width == 320 {
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        } else {
-            layout.sectionInset = UIEdgeInsets(top: 0, left: -40, bottom: 0, right: 0)
-        }
-        layout.itemSize = CGSize(width: 300, height: 100)
-        
-        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        self.view.addSubview(collectionView)
-        collectionView.backgroundColor = UIColor(named: "viewColor")
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.isHidden = false
+        detailView.collectionView.delegate = self
+        detailView.collectionView.dataSource = self
+        detailView.collectionView.isHidden = false
         
         errorView.translatesAutoresizingMaskIntoConstraints = false
+        detailView.spinner.startAnimating()
         
-        spinner = UIActivityIndicatorView(style: .large)
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.hidesWhenStopped = true
-        spinner.startAnimating()
-        
-        view.addSubview(errorView)
-        view.addSubview(spinner)
-        self.errorView.isHidden = true
+        view.addSubview(detailView)
+        detailView.addSubview(errorView)
+        errorView.isHidden = true
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            detailView.topAnchor.constraint(equalTo: view.topAnchor),
+            detailView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            detailView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            detailView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
             errorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             errorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             
             errorView.widthAnchor.constraint(equalToConstant: 300),
-            errorView.heightAnchor.constraint(equalToConstant: 95),
-            
-            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            spinner.heightAnchor.constraint(equalToConstant: 100)
+            errorView.heightAnchor.constraint(equalToConstant: 95)
         ])
     }
 }

@@ -8,28 +8,28 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-    
-    var searchTable: UITableView!
-    var spinner: UIActivityIndicatorView!
-    
+
     let viewModel = SearchViewModel()
-    
+    let searchView: SearchView = {
+        let view = SearchView()
+        view.backgroundColor = UIColor(named: "viewColor")
+        return view
+    }()
     let K = Constants()
     let searchController = UISearchController(searchResultsController: nil)
     var timer: Timer?
-    
     static var selectedAPI = "Select API"
     var artistHits = [String]() {
         didSet {
             DispatchQueue.main.async {
-                self.searchTable.reloadData()
+                self.searchView.searchTable.reloadData()
             }
         }
     }
     var collections = [String]() {
         didSet {
             DispatchQueue.main.async {
-                self.searchTable.reloadData()
+                self.searchView.searchTable.reloadData()
             }
         }
     }
@@ -38,6 +38,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(searchView)
         setupViews()
     }
     
@@ -63,7 +64,7 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
             artistHits = []
             collections = []
             DispatchQueue.main.async {
-                self.spinner.stopAnimating()
+                self.searchView.spinner.stopAnimating()
             }
         } else {
             timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(callAPI), userInfo: nil, repeats: false)
@@ -76,8 +77,8 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
     }
     
     @objc func callAPI() {
-        spinner.isHidden = false
-        spinner.startAnimating()
+        searchView.spinner.isHidden = false
+        searchView.spinner.startAnimating()
         print("Method called by \(searchController.searchBar.text!)")
         let search = searchController.searchBar.text!
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
@@ -85,7 +86,7 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
                 self?.artistHits = artists
                 self?.collections = collection
                 DispatchQueue.main.async {
-                    self?.spinner.stopAnimating()
+                    self?.searchView.spinner.stopAnimating()
                 }
             }
         }
@@ -142,27 +143,15 @@ extension SearchViewController {
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
         
-        searchTable = UITableView()
-        self.view.addSubview(searchTable)
-        searchTable.delegate = self
-        searchTable.dataSource = self
-        searchTable.translatesAutoresizingMaskIntoConstraints = false
-        searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
-        
-        spinner = UIActivityIndicatorView(style: .large)
-        spinner.hidesWhenStopped = true
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        searchTable.addSubview(spinner)
-        spinner.isHidden = true
+        searchView.searchTable.delegate = self
+        searchView.searchTable.dataSource = self
+        searchView.searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
         
         NSLayoutConstraint.activate([
-            searchTable.topAnchor.constraint(equalTo: view.topAnchor),
-            searchTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            searchTable.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            searchTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            spinner.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+            searchView.topAnchor.constraint(equalTo: view.topAnchor),
+            searchView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            searchView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 }
