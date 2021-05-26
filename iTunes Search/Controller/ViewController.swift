@@ -8,9 +8,6 @@
 import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-//    var collectionView: UICollectionView!
-//    var spinner: UIActivityIndicatorView!
-    
     let viewModel = ViewModel()
     let searchVC = SearchViewController()
     
