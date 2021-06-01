@@ -12,19 +12,19 @@ class ApplicationCoordinator: Coordinator {
 	private let window: UIWindow
 	private let rootViewController: UINavigationController
 	private let searchTableCoordinator: SearchTableCoordinator?
-	private var searchVC: SearchViewController?
+//	private var searchVC: SearchViewController?
 	
 	init(window: UIWindow) {
 		self.window = window
-		searchVC = SearchViewController()
-		rootViewController = UINavigationController(rootViewController: searchVC!)
+//		searchVC = SearchViewController()
+		rootViewController = UINavigationController()
 		rootViewController.navigationBar.prefersLargeTitles = true
-		
 		searchTableCoordinator = SearchTableCoordinator(presenter: rootViewController)
 	}
 	
 	func start() {
 		window.rootViewController = rootViewController
+		searchTableCoordinator?.start()
 		window.makeKeyAndVisible()
 	}
 }

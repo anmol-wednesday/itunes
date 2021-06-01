@@ -21,6 +21,5 @@ class APISelectCoordinator: Coordinator {
 		let APISelectVC = APISelectVC()
 		self.apiViewController = APISelectVC
 		presenter.pushViewController(APISelectVC, animated: true)
-		searchTableCoordinator?.start()
 	}
 }

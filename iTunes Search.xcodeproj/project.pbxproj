@@ -24,6 +24,7 @@
 		7B276C18265D018300D65E21 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B276C17265D018300D65E21 /* SearchView.swift */; };
 		7B276C1A265D161600D65E21 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B276C19265D161600D65E21 /* DetailView.swift */; };
 		7B342442265F600F00E4B435 /* ViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B342441265F600F00E4B435 /* ViewModelTests.swift */; };
+		7B53FA342666427000F62EE4 /* CollectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B53FA332666427000F62EE4 /* CollectionCoordinator.swift */; };
 		7B69BD6726660C000076D64B /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B69BD6626660C000076D64B /* ApplicationCoordinator.swift */; };
 		7B6AC5B92618427B000A4B45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5B82618427B000A4B45 /* AppDelegate.swift */; };
 		7B6AC5BB2618427B000A4B45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AC5BA2618427B000A4B45 /* SceneDelegate.swift */; };
@@ -83,6 +84,7 @@
 		7B276C17265D018300D65E21 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		7B276C19265D161600D65E21 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		7B342441265F600F00E4B435 /* ViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelTests.swift; sourceTree = "<group>"; };
+		7B53FA332666427000F62EE4 /* CollectionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionCoordinator.swift; sourceTree = "<group>"; };
 		7B69BD6626660C000076D64B /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		7B6AC5B52618427B000A4B45 /* iTunes Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iTunes Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B6AC5B82618427B000A4B45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				7B97F7192665024E00A2325A /* SearchTableCoordinator.swift */,
 				7B97F71B2665025B00A2325A /* APISelectCoordinator.swift */,
 				7B69BD6626660C000076D64B /* ApplicationCoordinator.swift */,
+				7B53FA332666427000F62EE4 /* CollectionCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				7B6AC5DD26184477000A4B45 /* SearchManager.swift in Sources */,
 				7B97F71C2665025B00A2325A /* APISelectCoordinator.swift in Sources */,
 				7B0C2726265BB7BB00B85352 /* ViewModel.swift in Sources */,
+				7B53FA342666427000F62EE4 /* CollectionCoordinator.swift in Sources */,
 				7B25FB8B26399C0700731422 /* Constants.swift in Sources */,
 				7B7D3E5C2641571B00ACB485 /* APISelectVC.swift in Sources */,
 				7B97F71A2665024E00A2325A /* SearchTableCoordinator.swift in Sources */,

@@ -7,8 +7,15 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+protocol SearchViewControllerDelegate: AnyObject {
+	func didTapSelectAPI(_ controller: SearchViewController)
+	func didTapCellInList(_ controller: SearchViewController, resultName: String, selectedAPI: String)
+}
 
+class SearchViewController: UIViewController {
+	
+	weak var delegate: SearchViewControllerDelegate?
+	
     let viewModel = SearchViewModel()
     let searchView: SearchView = {
         let view = SearchView()
@@ -51,8 +58,7 @@ class SearchViewController: UIViewController {
     }
     
     @objc func promptAPISelect() {
-        let apiSelectVC = APISelectVC()
-        navigationController?.pushViewController(apiSelectVC, animated: true)
+		delegate?.didTapSelectAPI(self)
     }
 }
     
@@ -119,11 +125,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detail = ViewController()
-        (detail.resultName, detail.selectedAPI) = viewModel.setupDetailVC(for: indexPath)
+		let (result, api) = viewModel.setupDetailVC(for: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
-//        navigationController?.pushViewController(detail, animated: true)
+		delegate?.didTapCellInList(self, resultName: result, selectedAPI: api)
     }
 }
 //MARK: - Class methods
