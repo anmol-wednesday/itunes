@@ -8,12 +8,12 @@
 import UIKit
 
 class SearchTableCoordinator: Coordinator {
-    
+	
 	private let presenter: UINavigationController
 	private var searchVC: SearchViewController?
 	private var apiCoordinator: APISelectCoordinator?
 	private var collectionCoordinator: CollectionCoordinator?
-    
+	
 	init(presenter: UINavigationController) {
 		self.presenter = presenter
 	}
