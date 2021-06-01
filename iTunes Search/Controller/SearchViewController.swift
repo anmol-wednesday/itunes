@@ -45,7 +45,8 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         viewModel.setSelectedAPI()
         let apiSelect = UIBarButtonItem(title: defaults.object(forKey: K.userDefaultsKey) as? String, style: .plain, target: self, action: #selector(promptAPISelect))
-        navigationItem.rightBarButtonItems = [apiSelect]
+        navigationItem.rightBarButtonItem = apiSelect
+        apiSelect.accessibilityIdentifier = "apiButton"
         viewModel.selectedAPI(name: SearchViewController.selectedAPI)
     }
     
@@ -122,7 +123,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         (detail.resultName, detail.selectedAPI) = viewModel.setupDetailVC(for: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
         searchController.searchBar.resignFirstResponder()
-        navigationController?.pushViewController(detail, animated: true)
+//        navigationController?.pushViewController(detail, animated: true)
     }
 }
 //MARK: - Class methods
@@ -139,7 +140,6 @@ extension SearchViewController {
         
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = true
-        searchController.searchBar.enablesReturnKeyAutomatically = true
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Enter artist name"
         
