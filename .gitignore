@@ -7,3 +7,4 @@
 
 *.xcworkspace
 iTunes\ SearchTests/*
+iTunes\ SearchUITests/*
