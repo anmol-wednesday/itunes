@@ -1,8 +1,10 @@
-*.xcbkptlist
-*.xcuserstate
+*/xcbkptlist
+*/xcuserstate
 *.DS_Store
-*.xcuserdata/
+*/xcuserdata/
 *.idea
-*.xcshareddata
+*/xcshareddata
 
 *.xcworkspace
+iTunes\ SearchTests/*
+iTunes\ SearchUITests/*
