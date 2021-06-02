@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class SearchViewModel {
     public let defaults = UserDefaults.standard
@@ -13,7 +15,9 @@ class SearchViewModel {
     public var collections = [String]()
     public var resultName = ""
     public var selectedAPI = ""
-    
+	
+	public var subject = PublishSubject<[String]>()
+	
     let K = Constants()
     
     func selectedAPI(name: String) {
@@ -42,7 +46,7 @@ class SearchViewModel {
         if selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getArtists(search: value) { (namesResponse, collectionsResponse) in
-                    self?.artistHits = namesResponse
+					self?.artistHits = namesResponse
                     self?.collections = collectionsResponse
                     completion(self!.artistHits, self!.collections)
                 }
@@ -56,12 +60,11 @@ class SearchViewModel {
                 completion(self!.artistHits, self!.collections)
             }
         }
-        
     }
     
     func setupDetailVC(for indexPath: IndexPath) -> (String, String) {
         SearchViewController.selectedAPI == API.Apple.rawValue ? {
-            resultName = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
+			resultName = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
             selectedAPI = SearchViewController.selectedAPI
         }() : {
             resultName = artistHits[indexPath.row]
@@ -69,4 +72,10 @@ class SearchViewModel {
         }()
         return (resultName, selectedAPI)
     }
+	
+	func fetchTableData() {
+		let results = artistHits
+		subject.onNext(results)
+		subject.onCompleted()
+	}
 }

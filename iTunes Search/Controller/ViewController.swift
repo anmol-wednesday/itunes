@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ViewController: UIViewController {
 	let viewModel = ViewModel()
 	let searchVC = SearchViewController()
 	
@@ -53,6 +53,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 		}
 		title = resultName
 	}
+}
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return cellData.count

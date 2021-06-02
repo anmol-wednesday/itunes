@@ -8,3 +8,5 @@
 *.xcworkspace
 iTunes\ SearchTests/*
 iTunes\ SearchUITests/*
+
+Pods

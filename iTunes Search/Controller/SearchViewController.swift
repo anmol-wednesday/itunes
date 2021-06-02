@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol SearchViewControllerDelegate: AnyObject {
 	func didTapSelectAPI(_ controller: SearchViewController)
@@ -15,24 +17,29 @@ protocol SearchViewControllerDelegate: AnyObject {
 class SearchViewController: UIViewController {
 	
 	weak var delegate: SearchViewControllerDelegate?
-	
+	let disposeBag = DisposeBag()
 	let viewModel = SearchViewModel()
+	
 	let searchView: SearchView = {
 		let view = SearchView()
 		view.backgroundColor = UIColor(named: "viewColor")
 		return view
 	}()
+	
 	let K = Constants()
 	let searchController = UISearchController(searchResultsController: nil)
 	var timer: Timer?
 	static var selectedAPI = "Select API"
+	
 	var artistHits = [String]() {
 		didSet {
-			DispatchQueue.main.async {
-				self.searchView.searchTable.reloadData()
+			DispatchQueue.main.async { [weak self] in
+				self?.searchView.searchTable.reloadData()
 			}
 		}
 	}
+	
+	
 	var collections = [String]() {
 		didSet {
 			DispatchQueue.main.async {
@@ -40,6 +47,7 @@ class SearchViewController: UIViewController {
 			}
 		}
 	}
+	
 	var searchQuery = ""
 	var defaults = UserDefaults.standard
 	
@@ -47,6 +55,11 @@ class SearchViewController: UIViewController {
 		super.viewDidLoad()
 		view.addSubview(searchView)
 		setupViews()
+		ObserveSearchBar()
+		cancelButtonForSearchBar()
+		searchView.searchTable.rx.setDelegate(self).disposed(by: disposeBag)
+		bindToTable()
+		 
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -62,25 +75,76 @@ class SearchViewController: UIViewController {
 	}
 }
 
-//MARK: - Search Bar and Controller Delegates
+//MARK: - UITableView Delegate and Datasource
+//TODO: - Remove TableView Delegate and DataSource Methods
+//extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+//	
+//	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//		return artistHits.count
+//	}
+//	
+//	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//		let cell = tableView.dequeueReusableCell(withIdentifier: K.searchTable, for: indexPath)
+//		
+//		if SearchViewController.selectedAPI == API.Apple.rawValue {
+//			cell.textLabel?.text = artistHits[indexPath.row]
+//			cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+//			cell.detailTextLabel?.text = collections[indexPath.row]
+//			cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14)
+//		} else if SearchViewController.selectedAPI == API.Napster.rawValue {
+//			cell.textLabel?.text = artistHits[indexPath.row]
+//			cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+//			cell.detailTextLabel?.text = nil
+//		}
+//		return cell
+//	}
+//	
+//	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//		let (result, api) = viewModel.setupDetailVC(for: indexPath)
+//		tableView.deselectRow(at: indexPath, animated: true)
+//		searchController.searchBar.resignFirstResponder()
+//		delegate?.didTapCellInList(self, resultName: result, selectedAPI: api)
+//	}
+//}
+//MARK: - Class methods
 
-extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate {
-	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		timer?.invalidate()
-		if searchText.isEmpty {
-			artistHits = []
-			collections = []
-			DispatchQueue.main.async {
-				self.searchView.spinner.stopAnimating()
-			}
-		} else {
-			timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(callAPI), userInfo: nil, repeats: false)
-		}
+extension SearchViewController {
+	func setupViews() {
+		navigationController?.navigationBar.prefersLargeTitles = true
+		navigationController?.navigationBar.isTranslucent = true
+		title = "Search"
+		navigationItem.searchController = searchController
+		
+		searchController.obscuresBackgroundDuringPresentation = false
+		searchController.hidesNavigationBarDuringPresentation = true
+		searchController.searchBar.sizeToFit()
+		searchController.searchBar.placeholder = "Enter artist name"
+		
+//		searchView.searchTable.delegate = self
+//		searchView.searchTable.dataSource = self
+		searchView.searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
+		
+		NSLayoutConstraint.activate([
+			searchView.topAnchor.constraint(equalTo: view.topAnchor),
+			searchView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			searchView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			searchView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+		])
 	}
 	
-	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-		artistHits = []
-		collections = []
+	func ObserveSearchBar() {
+		searchController.searchBar.rx.text.subscribe { event in
+			self.timer?.invalidate()
+			if event.element!!.isEmpty {
+				self.artistHits = []
+				self.collections = []
+				DispatchQueue.main.async {
+					self.searchView.spinner.stopAnimating()
+				}
+			} else {
+				self.timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.callAPI), userInfo: nil, repeats: false)
+			}
+		}.disposed(by: disposeBag)
 	}
 	
 	@objc func callAPI() {
@@ -98,65 +162,24 @@ extension SearchViewController: UISearchBarDelegate, UISearchControllerDelegate 
 			}
 		}
 	}
-}
-
-//MARK: - UITableView Delegate and Datasource
-
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return artistHits.count
+	func cancelButtonForSearchBar() {
+		searchController.searchBar.rx.cancelButtonClicked.subscribe { _ in
+			self.artistHits = []
+			self.collections = []
+		}.disposed(by: disposeBag)
 	}
 	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: K.searchTable, for: indexPath)
-		
-		if SearchViewController.selectedAPI == API.Apple.rawValue {
-			cell.textLabel?.text = artistHits[indexPath.row]
-			cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
-			cell.detailTextLabel?.text = collections[indexPath.row]
-			cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14)
-		} else if SearchViewController.selectedAPI == API.Napster.rawValue {
-			cell.textLabel?.text = artistHits[indexPath.row]
-			cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
-			cell.detailTextLabel?.text = nil
-		}
-		return cell
-	}
-	
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let (result, api) = viewModel.setupDetailVC(for: indexPath)
-		tableView.deselectRow(at: indexPath, animated: true)
-		searchController.searchBar.resignFirstResponder()
-		delegate?.didTapCellInList(self, resultName: result, selectedAPI: api)
-	}
-}
-//MARK: - Class methods
+	// Table View
+	// TODO: - Write this method
+	func bindToTable() {
+		let table = searchView.searchTable
 
-extension SearchViewController {
-	func setupViews() {
-		searchController.delegate = self
-		searchController.searchBar.delegate = self
+		table.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
+		viewModel.subject.bind(to: table.rx.items(cellIdentifier: K.searchTable, cellType: CustomCell.self)) { (_, item, cell) in
+			cell.textLabel?.text = item
+		}.disposed(by: disposeBag)
 		
-		navigationController?.navigationBar.prefersLargeTitles = true
-		navigationController?.navigationBar.isTranslucent = true
-		title = "Search"
-		navigationItem.searchController = searchController
-		
-		searchController.obscuresBackgroundDuringPresentation = false
-		searchController.hidesNavigationBarDuringPresentation = true
-		searchController.searchBar.sizeToFit()
-		searchController.searchBar.placeholder = "Enter artist name"
-		
-		searchView.searchTable.delegate = self
-		searchView.searchTable.dataSource = self
-		searchView.searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
-		
-		NSLayoutConstraint.activate([
-			searchView.topAnchor.constraint(equalTo: view.topAnchor),
-			searchView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			searchView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-			searchView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-		])
+		viewModel.fetchTableData()
 	}
 }
