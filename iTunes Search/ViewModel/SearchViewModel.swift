@@ -11,12 +11,11 @@ import RxCocoa
 
 class SearchViewModel {
     public let defaults = UserDefaults.standard
-    public var artistHits = [String]()
-    public var collections = [String]()
+    public var artistHits = [TableViewCellData]()
     public var resultName = ""
     public var selectedAPI = ""
 	
-	public var subject = PublishSubject<[String]>()
+	public var subject = PublishSubject<TableViewCellData>()
 	
     let K = Constants()
     
@@ -40,42 +39,38 @@ class SearchViewModel {
         }
     }
     
-    func getAPIData(for value: String, completion: @escaping ([String], [String]) -> Void) {
+    func getAPIData(for value: String, completion: @escaping ([TableViewCellData]) -> Void) {
         selectedAPI = defaults.value(forKey: K.userDefaultsKey) as! String
         print("getAPIData called")
         if selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                SearchManager.instance.getArtists(search: value) { (namesResponse, collectionsResponse) in
-					self?.artistHits = namesResponse
-                    self?.collections = collectionsResponse
-                    completion(self!.artistHits, self!.collections)
+                SearchManager.instance.getArtists(search: value) { (namesResponse) in
+					self?.artistHits = namesResponse // remove
+//					self?.subject.onNext(TableViewCellData(artistNames: namesResponse, collectionNames: collectionsResponse)) //????
+//					self?.subject.onNext(collectionsResponse)
+//					self?.finalSubject.onNext(namesResponse)
+                    completion(self!.artistHits) // remove closure
                 }
             }
         } else if selectedAPI == API.Napster.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getNapsterArtists(value) { response in
-                    self?.artistHits = response
+                    self?.artistHits = response // remove
+//					self?.subject.onNext(TableViewCellData(artistNames: response, collectionNames: []))
                 }
-                self?.collections = []
-                completion(self!.artistHits, self!.collections)
+                completion(self!.artistHits) // remove closure
             }
         }
     }
     
     func setupDetailVC(for indexPath: IndexPath) -> (String, String) {
         SearchViewController.selectedAPI == API.Apple.rawValue ? {
-			resultName = ("\(artistHits[indexPath.row]) \(collections[indexPath.row])")
+			resultName = ("\(artistHits[indexPath.row].artistNames) \(artistHits[indexPath.row].collectionNames ?? "")")
             selectedAPI = SearchViewController.selectedAPI
         }() : {
-            resultName = artistHits[indexPath.row]
+			resultName = artistHits[indexPath.row].artistNames
             selectedAPI = SearchViewController.selectedAPI
         }()
         return (resultName, selectedAPI)
     }
-	
-	func fetchTableData() {
-		let results = artistHits
-		subject.onNext(results)
-		subject.onCompleted()
-	}
 }

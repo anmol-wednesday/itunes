@@ -54,9 +54,8 @@ class SearchManager {
 		}
 	}
 	
-	func getArtists(search: String, completion: @escaping (([String], [String])) -> Void) {
-		var artists = [String]()
-		var collections = [String]()
+	func getArtists(search: String, completion: @escaping ([TableViewCellData]) -> Void) {
+		var artists = [TableViewCellData]()
 		makeAPICall(searchQuery: search) { data, _, error in
 			if let safeData = data {
 				do {
@@ -67,14 +66,11 @@ class SearchManager {
 								guard let artistName = artistInfo["artistName"] as? String else { return }
 								guard let collectionName = artistInfo["collectionName"] as? String else { return }
 								
-								let artist = Artists(name: artistName)
-								artists.append(artist.name)
-								
-								let collection = Collection(collectionName: collectionName)
-								collections.append(collection.collectionName)
+								let table = TableViewCellData(artistNames: artistName, collectionNames: collectionName)
+								artists.append(table)
 							}
 						}
-						completion((artists, collections))
+						completion(artists)
 					}
 				} catch {
 					print(error)
@@ -86,14 +82,15 @@ class SearchManager {
 		}
 	}
 	
-	func getNapsterArtists(_ searchString: String, completion: @escaping ([String]) -> Void) {
-		var artistName = [String]()
+	func getNapsterArtists(_ searchString: String, completion: @escaping ([TableViewCellData]) -> Void) {
+		var artistName = [TableViewCellData]()
 		let url = makeURL(for: searchString)
 		if let data = try? Data(contentsOf: url) {
 			let decoder = JSONDecoder()
 			if let jsonArtists = try? decoder.decode(NapsterArtists.self, from: data) {
 				for names in jsonArtists.search.data.artists {
-					artistName.append(names.name)
+					let artist = TableViewCellData(artistNames: names.name, collectionNames: "")
+					artistName.append(artist)
 				}
 				completion(artistName)
 			}
@@ -109,7 +106,7 @@ class SearchManager {
 			if let albumJSON = decodedData.search.data.artists.first!.albumGroups.singlesAndEPs {
 				albumID = albumJSON
 			}
-			let albumInfo = NapsterAlbums(albumID: albumID) //change
+			let albumInfo = NapsterAlbums(albumID: albumID)
 			temp.append(albumInfo)
 		} catch {
 			print(error)

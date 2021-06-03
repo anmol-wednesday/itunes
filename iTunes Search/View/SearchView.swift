@@ -9,10 +9,12 @@ import UIKit
 
 class SearchView: UIView {
     var searchTable: UITableView = {
+		let K = Constants()
         let searchTableView = UITableView()
         searchTableView.translatesAutoresizingMaskIntoConstraints = false
         searchTableView.sizeToFit()
         searchTableView.backgroundColor = UIColor(named: "viewColor")
+		searchTableView.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
         return searchTableView
     }()
     

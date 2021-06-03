@@ -13,3 +13,8 @@ struct CollectionCellData {
     let trackName: String
     let collectionName: String?
 }
+
+struct TableViewCellData {
+	let artistNames: String
+	let collectionNames: String?
+}
