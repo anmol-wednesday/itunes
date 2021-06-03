@@ -15,7 +15,7 @@ class SearchViewModel {
     public var resultName = ""
     public var selectedAPI = ""
 	
-	public var subject = PublishSubject<TableViewCellData>()
+	public var subject = PublishSubject<[TableViewCellData]>()
 	
     let K = Constants()
     
@@ -46,9 +46,7 @@ class SearchViewModel {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getArtists(search: value) { (namesResponse) in
 					self?.artistHits = namesResponse // remove
-//					self?.subject.onNext(TableViewCellData(artistNames: namesResponse, collectionNames: collectionsResponse)) //????
-//					self?.subject.onNext(collectionsResponse)
-//					self?.finalSubject.onNext(namesResponse)
+					self?.subject.onNext(namesResponse)
                     completion(self!.artistHits) // remove closure
                 }
             }
@@ -56,7 +54,7 @@ class SearchViewModel {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getNapsterArtists(value) { response in
                     self?.artistHits = response // remove
-//					self?.subject.onNext(TableViewCellData(artistNames: response, collectionNames: []))
+					self?.subject.onNext(response)
                 }
                 completion(self!.artistHits) // remove closure
             }

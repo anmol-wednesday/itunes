@@ -14,7 +14,7 @@ protocol SearchViewControllerDelegate: AnyObject {
 	func didTapCellInList(_ controller: SearchViewController, resultName: String, selectedAPI: String)
 }
 
-class SearchViewController: UIViewController {//, UIScrollViewDelegate {
+class SearchViewController: UIViewController, UIScrollViewDelegate {
 	
 	weak var delegate: SearchViewControllerDelegate?
 	let disposeBag = DisposeBag()
@@ -31,14 +31,7 @@ class SearchViewController: UIViewController {//, UIScrollViewDelegate {
 	var timer: Timer?
 	static var selectedAPI = "Select API"
 	
-	var artistHits = [TableViewCellData]() {
-		didSet {
-			
-			DispatchQueue.main.async { [weak self] in
-				self?.searchView.searchTable.reloadData()
-			}
-		}
-	}
+	var artistHits = [TableViewCellData]()
 	
 	var searchQuery = ""
 	var defaults = UserDefaults.standard
@@ -47,13 +40,12 @@ class SearchViewController: UIViewController {//, UIScrollViewDelegate {
 		super.viewDidLoad()
 		view.addSubview(searchView)
 		setupViews()
+		
 		ObserveSearchBar()
 		cancelButtonForSearchBar()
-		searchView.searchTable.delegate = self
-		searchView.searchTable.dataSource = self
-//		searchView.searchTable.rx.setDelegate(self).disposed(by: disposeBag)
-//		bindToTable()
-		
+		searchView.searchTable.rx.setDelegate(self).disposed(by: disposeBag)
+		bindToTable()
+		showDetail()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -69,30 +61,6 @@ class SearchViewController: UIViewController {//, UIScrollViewDelegate {
 	}
 }
 
-//MARK: - UITableView Delegate and Datasource
-//TODO: - Remove TableView Delegate and DataSource Methods
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
-
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return artistHits.count
-	}
-
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: K.searchTable, for: indexPath)
-		cell.textLabel?.text = artistHits[indexPath.row].artistNames
-		cell.detailTextLabel?.text = artistHits[indexPath.row].collectionNames
-		cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
-		cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14)
-		return cell
-	}
-
-	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let (result, api) = viewModel.setupDetailVC(for: indexPath)
-		tableView.deselectRow(at: indexPath, animated: true)
-		searchController.searchBar.resignFirstResponder()
-		delegate?.didTapCellInList(self, resultName: result, selectedAPI: api)
-	}
-}
 //MARK: - Class methods
 
 extension SearchViewController {
@@ -107,7 +75,7 @@ extension SearchViewController {
 		searchController.searchBar.sizeToFit()
 		searchController.searchBar.placeholder = "Enter artist name"
 		
-//		searchView.searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
+		searchView.searchTable.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
 		
 		NSLayoutConstraint.activate([
 			searchView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -153,26 +121,23 @@ extension SearchViewController {
 	}
 	
 	// Table View
-//	func bindToTable() {
-//
-////		viewModel.subject.subscribe { results in
-////			print(results)
-////		}.disposed(by: disposeBag)
-////
-////		viewModel.subject2.subscribe(onNext: { results in
-////			print(results)
-////		}).disposed(by: disposeBag)
-//
-//		let table = searchView.searchTable
-////		table.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
-//		viewModel.subject.bind(to: table.rx.items(cellIdentifier: K.searchTable, cellType: CustomCell.self)) { (_, item, cell) in
-//			cell.textLabel?.text = item
-//			cell.detailTextLabel?.text = item
-//			}.disposed(by: disposeBag)
-//
-////			viewModel.subject2.bind(to: table.rx.items(cellIdentifier: K.searchTable, cellType: CustomCell.self)) { (_, item, cell) in
-////				cell.detailTextLabel?.text = item
-////			}.disposed(by: disposeBag)
-//
-//	}
+	func bindToTable() {
+
+		let table = searchView.searchTable
+		table.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
+		viewModel.subject.bind(to: table.rx.items(cellIdentifier: K.searchTable, cellType: CustomCell.self)) { (_, item, cell) in
+			cell.textLabel?.text = item.artistNames
+			cell.detailTextLabel?.text = item.collectionNames
+			}.disposed(by: disposeBag)
+	}
+	
+	func showDetail() {
+		let table = searchView.searchTable
+		table.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
+			let (api, result) = self!.viewModel.setupDetailVC(for: indexPath)
+			table.deselectRow(at: indexPath, animated: true)
+			self?.searchController.searchBar.resignFirstResponder()
+			self?.delegate?.didTapCellInList(self!, resultName: result, selectedAPI: api)
+		}).disposed(by: disposeBag)
+	}
 }
