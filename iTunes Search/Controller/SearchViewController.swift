@@ -134,7 +134,7 @@ extension SearchViewController {
 	func showDetail() {
 		let table = searchView.searchTable
 		table.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
-			let (api, result) = self!.viewModel.setupDetailVC(for: indexPath)
+			let (result, api) = self!.viewModel.setupDetailVC(for: indexPath)
 			table.deselectRow(at: indexPath, animated: true)
 			self?.searchController.searchBar.resignFirstResponder()
 			self?.delegate?.didTapCellInList(self!, resultName: result, selectedAPI: api)
