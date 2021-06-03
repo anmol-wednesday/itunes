@@ -11,7 +11,6 @@ import RxCocoa
 
 class SearchViewModel {
     public let defaults = UserDefaults.standard
-    public var artistHits = [TableViewCellData]()
     public var resultName = ""
     public var selectedAPI = ""
 	
@@ -39,34 +38,31 @@ class SearchViewModel {
         }
     }
     
-    func getAPIData(for value: String, completion: @escaping ([TableViewCellData]) -> Void) {
+    func getAPIData(for value: String) {
         selectedAPI = defaults.value(forKey: K.userDefaultsKey) as! String
         print("getAPIData called")
         if selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getArtists(search: value) { (namesResponse) in
-					self?.artistHits = namesResponse // remove
 					self?.subject.onNext(namesResponse)
-                    completion(self!.artistHits) // remove closure
                 }
             }
         } else if selectedAPI == API.Napster.rawValue {
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 SearchManager.instance.getNapsterArtists(value) { response in
-                    self?.artistHits = response // remove
 					self?.subject.onNext(response)
                 }
-                completion(self!.artistHits) // remove closure
             }
         }
     }
     
-    func setupDetailVC(for indexPath: IndexPath) -> (String, String) {
+	func setupDetailVC(for string: TableViewCellData?) -> (String, String) {
+		guard let data = string else { fatalError("Failed to get model.") }
         SearchViewController.selectedAPI == API.Apple.rawValue ? {
-			resultName = ("\(artistHits[indexPath.row].artistNames) \(artistHits[indexPath.row].collectionNames ?? "")")
+			resultName = ("\(data.artistNames) \(data.collectionNames ?? "")")
             selectedAPI = SearchViewController.selectedAPI
         }() : {
-			resultName = artistHits[indexPath.row].artistNames
+			resultName = data.artistNames
             selectedAPI = SearchViewController.selectedAPI
         }()
         return (resultName, selectedAPI)

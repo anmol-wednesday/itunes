@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIScrollViewDelegate {
+	
+	let disposeBag = DisposeBag()
+	
 	let viewModel = ViewModel()
 	let searchVC = SearchViewController()
 	
@@ -25,16 +30,8 @@ class ViewController: UIViewController {
 	var resultName: String?
 	var selectedAPI = ""
 	
-	var albums = [Album]()
-	var napsterAlbums = [NapsterAlbums]()
-	var cellData = [CollectionCellData]() {
-		didSet {
-			DispatchQueue.main.async {
-				self.detailView.collectionView.reloadData()
-			}
-		}
-	}
-	
+	var cellData = [CollectionCellData]()
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.addSubview(detailView)
@@ -52,28 +49,14 @@ class ViewController: UIViewController {
 			}
 		}
 		title = resultName
-	}
-}
-
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-	
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return cellData.count
-	}
-	
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AlbumCell.description(), for: indexPath) as? AlbumCell {
-			cell.updateCell(album: cellData[indexPath.row])
-			return cell
-		}
-		return UICollectionViewCell()
+		
+		detailView.collectionView.rx.setDelegate(self).disposed(by: disposeBag)
+		bindToCollectionView()
 	}
 }
 
 extension ViewController {
 	func setupViews() {
-		detailView.collectionView.delegate = self
-		detailView.collectionView.dataSource = self
 		detailView.collectionView.isHidden = false
 		
 		errorView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,5 +78,14 @@ extension ViewController {
 			errorView.widthAnchor.constraint(equalToConstant: 300),
 			errorView.heightAnchor.constraint(equalToConstant: 95)
 		])
+	}
+	
+	func bindToCollectionView() {
+		
+		detailView.collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
+		
+		viewModel.subject.asObserver().bind(to: self.detailView.collectionView.rx.items(cellIdentifier: AlbumCell.description(), cellType: AlbumCell.self)) { row, _, cell in
+			cell.updateCell(album: self.cellData[row])
+		}.disposed(by: disposeBag)
 	}
 }

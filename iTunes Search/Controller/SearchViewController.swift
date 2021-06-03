@@ -105,11 +105,9 @@ extension SearchViewController {
 		print("Method called by \(searchController.searchBar.text!)")
 		let search = searchController.searchBar.text!
 		DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-			self?.viewModel.getAPIData(for: search) { [weak self] artists in
-				self?.artistHits = artists
-				DispatchQueue.main.async {
-					self?.searchView.spinner.stopAnimating()
-				}
+			self?.viewModel.getAPIData(for: search)
+			DispatchQueue.main.async {
+				self?.searchView.spinner.stopAnimating()
 			}
 		}
 	}
@@ -120,9 +118,7 @@ extension SearchViewController {
 		}.disposed(by: disposeBag)
 	}
 	
-	// Table View
 	func bindToTable() {
-
 		let table = searchView.searchTable
 		table.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
 		viewModel.subject.bind(to: table.rx.items(cellIdentifier: K.searchTable, cellType: CustomCell.self)) { (_, item, cell) in
@@ -133,11 +129,12 @@ extension SearchViewController {
 	
 	func showDetail() {
 		let table = searchView.searchTable
-		table.rx.itemSelected.subscribe(onNext: { [weak self] indexPath in
-			let (result, api) = self!.viewModel.setupDetailVC(for: indexPath)
-			table.deselectRow(at: indexPath, animated: true)
-			self?.searchController.searchBar.resignFirstResponder()
-			self?.delegate?.didTapCellInList(self!, resultName: result, selectedAPI: api)
-		}).disposed(by: disposeBag)
+		PublishSubject.zip(table.rx.itemSelected, table.rx.modelSelected(TableViewCellData.self))
+			.bind { [weak self] indexPath, model in
+				table.deselectRow(at: indexPath, animated: true)
+				let (result, api) = self!.viewModel.setupDetailVC(for: model)
+				self?.searchController.searchBar.resignFirstResponder()
+				self?.delegate?.didTapCellInList(self!, resultName: result, selectedAPI: api)
+			}.disposed(by: disposeBag)
 	}
 }

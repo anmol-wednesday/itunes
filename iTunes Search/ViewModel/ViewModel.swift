@@ -7,11 +7,15 @@
 
 import Foundation
 import UIKit.UICollectionView
+import RxSwift
+import RxCocoa
 
 class ViewModel {
     public var albums = [Album]()
     public var cellData = [CollectionCellData]()
     public var napsterAlbums = [NapsterAlbums]()
+	
+	public var subject = PublishSubject<[CollectionCellData]>()
     
     func getCollectionViewData(for value: String, completion: @escaping ([CollectionCellData]) -> Void) {
         if SearchViewController.selectedAPI == API.Apple.rawValue {
@@ -22,7 +26,8 @@ class ViewModel {
                     self?.cellData = self!.albums.map {
                         CollectionCellData(image: $0.artwork, artistName: $0.artistName, trackName: $0.songName, collectionName: $0.collectionName)
                     }
-                    completion(self!.cellData)
+					self?.subject.onNext(self!.cellData)
+                    completion(self!.cellData) // remove
                 }
             }
         } else if SearchViewController.selectedAPI == API.Napster.rawValue {
@@ -32,7 +37,8 @@ class ViewModel {
                     self?.cellData = self!.napsterAlbums[0].albumID.map {
                         CollectionCellData(image: $0, artistName: value, trackName: $0, collectionName: $0)
                     }
-                    completion(self?.cellData ?? [])
+					self?.subject.onNext(self!.cellData)
+                    completion(self?.cellData ?? []) // remove
                 }
             }
         }

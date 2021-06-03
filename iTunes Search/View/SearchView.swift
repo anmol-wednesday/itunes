@@ -14,7 +14,6 @@ class SearchView: UIView {
         searchTableView.translatesAutoresizingMaskIntoConstraints = false
         searchTableView.sizeToFit()
         searchTableView.backgroundColor = UIColor(named: "viewColor")
-		searchTableView.register(CustomCell.self, forCellReuseIdentifier: K.searchTable)
         return searchTableView
     }()
     
