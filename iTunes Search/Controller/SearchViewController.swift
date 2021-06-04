@@ -19,6 +19,7 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
 	weak var delegate: SearchViewControllerDelegate?
 	let disposeBag = DisposeBag()
 	let viewModel = SearchViewModel()
+	let apiVC = APISelectVC()
 	
 	let searchView: SearchView = {
 		let view = SearchView()
@@ -34,7 +35,6 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
 	var artistHits = [TableViewCellData]()
 	
 	var searchQuery = ""
-	var defaults = UserDefaults.standard
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -49,11 +49,10 @@ class SearchViewController: UIViewController, UIScrollViewDelegate {
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
-		viewModel.setSelectedAPI()
-		let apiSelect = UIBarButtonItem(title: defaults.object(forKey: K.userDefaultsKey) as? String, style: .plain, target: self, action: #selector(promptAPISelect))
+		let defaults = UserDefaults.standard.string(forKey: K.userDefaultsKey)
+		let apiSelect = UIBarButtonItem(title: defaults, style: .plain, target: self, action: #selector(promptAPISelect))
 		navigationItem.rightBarButtonItem = apiSelect
 		apiSelect.accessibilityIdentifier = "apiButton"
-		viewModel.selectedAPI(name: SearchViewController.selectedAPI)
 	}
 	
 	@objc func promptAPISelect() {

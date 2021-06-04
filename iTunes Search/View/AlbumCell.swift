@@ -82,11 +82,11 @@ class AlbumCell: UICollectionViewCell {
         ])
     }
     
-    let defaults = UserDefaults.standard
+//    let defaults = UserDefaults.standard
     let K = Constants()
     
     func updateCell(album: CollectionCellData) {
-        if defaults.object(forKey: K.userDefaultsKey) as? String == API.Apple.rawValue {
+		if SearchViewController.selectedAPI == API.Apple.rawValue {
             DispatchQueue.global(qos: .userInitiated).async {
                 let imageUrl = URL(string: album.image)
                 DispatchQueue.global().async {
@@ -102,7 +102,7 @@ class AlbumCell: UICollectionViewCell {
             collectionNameLabel.text = album.collectionName ?? ""
         }
         
-        if defaults.object(forKey: K.userDefaultsKey) as? String == API.Napster.rawValue {
+		if SearchViewController.selectedAPI == API.Napster.rawValue {
             let baseURL = "https://api.napster.com/imageserver/v2/albums/"
             let size = "200x200"
             let imageExtension = ".jpg"

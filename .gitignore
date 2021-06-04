@@ -1,6 +1,6 @@
 */xcbkptlist
 */xcuserstate
-*.DS_Store
+*/.DS_Store
 */xcuserdata/
 *.idea
 */xcshareddata

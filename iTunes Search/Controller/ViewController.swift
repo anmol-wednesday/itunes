@@ -81,9 +81,7 @@ extension ViewController {
 	}
 	
 	func bindToCollectionView() {
-		
 		detailView.collectionView.register(AlbumCell.self, forCellWithReuseIdentifier: AlbumCell.description())
-		
 		viewModel.subject.asObserver().bind(to: self.detailView.collectionView.rx.items(cellIdentifier: AlbumCell.description(), cellType: AlbumCell.self)) { row, _, cell in
 			cell.updateCell(album: self.cellData[row])
 		}.disposed(by: disposeBag)

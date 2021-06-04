@@ -11,7 +11,6 @@
 		514355A1264D1FEC0047F576 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5143559E264D1FEC0047F576 /* EmptyView.swift */; };
 		7B0C2724265BB7B100B85352 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0C2723265BB7B100B85352 /* SearchViewModel.swift */; };
 		7B0C2726265BB7BB00B85352 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0C2725265BB7BB00B85352 /* ViewModel.swift */; };
-		7B0C2728265BB7C600B85352 /* APIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0C2727265BB7C600B85352 /* APIViewModel.swift */; };
 		7B0D8F51265E2C7C00801524 /* iTunes_SearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0D8F50265E2C7C00801524 /* iTunes_SearchUITests.swift */; };
 		7B1D5031265628B80005F497 /* URLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1D5030265628B80005F497 /* URLTests.swift */; };
 		7B1D503B265656060005F497 /* MockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1D503A265656060005F497 /* MockTests.swift */; };
@@ -75,7 +74,6 @@
 		72BA68E7A26E050F5235C4DF /* Pods-iTunes Search-iTunes SearchUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iTunes Search-iTunes SearchUITests.debug.xcconfig"; path = "Target Support Files/Pods-iTunes Search-iTunes SearchUITests/Pods-iTunes Search-iTunes SearchUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7B0C2723265BB7B100B85352 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		7B0C2725265BB7BB00B85352 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		7B0C2727265BB7C600B85352 /* APIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIViewModel.swift; sourceTree = "<group>"; };
 		7B0D8F4E265E2C7C00801524 /* iTunes SearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iTunes SearchUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B0D8F50265E2C7C00801524 /* iTunes_SearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunes_SearchUITests.swift; sourceTree = "<group>"; };
 		7B0D8F52265E2C7C00801524 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 			children = (
 				7B0C2723265BB7B100B85352 /* SearchViewModel.swift */,
 				7B0C2725265BB7BB00B85352 /* ViewModel.swift */,
-				7B0C2727265BB7C600B85352 /* APIViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -574,7 +571,6 @@
 				7B276C1A265D161600D65E21 /* DetailView.swift in Sources */,
 				514355A1264D1FEC0047F576 /* EmptyView.swift in Sources */,
 				7B0C2724265BB7B100B85352 /* SearchViewModel.swift in Sources */,
-				7B0C2728265BB7C600B85352 /* APIViewModel.swift in Sources */,
 				7BC49EAD263047A4007FED3B /* SearchViewController.swift in Sources */,
 				7BDD270B2640060F009E7289 /* CollectionCellData.swift in Sources */,
 				7B276C18265D018300D65E21 /* SearchView.swift in Sources */,

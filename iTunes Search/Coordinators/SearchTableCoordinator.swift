@@ -27,9 +27,7 @@ class SearchTableCoordinator: Coordinator {
 
 extension SearchTableCoordinator: SearchViewControllerDelegate {
 	func didTapSelectAPI(_ controller: SearchViewController) {
-		
 		let apiCoordinator = APISelectCoordinator(presenter: presenter)
-		
 		self.apiCoordinator = apiCoordinator
 		apiCoordinator.start()
 	}
